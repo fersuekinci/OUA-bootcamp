@@ -3,7 +3,7 @@ import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:oua_bootcamp/pages/business_detail_page.dart';
 import 'package:oua_bootcamp/pages/category_page.dart';
 import 'package:oua_bootcamp/pages/menu_page.dart';
-import 'package:oua_bootcamp/widgets/menu_item.dart';
+import 'package:oua_bootcamp/model/menu_item.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

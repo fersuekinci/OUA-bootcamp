@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:oua_bootcamp/widgets/menu_item.dart';
+import 'package:oua_bootcamp/model/menu_item.dart';
 
 //ZoomDrawer menü elemanlarının oluşturulması ve özelliklerinin verilmesi
 class MenuItems {
