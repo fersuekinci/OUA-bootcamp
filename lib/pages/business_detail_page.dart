@@ -1,6 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:oua_bootcamp/constants.dart';
+import 'package:oua_bootcamp/pages/menu_page.dart';
+import 'package:oua_bootcamp/widgets/menu_item.dart';
+import 'package:oua_bootcamp/widgets/menu_widget.dart';
 
 class BusinessDetail extends StatefulWidget {
   const BusinessDetail({Key? key}) : super(key: key);
@@ -31,10 +34,12 @@ class _BusinessDetailState extends State<BusinessDetail> {
             _appbarTitle,
           ),
           //Önceki erkana geçiş için
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
+          // leading: IconButton(
+          //   icon: const Icon(Icons.arrow_back),
+          //   onPressed: () => Navigator.of(context).pop(),
+          // ),
+
+          leading: const MenuWidget(),
         ),
         body: Scaffold(
           body: SingleChildScrollView(

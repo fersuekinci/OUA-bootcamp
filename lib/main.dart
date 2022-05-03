@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:oua_bootcamp/constants.dart';
-import 'package:oua_bootcamp/pages/business_detail_page.dart';
+import 'package:oua_bootcamp/pages/home_page.dart';
 
 void main() => runApp(const MyApp());
 
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
 
-      home: const BusinessDetail(),
+      home: const HomePage(),
     );
   }
 }
