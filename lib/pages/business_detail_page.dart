@@ -1,8 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:oua_bootcamp/constants.dart';
-import 'package:oua_bootcamp/pages/menu_page.dart';
-import 'package:oua_bootcamp/model/menu_item.dart';
+
 import 'package:oua_bootcamp/widgets/menu_widget.dart';
 
 class BusinessDetail extends StatefulWidget {
