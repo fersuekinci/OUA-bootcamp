@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:oua_bootcamp/pages/business_detail_page.dart';
+import 'package:oua_bootcamp/pages/businesses_page.dart';
 import 'package:oua_bootcamp/pages/category_page.dart';
 import 'package:oua_bootcamp/pages/menu_page.dart';
 import 'package:oua_bootcamp/model/menu_item.dart';
@@ -42,6 +43,8 @@ class _HomePageState extends State<HomePage> {
         return const CategoryPage();
       case MenuItems.businessDetail:
         return const BusinessDetail();
+      case MenuItems.businesses:
+        return const Businesses();
       default:
         return const CategoryPage();
     }

@@ -6,8 +6,9 @@ class MenuItems {
   //Menü elemanları ekleniyor.
   static const category = MenuItem('Ana Sayfa', Icons.category);
   static const businessDetail = MenuItem('İşletme Detayları', Icons.details);
+  static const businesses = MenuItem('İşletmeler', Icons.list_alt);
 
-  static const all = <MenuItem>[category, businessDetail];
+  static const all = <MenuItem>[category, businessDetail, businesses];
 }
 
 class MenuPage extends StatelessWidget {
