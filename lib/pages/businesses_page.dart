@@ -35,7 +35,27 @@ class _BusinessesState extends State<Businesses> {
                     style: TextStyle(color: Colors.black.withOpacity(0.6)),
                   ),
                 ),
+<<<<<<< Updated upstream
 
+=======
+                ButtonBar(
+                  alignment: MainAxisAlignment.start,
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        // Perform some action
+                      },
+                      child: const Text('ACTION 1'),
+                    ),
+                    FlatButton(
+                      onPressed: () {
+                        // Perform some action
+                      },
+                      child: const Text('ACTION 2'),
+                    ),
+                  ],
+                ),
+>>>>>>> Stashed changes
                 //Image.asset('assets/card-sample-image.jpg'),
               ],
             ),
