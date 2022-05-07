@@ -61,15 +61,17 @@ Story'ler yapılacak işlere (task'lere) bölünmüştür. Miro Board'da gözük
   ![Screenshot 1](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint1/ss1.PNG)
 
 - **Sprint Review**: 
-Alınan kararlar: Veritabanı oluşturması email ile toplanacak veriler için gerekli görülmüştür. Fakat bir yandan da veritabanı form sayfası için gerekli olmamıştır. O sebeple PBI bir sonraki sprint'e aktarılmıştır. Çıkan ürünün çalışmasında ve testlerinde bir problem görülmemiştir. Ekstra koyulması gereken özellikler belirlenmiştir. Sprint Review katılımcıları: ......
+Alınan kararlar: Login, auth, user-role işlemleri 2.sprintle başlayacaktır ve bunun için firebase tarafında yapı oluşturulacaktır. Login olan kullanıcı rolüne göre menü üzerinde görüntüleme yapılacak, session ile işlemer yönetilmeye başlanacaktır. Form işlemleri 2.sprint ile başlanması öngörülmüştür. 1.Sprint için planan işlemler tamamlanmış ve kurulan, kurulacak olan yapılar entegre bir şekilde çalışması için 2.sprint uygun görülmüştür.  Sprint Review katılımcıları: ......
 
 - **Sprint Retrospective:**
-  - Takım içindeki görev dağılımıyla ilgili düzenleme yapılması kararı alınmıştır
-  - Tahmin puanları gözden geçirilmeli ve sprint planlama toplantılarında gerekli geri bildirimlerin developer'lar tarafından verildiğine emin olunmalı
-  - Unit test'ler için ayrılan efor/saat arttırılmalı 
+  - Sprintlerde gerçekleştirilmesi için daha fazla görev yükü gerekmektedir. 
+  - Uygulamanın işleyişinin aktif olabilmesi için backend çalışmaları başlamalıdır.
+  - Veri yapılarının oluşturulması için uygulama detayları belirlenmelidir, düzayn ve yapılarda zaman yönetimi için gereklidir.
+  - Takım ile daha sık buluşmalar gerçekleştirilerek yapılan işler üzerinde yorumlama ve geliştirme analizleri yapılmalaıdır. 
+
 
 -**Diğer Notlar**:
-- N/A
+- 1. Sprint ile kararlaştırılan uygulama fikrinin çalışmalarına başlanmış olup ekran tasarımları yapılmıştır. Projede bir dosya yapısı, kullanılan widgetlarda proje genelinde bir yönetilebilir yapı oluşturulmuştur. Zaman yönetimi açısından uygulamanın işlevsel hale gelmesi, role yapısında işlemlerin yapılabilmesi, post, get, update, delete metodlarıyla kullanıcıların işlem yapması durumları ve bunların veri yapılarıyla veritabanında saklanma işlemleri için 2. sprint hedeflenmektedir. 2. sprint ile bunlar gerçekleştirilerek diğer sprintte optimizasyon ve revize işlmemleri öngörülmektedir. 
 
 ---
 
