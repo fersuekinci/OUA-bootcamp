@@ -32,9 +32,8 @@ Takım kırk8
 - Küçük ve orta hizmet sektörü işletmeleri
 
 ## Product Backlog URL
-  !!!!
 
-[Miro Backlog Board](https://miro.com/app/board/uXjVOSSCpsI=/) 
+[Miro Backlog Board](https://miro.com/app/board/uXjVO2sHGvQ=/?share_link_id=191860939694) 
 
 ---
 
