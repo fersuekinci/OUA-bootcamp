@@ -4,6 +4,8 @@ import 'package:oua_bootcamp/constants.dart';
 
 import 'package:oua_bootcamp/widgets/menu_widget.dart';
 
+import 'chat_page.dart';
+
 class BusinessDetail extends StatefulWidget {
   const BusinessDetail({Key? key}) : super(key: key);
 
@@ -83,7 +85,7 @@ class _BusinessDetailState extends State<BusinessDetail> {
                       buttonPadding: const EdgeInsets.all(15),
                       children: [
                         FloatingActionButton(
-                          onPressed: () {},
+                          onPressed: () => _chatEkraninaGit(context),
                           elevation: 20,
                           child: const Icon(Icons.message),
                         ),
@@ -172,5 +174,12 @@ class _BusinessDetailState extends State<BusinessDetail> {
                   )),
             ))
         .toList();
+  }
+  void _chatEkraninaGit(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) {
+        return ChatPage();
+      },
+    ));
   }
 }

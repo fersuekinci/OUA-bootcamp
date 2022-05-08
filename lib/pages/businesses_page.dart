@@ -35,9 +35,6 @@ class _BusinessesState extends State<Businesses> {
                     style: TextStyle(color: Colors.black.withOpacity(0.6)),
                   ),
                 ),
-<<<<<<< Updated upstream
-
-=======
                 ButtonBar(
                   alignment: MainAxisAlignment.start,
                   children: [
@@ -54,9 +51,7 @@ class _BusinessesState extends State<Businesses> {
                       child: const Text('ACTION 2'),
                     ),
                   ],
-                ),
->>>>>>> Stashed changes
-                //Image.asset('assets/card-sample-image.jpg'),
+                ), //Image.asset('assets/card-sample-image.jpg'),
               ],
             ),
           ),
