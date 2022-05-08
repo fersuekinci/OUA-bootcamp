@@ -34,7 +34,7 @@ Takım kırk8
 ## Product Backlog URL
   !!!!
 
-[Miro Backlog Board](https://miro.com/app/board/uXjVOSSCpsI=/)
+[Miro Backlog Board](https://miro.com/app/board/uXjVOSSCpsI=/) 
 
 ---
 
@@ -53,6 +53,7 @@ Story'ler yapılacak işlere (task'lere) bölünmüştür. Miro Board'da gözük
 
 - **Daily Scrum**: Daily Scrum toplantılarının zamansal sebeplerden ötürü Slack üzerinden yapılmasına karar verilmiştir. Daily Scrum toplantısı örneği jpeg veya word olarak Readme'de tarafımızdan paylaşılmaktadır: [Sprint 1 Daily Scrum Chats](https://docs.google.com/spreadsheets/d/1Y-dc__Gj7hXpSxtBPJP4FeLIknj2NKN8z6VeKEmvAfs/edit#gid=0)
 
+<<<<<<< HEAD
 - **Sprint board update**: Sprint board screenshotları:
 ![Backlog 1](https://raw.githubusercontent.com/OyunveUygulamaAkademisi/BootcampScrumTemplate/main/ProjectManagement/Sprint1Documents/backlog1.png)
 
@@ -72,6 +73,27 @@ Alınan kararlar: Login, auth, user-role işlemleri 2.sprintle başlayacaktır v
 
 -**Diğer Notlar**:
 - 1. Sprint ile kararlaştırılan uygulama fikrinin çalışmalarına başlanmış olup ekran tasarımları yapılmıştır. Projede bir dosya yapısı, kullanılan widgetlarda proje genelinde bir yönetilebilir yapı oluşturulmuştur. Zaman yönetimi açısından uygulamanın işlevsel hale gelmesi, role yapısında işlemlerin yapılabilmesi, post, get, update, delete metodlarıyla kullanıcıların işlem yapması durumları ve bunların veri yapılarıyla veritabanında saklanma işlemleri için 2. sprint hedeflenmektedir. 2. sprint ile bunlar gerçekleştirilerek diğer sprintte optimizasyon ve revize işlmemleri öngörülmektedir.
+=======
+- **Sprint board update**: Sprint board screenshotları: 
+![Backlog 1](https://raw.githubusercontent.com/OyunveUygulamaAkademisi/BootcampScrumTemplate/main/ProjectManagement/Sprint1Documents/backlog1.png) 
+
+- **Ürün Durumu**: Ekran görüntüleri:
+  
+  ![Screenshot 1](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint1/ss1.PNG)
+
+- **Sprint Review**: 
+Alınan kararlar: Login, auth, user-role işlemleri 2.sprintle başlayacaktır ve bunun için firebase tarafında yapı oluşturulacaktır. Login olan kullanıcı rolüne göre menü üzerinde görüntüleme yapılacak, session ile işlemer yönetilmeye başlanacaktır. Form işlemleri 2.sprint ile başlanması öngörülmüştür. 1.Sprint için planan işlemler tamamlanmış ve kurulan, kurulacak olan yapılar entegre bir şekilde çalışması için 2.sprint uygun görülmüştür.  Sprint Review katılımcıları: ......
+
+- **Sprint Retrospective:**
+  - Sprintlerde gerçekleştirilmesi için daha fazla görev yükü gerekmektedir. 
+  - Uygulamanın işleyişinin aktif olabilmesi için backend çalışmaları başlamalıdır.
+  - Veri yapılarının oluşturulması için uygulama detayları belirlenmelidir, düzayn ve yapılarda zaman yönetimi için gereklidir.
+  - Takım ile daha sık buluşmalar gerçekleştirilerek yapılan işler üzerinde yorumlama ve geliştirme analizleri yapılmalaıdır. 
+
+
+-**Diğer Notlar**:
+- 1. Sprint ile kararlaştırılan uygulama fikrinin çalışmalarına başlanmış olup ekran tasarımları yapılmıştır. Projede bir dosya yapısı, kullanılan widgetlarda proje genelinde bir yönetilebilir yapı oluşturulmuştur. Zaman yönetimi açısından uygulamanın işlevsel hale gelmesi, role yapısında işlemlerin yapılabilmesi, post, get, update, delete metodlarıyla kullanıcıların işlem yapması durumları ve bunların veri yapılarıyla veritabanında saklanma işlemleri için 2. sprint hedeflenmektedir. 2. sprint ile bunlar gerçekleştirilerek diğer sprintte optimizasyon ve revize işlmemleri öngörülmektedir. 
+>>>>>>> d696e0dcf617abacf39668f8c995104a43f425c4
 
 ---
 
