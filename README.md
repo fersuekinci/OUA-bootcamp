@@ -38,7 +38,6 @@ Takım kırk8
 ---
 
 # Sprint 1
-  !!!!
 
 - **Sprint Notları**: User Story'ler product backlog'ların içine yazılmıştır. Product backlog item'lara tıklandığında hikayelerin detayları okunabilir.
 
@@ -48,9 +47,9 @@ Takım kırk8
 
 - **Backlog düzeni ve Story seçimleri**: Backlog'umuz ilk yapılacak story'lere göre düzenlenmiştir. Sprint başına tahmin edilen puan sayısını geçmeyecek şekilde sıradan seçimler yapılmaktadır. Story başına çıkan tahmin puanı, toplam puanın yarısından az tutulmuştur.
 
-Story'ler yapılacak işlere (task'lere) bölünmüştür. Miro Board'da gözüken kırmızı item'lar yapılacak işleri (task) gösterirken, mavi item'lar story'leri temsil etmektedir. !!!!
+Story'ler yapılacak işlere (task'lere) bölünmüştür. Miro Board'da gözüken kırmızı item'lar yapılacak işleri (task) gösterirken, mavi item'lar story'leri temsil etmektedir.
 
-- **Daily Scrum**: Daily Scrum toplantılarının zamansal sebeplerden ötürü Slack üzerinden yapılmasına karar verilmiştir. Daily Scrum toplantısı örneği jpeg veya word olarak Readme'de tarafımızdan paylaşılmaktadır: [Sprint 1 Daily Scrum Chats](https://docs.google.com/spreadsheets/d/1Y-dc__Gj7hXpSxtBPJP4FeLIknj2NKN8z6VeKEmvAfs/edit#gid=0)
+- **Daily Scrum**: Daily Scrum toplantılarının 1.sprint için Discord üzerinden yapılmasına karar verilmiştir. Daily Scrum toplantısı örneği excel tablosu olarak Readme'de tarafımızdan paylaşılmaktadır: [Sprint 1 Daily Scrum Chats](https://docs.google.com/spreadsheets/d/1Y-dc__Gj7hXpSxtBPJP4FeLIknj2NKN8z6VeKEmvAfs/edit#gid=0)
 
 - **Sprint board update**: Sprint board screenshotları: 
 ![Backlog 1](https://raw.githubusercontent.com/OyunveUygulamaAkademisi/BootcampScrumTemplate/main/ProjectManagement/Sprint1Documents/backlog1.png) 
@@ -60,17 +59,17 @@ Story'ler yapılacak işlere (task'lere) bölünmüştür. Miro Board'da gözük
   ![Screenshot 1](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint1/ss1.PNG)
 
 - **Sprint Review**: 
-Alınan kararlar: Login, auth, user-role işlemleri 2.sprintle başlayacaktır ve bunun için firebase tarafında yapı oluşturulacaktır. Login olan kullanıcı rolüne göre menü üzerinde görüntüleme yapılacak, session ile işlemer yönetilmeye başlanacaktır. Form işlemleri 2.sprint ile başlanması öngörülmüştür. 1.Sprint için planan işlemler tamamlanmış ve kurulan, kurulacak olan yapılar entegre bir şekilde çalışması için 2.sprint uygun görülmüştür.  Sprint Review katılımcıları: ......
+Alınan kararlar: Login, auth, user-role işlemleri 2.sprintle başlayacaktır ve bunun için firebase tarafında yapı oluşturulacaktır. Login olan kullanıcı rolüne göre menü üzerinde görüntüleme yapılacak, session ile işlemer yönetilmeye başlanacaktır. Form işlemleri 2.sprint ile başlanması öngörülmüştür. 1.Sprint için planan işlemler tamamlanmış ve kurulan, kurulacak olan yapılar entegre bir şekilde çalışması için 2.sprint uygun görülmüştür. Sprint Review katılımcıları: ...... !!!
 
 - **Sprint Retrospective:**
   - Sprintlerde gerçekleştirilmesi için daha fazla görev yükü gerekmektedir. 
   - Uygulamanın işleyişinin aktif olabilmesi için backend çalışmaları başlamalıdır.
   - Veri yapılarının oluşturulması için uygulama detayları belirlenmelidir, dizayn ve yapılarda zaman yönetimi için gereklidir.
-  - Takım ile daha sık buluşmalar gerçekleştirilerek yapılan işler üzerinde yorumlama ve geliştirme analizleri yapılmalaıdır. 
+  - Takım ile daha sık buluşmalar gerçekleştirilerek yapılan işler üzerinde yorumlama ve geliştirme analizleri yapılmalıdır. 
 
 
 -**Diğer Notlar**:
-- 1. Sprint ile kararlaştırılan uygulama fikrinin çalışmalarına başlanmış olup ekran tasarımları yapılmıştır. Projede bir dosya yapısı, kullanılan widgetlarda proje genelinde bir yönetilebilir yapı oluşturulmuştur. Zaman yönetimi açısından uygulamanın işlevsel hale gelmesi, role yapısında işlemlerin yapılabilmesi, post, get, update, delete metodlarıyla kullanıcıların işlem yapması durumları ve bunların veri yapılarıyla veritabanında saklanma işlemleri için 2. sprint hedeflenmektedir. 2. sprint ile bunlar gerçekleştirilerek diğer sprintte optimizasyon ve revize işlmemleri öngörülmektedir. 
+- 1. Sprint ile kararlaştırılan uygulama fikrinin çalışmalarına başlanmış olup ekran tasarımları yapılmıştır. Projede bir dosya yapısı, kullanılan widgetlarda proje genelinde bir yönetilebilir yapı oluşturulmuştur. Zaman yönetimi açısından uygulamanın işlevsel hale gelmesi, role yapısında işlemlerin yapılabilmesi, post, get, update, delete metodlarıyla kullanıcıların işlem yapması durumları ve bunların veri yapılarıyla veritabanında saklanma işlemleri için 2. sprint hedeflenmektedir. 2. sprint ile bunlar gerçekleştirilerek diğer sprintte optimizasyon ve revize işlemleri öngörülmektedir. 
 
 ---
 
