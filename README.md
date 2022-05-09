@@ -52,7 +52,7 @@ Story'ler yapılacak işlere (task'lere) bölünmüştür. Miro Board'da gözük
 - **Daily Scrum**: Daily Scrum toplantılarının 1.sprint için Discord üzerinden yapılmasına karar verilmiştir. Daily Scrum toplantısı örneği excel tablosu olarak Readme'de tarafımızdan paylaşılmaktadır: [Sprint 1 Daily Scrum Chats](https://docs.google.com/spreadsheets/d/1Y-dc__Gj7hXpSxtBPJP4FeLIknj2NKN8z6VeKEmvAfs/edit#gid=0)
 
 - **Sprint board update**: Sprint board screenshotları: 
-![Backlog 1](https://raw.githubusercontent.com/OyunveUygulamaAkademisi/BootcampScrumTemplate/main/ProjectManagement/Sprint1Documents/backlog1.png) 
+![Backlog 1](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint1/ss2.PNG) 
 
 - **Ürün Durumu**: Ekran görüntüleri:
   
