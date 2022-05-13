@@ -23,7 +23,6 @@ class MyApp extends StatelessWidget {
           titleTextStyle: TextStyle(color: Colors.black, fontSize: 20),
         ),
       ),
-
       home: const HomePage(),
     );
   }

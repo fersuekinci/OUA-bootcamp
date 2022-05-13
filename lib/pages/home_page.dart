@@ -6,6 +6,8 @@ import 'package:oua_bootcamp/pages/category_page.dart';
 import 'package:oua_bootcamp/pages/menu_page.dart';
 import 'package:oua_bootcamp/model/menu_item.dart';
 
+import 'login_page.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -45,6 +47,8 @@ class _HomePageState extends State<HomePage> {
         return const BusinessDetail();
       case MenuItems.businesses:
         return const Businesses();
+      case MenuItems.register:
+        return const LoginPage();
       default:
         return const CategoryPage();
     }

@@ -7,8 +7,9 @@ class MenuItems {
   static const category = MenuItem('Ana Sayfa', Icons.category);
   static const businessDetail = MenuItem('İşletme Detayları', Icons.details);
   static const businesses = MenuItem('İşletmeler', Icons.list_alt);
+  static const register = MenuItem('Kayıt ol sayfası', Icons.list_alt);
 
-  static const all = <MenuItem>[category, businessDetail, businesses];
+  static const all = <MenuItem>[category, businessDetail, businesses, register];
 }
 
 class MenuPage extends StatelessWidget {
@@ -26,30 +27,30 @@ class MenuPage extends StatelessWidget {
         backgroundColor: Colors.indigo,
         body: SafeArea(
             child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Spacer(),
-            ...MenuItems.all.map(buildMenuItem).toList(),
-            const Spacer(
-              flex: 2,
-            )
-          ],
-        )),
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Spacer(),
+                ...MenuItems.all.map(buildMenuItem).toList(),
+                const Spacer(
+                  flex: 2,
+                )
+              ],
+            )),
       ),
     );
   }
 
   Widget buildMenuItem(MenuItem item) => ListTileTheme(
-        selectedColor: Colors.white,
-        child: ListTile(
-          selectedTileColor: Colors.black26,
-          selected: currentItem == item,
-          minLeadingWidth: 20,
-          leading: Icon(item.icon),
-          title: Text(item.title),
-          onTap: () {
-            return onSelectedItem(item);
-          },
-        ),
-      );
+    selectedColor: Colors.white,
+    child: ListTile(
+      selectedTileColor: Colors.black26,
+      selected: currentItem == item,
+      minLeadingWidth: 20,
+      leading: Icon(item.icon),
+      title: Text(item.title),
+      onTap: () {
+        return onSelectedItem(item);
+      },
+    ),
+  );
 }
