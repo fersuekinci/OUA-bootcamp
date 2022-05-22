@@ -69,7 +69,7 @@ Alınan kararlar: Login, auth, user-role işlemleri 2.sprintle başlayacaktır v
 
 
 -**Diğer Notlar**:
-- 1. Sprint ile kararlaştırılan uygulama fikrinin çalışmalarına başlanmış olup ekran tasarımları yapılmıştır. Projede bir dosya yapısı, kullanılan widgetlarda proje genelinde bir yönetilebilir yapı oluşturulmuştur. Zaman yönetimi açısından uygulamanın işlevsel hale gelmesi, role yapısında işlemlerin yapılabilmesi, post, get, update, delete metodlarıyla kullanıcıların işlem yapması durumları ve bunların veri yapılarıyla veritabanında saklanma işlemleri için 2. sprint hedeflenmektedir. 2. sprint ile bunlar gerçekleştirilerek diğer sprintte optimizasyon ve revize işlemleri öngörülmektedir. 
+- 1.Sprint ile kararlaştırılan uygulama fikrinin çalışmalarına başlanmış olup ekran tasarımları yapılmıştır. Projede bir dosya yapısı, kullanılan widgetlarda proje genelinde bir yönetilebilir yapı oluşturulmuştur. Zaman yönetimi açısından uygulamanın işlevsel hale gelmesi, role yapısında işlemlerin yapılabilmesi, post, get, update, delete metodlarıyla kullanıcıların işlem yapması durumları ve bunların veri yapılarıyla veritabanında saklanma işlemleri için 2. sprint hedeflenmektedir. 2. sprint ile bunlar gerçekleştirilerek diğer sprintte optimizasyon ve revize işlemleri öngörülmektedir. 
 
 ---
 
@@ -99,13 +99,13 @@ Alınan kararlar: Tasarımda ve backend kısmında iyileştirmeler 3.sprintle ba
 rollerinin tam oturtulması üzerine çalışmalar yapılacaktır. Eksikler ve errorlar düzeltilecektir. 2.sprint için planlanan işlemler neredeyse tamamlanmış olup, tamamlanamayan işlerin 3.sprintte atanması uygun görülmüştür.
 
 - **Sprint Retrospective:**
-  - Uygulamanın arayüzü iyileştirilmlidir.
+  - Uygulamanın arayüzü iyileştirilmelidir.
   - Uygulamanın işleyişinin aktif olabilmesi için backend çalışmaları iyileştirilmelidir.
   - Takım ile daha sık buluşmalar gerçekleştirilerek yapılan işler üzerinde yorumlama ve geliştirme analizleri yapılmalıdır. 
 
 
 -**Diğer Notlar**:
-- 2. Sprint ile zaman yönetimi açısından uygulamanın işlevsel hale gelmesi, role yapısında işlemlerin yapılması, post, get, update, delete metodlarıyla kullanıcıların işlem yapması durumları ve bunların veri yapılarıyla veritabanında saklanma işlemleri yapılmıştır. 2. sprint ile bunlar gerçekleştirilerek diğer sprintte optimizasyon ve revize işlemleri öngörülmektedir. 
+- 2.Sprint ile zaman yönetimi açısından uygulamanın işlevsel hale gelmesi, role yapısında işlemlerin yapılması, post, get, update, delete metodlarıyla kullanıcıların işlem yapması durumları ve bunların veri yapılarıyla veritabanında saklanma işlemleri yapılmıştır. 2. sprint ile bunlar gerçekleştirilerek diğer sprintte optimizasyon ve revize işlemleri öngörülmektedir. 
 
 
 ---
