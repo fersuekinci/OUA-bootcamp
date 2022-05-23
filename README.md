@@ -99,6 +99,7 @@ Story'ler yapılacak işlere (task'lere) bölünmüştür. Miro Board'da gözük
   ![Screenshot 5](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint2/ss5.png)
   ![Screenshot 6](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint2/ss6.png)
   ![Screenshot 7](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint2/ss7.png)
+  ![Screenshot 8](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint2/ss9.png)
 
 - **Sprint Review**: 
 Alınan kararlar: Tasarımda ve backend kısmında iyileştirmeler 3.sprintle başlayacaktır. Login olmayan kullanıcı ve login olan kullanıcı (hizmet alan ve hizmet veren)
