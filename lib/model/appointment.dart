@@ -8,7 +8,7 @@ class AppointmentModel {
   bool? done;
   String? businessAddress;
   String? interval;
-  String? timeStamp;
+  int? timeStamp;
   String? time;
   String? docId;
 

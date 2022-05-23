@@ -4,8 +4,10 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:oua_bootcamp/cloud_firestore/all_business_ref.dart';
 import 'package:oua_bootcamp/constants.dart';
 import 'package:oua_bootcamp/model/CategoryModal.dart';
+import 'package:oua_bootcamp/model/appointment.dart';
 import 'package:oua_bootcamp/model/business_model.dart';
 import 'package:oua_bootcamp/state/state_management.dart';
 import 'package:oua_bootcamp/utils/utils.dart';
@@ -119,38 +121,65 @@ class MakeAppointment extends ConsumerWidget {
           ),
           Expanded(
               flex: 10,
-              child: GridView.builder(
-                  itemCount: Time_Interval.length,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3),
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        ref.read(selectedTime.state).state =
-                            Time_Interval.elementAt(index);
-                        ref.read(selectedTimeInterval.state).state = index;
-                      },
-                      child: Card(
-                        color: ref.read(selectedTime.state).state ==
-                                Time_Interval.elementAt(index)
-                            ? Colors.white54
-                            : Colors.white,
-                        child: GridTile(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(Time_Interval.elementAt(index)),
-                                Text('Mevcut')
-                              ],
+              child: FutureBuilder(
+                future: getTimeIntervalOfAppointment(
+                    DateFormat('dd/MM/yyyy')
+                        .format(ref.read(selectedDate.state).state),
+                    businessWatch.toString()),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  } else {
+                    var listTimeInterval = snapshot.data as List<String>;
+                    print(listTimeInterval);
+                    return GridView.builder(
+                        itemCount: Time_Interval.length,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3),
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            onTap: listTimeInterval
+                                    .contains(Time_Interval.elementAt(index))
+                                ? null
+                                : () {
+                                    print(businessWatch.toString());
+                                    ref.read(selectedTime.state).state =
+                                        Time_Interval.elementAt(index);
+                                    ref.read(selectedTimeInterval.state).state =
+                                        index;
+                                  },
+                            child: Card(
+                              color: listTimeInterval
+                                      .contains(Time_Interval.elementAt(index))
+                                  ? Colors.white10
+                                  : ref.read(selectedTime.state).state ==
+                                          Time_Interval.elementAt(index)
+                                      ? Colors.white54
+                                      : Colors.white,
+                              child: GridTile(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(Time_Interval.elementAt(index)),
+                                      Text(listTimeInterval.contains(
+                                              Time_Interval.elementAt(index))
+                                          ? 'Dolu'
+                                          : 'Mevcut')
+                                    ],
+                                  ),
+                                  header: ref.read(selectedTime.state).state ==
+                                          Time_Interval.elementAt(index)
+                                      ? Icon(Icons.check)
+                                      : null),
                             ),
-                            header: ref.read(selectedTime.state).state ==
-                                    Time_Interval.elementAt(index)
-                                ? Icon(Icons.check)
-                                : null),
-                      ),
-                    );
-                  }))
+                          );
+                        });
+                  }
+                },
+              ))
         ],
       ),
     );
@@ -179,8 +208,10 @@ class MakeAppointment extends ConsumerWidget {
       'businessAddress': ref.read(selectedBusiness.state).state.address,
       'interval': ref.read(selectedTime.state).state,
       'timeStamp': timeStamp,
+      // 'time':
+      //     '${ref.read(selectedTime.state).state}-${DateFormat('dd/MM/yyyy').format(ref.read(selectedDate.state).state)}'
       'time':
-          '${ref.read(selectedTime.state).state}-${DateFormat('dd/MM/yyyy').format(ref.read(selectedDate.state).state)}'
+          '${DateFormat('dd/MM/yyyy').format(ref.read(selectedDate.state).state)}'
     };
 
     FirebaseFirestore.instance.collection("Appointment").add({

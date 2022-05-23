@@ -42,3 +42,31 @@ Future<List<AppointmentModel>> getAppointmentByBusiness(
   });
   return appointments;
 }
+
+// Future<List<int>> getTimeIntervalOfAppointment(String time) async {
+//   List<int> result = List<int>.empty(growable: true);
+//   var appointmentRef = FirebaseFirestore.instance.collection('Appointment');
+//   // .collection(time);
+//   QuerySnapshot snapshot = await appointmentRef.get();
+//   for (var element in snapshot.docs) {
+//     var appointment = (AppointmentModel.fromJson(element.data()));
+//     appointment.time = time;
+//     result.add(int.parse(element.id));
+//   }
+//   return result;
+// }
+
+Future<List<String>> getTimeIntervalOfAppointment(
+    String time, String businessName) async {
+  var appointment = List<String>.empty(growable: true);
+  var appointmentRed = FirebaseFirestore.instance.collection('Appointment');
+  var snapshot = await appointmentRed.get();
+  snapshot.docs.forEach((element) {
+    var appointments = (AppointmentModel.fromJson(element.data()));
+    appointments.time = time;
+    appointments.businessName = businessName;
+
+    appointment.add(appointments.interval.toString());
+  });
+  return appointment;
+}
