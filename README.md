@@ -92,12 +92,13 @@ Story'ler yapılacak işlere (task'lere) bölünmüştür. Miro Board'da gözük
 
 - **Ürün Durumu**: Ekran görüntüleri:
   
-  ![Screenshot 1](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint2/ss1.jpeg)
-  ![Screenshot 2](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint2/ss2.jpeg)
-  ![Screenshot 3](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint2/ss4.jpeg)
-  ![Screenshot 4](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint2/ss5.jpeg)
-  ![Screenshot 5](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint2/ss6.jpeg)
-  ![Screenshot 6](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint2/ss7.jpeg)
+  ![Screenshot 1](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint2/ss1.png)
+  ![Screenshot 2](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint2/ss2.png)
+  ![Screenshot 3](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint2/ss3.png)
+  ![Screenshot 4](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint2/ss4.png)
+  ![Screenshot 5](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint2/ss5.png)
+  ![Screenshot 6](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint2/ss6.png)
+  ![Screenshot 7](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint2/ss7.png)
 
 - **Sprint Review**: 
 Alınan kararlar: Tasarımda ve backend kısmında iyileştirmeler 3.sprintle başlayacaktır. Login olmayan kullanıcı ve login olan kullanıcı (hizmet alan ve hizmet veren)
