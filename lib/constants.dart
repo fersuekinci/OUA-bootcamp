@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:oua_bootcamp/model/CategoryModal.dart';
 
 //Renk ve font tanımlamaları için kullanılacaktır.
-const Color appbarColor = Colors.red;
+const Color appbarColor = kPrimaryColor;
 
 const String exampleString =
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In dictum blandit mauris a auctor. Pellentesque enim diam, ultrices elementum metus at, scelerisque congue enim. Nunc malesuada sollicitudin purus eu molestie. Proin diam orci, condimentum eu aliquam id, bibendum quis tortor. Aliquam sed magna et risus consequat interdum at mattis nunc. Phasellus suscipit justo a libero lacinia, nec suscipit nibh accumsan. Cras pretium feugiat nibh, ut laoreet neque. Maecenas orci purus, interdum id ligula rutrum, suscipit vestibulum leo. Quisque varius maximus arcu, sed feugiat lorem blandit eget. Quisque bibendum iaculis enim non malesuada. Etiam metus mauris, pellentesque ac sem quis, faucibus aliquam velit. Vivamus ac tincidunt neque. Pellentesque vitae leo quis sem euismod congue sit amet ut nunc.';
 
-const kPrimaryColor = Color(0xFFFF8084);
+const kPrimaryColor = Color.fromRGBO(226, 62, 87, 1);
+const kSecondColor = Color.fromRGBO(136, 48, 78, 1);
+const kThirdColor = Color.fromRGBO(82, 37, 78, 1);
+const kFourthColor = Color.fromRGBO(49, 29, 63, 1);
 const kAccentColor = Color(0xFFF1F1F1);
 const kWhiteColor = Color(0xFFFFFFFF);
 const kLightColor = Color(0xFF808080);
@@ -55,20 +58,13 @@ const kSmallDivider = Divider(
 );
 
 final categoryList = [
-  CategoryModal(
-      image: "assets/images/Guzellik.jpg", category: "Güzellik"),
-  CategoryModal(
-      image: "assets/images/Spor1.jpg", category: "Spor"),
-  CategoryModal(
-      image: "assets/images/Ozelders1.jpg", category: "Özel Ders"),
-  CategoryModal(
-      image: "assets/images/Tamir.jpg", category: "Tamir"),
-  CategoryModal(
-      image: "assets/images/Tadilat.jpg", category: "Tadilat"),
-  CategoryModal(
-      image: "assets/images/Nakliyat.jpg", category: "Nakliyat"),
-  CategoryModal(
-      image: "assets/images/Temizlik1.jpg", category: "Temizlik"),
+  CategoryModal(image: "assets/images/Guzellik.jpg", category: "Güzellik"),
+  CategoryModal(image: "assets/images/Spor1.jpg", category: "Spor"),
+  CategoryModal(image: "assets/images/Ozelders1.jpg", category: "Özel Ders"),
+  CategoryModal(image: "assets/images/Tamir.jpg", category: "Tamir"),
+  CategoryModal(image: "assets/images/Tadilat.jpg", category: "Tadilat"),
+  CategoryModal(image: "assets/images/Nakliyat.jpg", category: "Nakliyat"),
+  CategoryModal(image: "assets/images/Temizlik1.jpg", category: "Temizlik"),
   CategoryModal(
       image: "assets/images/Boya-Badana.jpg", category: "Boya-Badana"),
 ];

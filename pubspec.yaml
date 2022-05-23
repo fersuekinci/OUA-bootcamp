@@ -36,6 +36,40 @@ dependencies:
   #Drawer eklentisi
   flutter_zoom_drawer: ^2.1.1
 
+  #Firebase eklentileri
+  cloud_firestore: ^3.1.15
+  firebase_core: ^1.17.0
+  firebase_auth: ^3.3.18
+  #firebase_auth_ui: 
+  firebase_helpers: ^0.5.0
+  http: ^0.13.4
+  logger: ^1.1.0
+
+  #Takvim Eklentisi
+  table_calendar: ^3.0.5
+  flutter_datetime_picker:
+ 
+
+  #Google Fonts
+  google_fonts: ^3.0.0
+
+  #Shared Preferences
+  shared_preferences: ^2.0.15
+
+  #Lokalizasyon
+  intl: ^0.17.0
+
+  google_maps: ^6.1.0
+
+
+  riverpod: ^1.0.3
+  flutter_riverpod:
+
+  provider: ^6.0.2
+  flutter_bloc: ^8.0.1
+  page_transition: ^2.0.5
+  rflutter_alert: ^2.0.4
+
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

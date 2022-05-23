@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 //ZoomDrawer için listelenecek menülerin oluşturulacağı class
-class MenuItem {
+class MenuItemK {
   final String title;
   final IconData icon;
 
-  const MenuItem(this.title, this.icon);
+  const MenuItemK(this.title, this.icon);
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:oua_bootcamp/pages/business_appointment.dart';
 import 'package:oua_bootcamp/pages/business_detail_page.dart';
 import 'package:oua_bootcamp/pages/businesses_page.dart';
 import 'package:oua_bootcamp/pages/category_page.dart';
@@ -16,7 +17,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  MenuItem currentItem = MenuItems.category;
+  MenuItemK currentItem = MenuItems.category;
   @override
   Widget build(BuildContext context) {
     return ZoomDrawer(
@@ -42,15 +43,17 @@ class _HomePageState extends State<HomePage> {
   Widget getScreen() {
     switch (currentItem) {
       case MenuItems.category:
-        return const CategoryPage();
+        return CategoryPage();
       case MenuItems.businessDetail:
-        return const BusinessDetail();
+        return BusinessDetail();
       case MenuItems.businesses:
-        return const Businesses();
+        return Businesses();
       case MenuItems.register:
         return const SignUp();
+      case MenuItems.businessAppointment:
+        return const BusinessAppointment();
       default:
-        return const CategoryPage();
+        return CategoryPage();
     }
   }
 }

@@ -1,20 +1,20 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:oua_bootcamp/cloud_firestore/user_ref.dart';
+
 import 'package:oua_bootcamp/constants.dart';
+import 'package:oua_bootcamp/model/user_model.dart';
 
 import 'package:oua_bootcamp/widgets/menu_widget.dart';
 
 import 'chat_page.dart';
 
-class BusinessDetail extends StatefulWidget {
-  const BusinessDetail({Key? key}) : super(key: key);
+class BusinessDetail extends ConsumerWidget {
+  BusinessDetail({Key? key}) : super(key: key);
 
-  @override
-  State<BusinessDetail> createState() => _BusinessDetailState();
-}
-
-class _BusinessDetailState extends State<BusinessDetail> {
-  //Ekranda görüntülenen işletme adı yazılacak.
   final String _appbarTitle = 'İşletme Adı';
 
   //İşletmenin yüklediği resimler yer alacak.
@@ -28,7 +28,7 @@ class _BusinessDetailState extends State<BusinessDetail> {
   ];
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     return Scaffold(
         appBar: AppBar(
           title: Text(
@@ -53,6 +53,24 @@ class _BusinessDetailState extends State<BusinessDetail> {
                 aspectRatio: 2.0,
                 enlargeCenterPage: true,
                 viewportFraction: 1,
+              ),
+            ),
+            Card(
+              child: FutureBuilder(
+                future: getUserProfiles(
+                    ref, FirebaseAuth.instance.currentUser!.email.toString()),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting)
+                    return Center(child: CircularProgressIndicator());
+                  else {
+                    var userModel = snapshot.data as UserModel;
+                    return Container(
+                      child: Text(
+                          FirebaseAuth.instance.currentUser!.email.toString()),
+                      //child: Text('${userModel.mail}'),
+                    );
+                  }
+                },
               ),
             ),
             //İşletme bilgilerinin yazılması
@@ -175,6 +193,7 @@ class _BusinessDetailState extends State<BusinessDetail> {
             ))
         .toList();
   }
+
   void _chatEkraninaGit(BuildContext context) {
     Navigator.of(context).push(MaterialPageRoute(
       builder: (context) {

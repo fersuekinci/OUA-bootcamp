@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 
 import 'package:oua_bootcamp/constants.dart';
-
-
+import 'package:oua_bootcamp/state/state_management.dart';
+import 'package:provider/provider.dart';
 
 class CategoryItems extends StatelessWidget {
-  final double height, width, radius, titleSize, amountSize, paddingHorizontal, paddingVertical;
+  final double height,
+      width,
+      radius,
+      titleSize,
+      amountSize,
+      paddingHorizontal,
+      paddingVertical;
   final String title, amount;
   final String image;
   final Color color;
@@ -64,7 +70,7 @@ class CategoryItems extends StatelessWidget {
                       ),
                       decoration: BoxDecoration(
                         color: lblColor,
-                        borderRadius: BorderRadius.only(
+                        borderRadius: const BorderRadius.only(
                           bottomLeft: Radius.circular(20.0),
                         ),
                       ),

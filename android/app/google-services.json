@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1046811946263",
+    "project_id": "oua-bootcamp",
+    "storage_bucket": "oua-bootcamp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1046811946263:android:2c9ed57ccbd13586619b52",
+        "android_client_info": {
+          "package_name": "com.example.oua_bootcamp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1046811946263-3vtrur2s8047pc8krb83tv2645de2e52.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYluTd5kIB_Qu1F1buOxID-H8lJj3VjzI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1046811946263-3vtrur2s8047pc8krb83tv2645de2e52.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
