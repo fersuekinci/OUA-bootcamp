@@ -88,11 +88,17 @@ Story'ler yapılacak işlere (task'lere) bölünmüştür. Miro Board'da gözük
 - **Daily Scrum**: Daily Scrum toplantılarının 2.sprint için Discord ve Whatsapp üzerinden yapılmasına karar verilmiştir. Daily Scrum toplantısı örneği word dosyası olarak Readme'de tarafımızdan paylaşılmaktadır: [Sprint 2 Daily Scrum Chats](https://docs.google.com/document/d/1INxz9AeIHqrVkdeBte7ipC4JCeFNTNMbOnGxMn1kNMQ/edit?usp=sharing)
 
 - **Sprint board update**: Sprint board screenshotları: 
-![Backlog 2](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint1/ss2.PNG) 
+![Backlog 2](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint2/ss8.PNG) 
 
 - **Ürün Durumu**: Ekran görüntüleri:
   
-  ![Screenshot 2](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint1/ss1.PNG)
+  ![Screenshot 1](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint2/ss1.jpeg)
+  ![Screenshot 2](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint2/ss2.jpeg)
+  ![Screenshot 3](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint2/ss3.PNG)
+  ![Screenshot 4](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint2/ss4.jpeg)
+  ![Screenshot 5](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint2/ss5.jpeg)
+  ![Screenshot 6](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint2/ss6.jpeg)
+  ![Screenshot 7](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint2/ss7.jpeg)
 
 - **Sprint Review**: 
 Alınan kararlar: Tasarımda ve backend kısmında iyileştirmeler 3.sprintle başlayacaktır. Login olmayan kullanıcı ve login olan kullanıcı (hizmet alan ve hizmet veren)
