@@ -21,76 +21,60 @@ const Time_Interval = {
 };
 
 Future<int> getMaxAvailableTimeSlot(DateTime time) async {
-  DateTime now = time;
+  DateTime now = time.toLocal();
   //int offset = await NTP.getNtpOffset(localTime: now);
   DateTime syncTime = now;
   // print(DateTime.now());
   // print(time);
 
-  if (time.day == DateTime.now().day) {
-    if (syncTime.isAfter(DateTime(now.year, now.month, now.day, 9, 0)) &&
-        syncTime.isBefore(DateTime(now.year, now.month, now.day, 9, 30))) {
-      return 1;
-    } else if (syncTime
-            .isAfter(DateTime(now.year, now.month, now.day, 9, 30)) &&
-        syncTime.isBefore(DateTime(now.year, now.month, now.day, 10, 0))) {
-      return 2;
-    } else if (syncTime
-            .isAfter(DateTime(now.year, now.month, now.day, 10, 0)) &&
-        syncTime.isBefore(DateTime(now.year, now.month, now.day, 10, 30))) {
-      return 3;
-    } else if (syncTime
-            .isAfter(DateTime(now.year, now.month, now.day, 10, 30)) &&
-        syncTime.isBefore(DateTime(now.year, now.month, now.day, 11, 0))) {
-      return 4;
-    } else if (syncTime
-            .isAfter(DateTime(now.year, now.month, now.day, 11, 0)) &&
-        syncTime.isBefore(DateTime(now.year, now.month, now.day, 11, 30))) {
-      return 5;
-    } else if (syncTime
-            .isAfter(DateTime(now.year, now.month, now.day, 11, 30)) &&
-        syncTime.isBefore(DateTime(now.year, now.month, now.day, 12, 0))) {
-      return 6;
-    } else if (syncTime
-            .isAfter(DateTime(now.year, now.month, now.day, 12, 0)) &&
-        syncTime.isBefore(DateTime(now.year, now.month, now.day, 12, 30))) {
-      return 7;
-    } else if (syncTime
-            .isAfter(DateTime(now.year, now.month, now.day, 12, 30)) &&
-        syncTime.isBefore(DateTime(now.year, now.month, now.day, 13, 0))) {
-      return 8;
-    } else if (syncTime
-            .isAfter(DateTime(now.year, now.month, now.day, 14, 0)) &&
-        syncTime.isBefore(DateTime(now.year, now.month, now.day, 14, 30))) {
-      return 9;
-    } else if (syncTime
-            .isAfter(DateTime(now.year, now.month, now.day, 14, 30)) &&
-        syncTime.isBefore(DateTime(now.year, now.month, now.day, 15, 0))) {
-      return 10;
-    } else if (syncTime
-            .isAfter(DateTime(now.year, now.month, now.day, 15, 0)) &&
-        syncTime.isBefore(DateTime(now.year, now.month, now.day, 15, 30))) {
-      return 11;
-    } else if (syncTime
-            .isAfter(DateTime(now.year, now.month, now.day, 15, 30)) &&
-        syncTime.isBefore(DateTime(now.year, now.month, now.day, 16, 0))) {
-      return 12;
-    } else if (syncTime
-            .isAfter(DateTime(now.year, now.month, now.day, 16, 0)) &&
-        syncTime.isBefore(DateTime(now.year, now.month, now.day, 16, 30))) {
-      return 13;
-    } else if (syncTime
-            .isAfter(DateTime(now.year, now.month, now.day, 16, 30)) &&
-        syncTime.isBefore(DateTime(now.year, now.month, now.day, 17, 0))) {
-      return 14;
-    } else if (syncTime
-            .isAfter(DateTime(now.year, now.month, now.day, 17, 0)) &&
-        syncTime.isBefore(DateTime(now.year, now.month, now.day, 17, 30))) {
-      return 15;
-    } else {
-      return 16;
-    }
-  } else {
+  if (syncTime.isBefore(DateTime(now.year, now.month, now.day, 9, 0))) {
     return 0;
+  } else if (syncTime.isAfter(DateTime(now.year, now.month, now.day, 9, 0)) &&
+      syncTime.isBefore(DateTime(now.year, now.month, now.day, 9, 30))) {
+    return 1;
+  } else if (syncTime.isAfter(DateTime(now.year, now.month, now.day, 9, 30)) &&
+      syncTime.isBefore(DateTime(now.year, now.month, now.day, 10, 0))) {
+    return 2;
+  } else if (syncTime.isAfter(DateTime(now.year, now.month, now.day, 10, 0)) &&
+      syncTime.isBefore(DateTime(now.year, now.month, now.day, 10, 30))) {
+    return 3;
+  } else if (syncTime.isAfter(DateTime(now.year, now.month, now.day, 10, 30)) &&
+      syncTime.isBefore(DateTime(now.year, now.month, now.day, 11, 0))) {
+    return 4;
+  } else if (syncTime.isAfter(DateTime(now.year, now.month, now.day, 11, 0)) &&
+      syncTime.isBefore(DateTime(now.year, now.month, now.day, 11, 30))) {
+    return 5;
+  } else if (syncTime.isAfter(DateTime(now.year, now.month, now.day, 11, 30)) &&
+      syncTime.isBefore(DateTime(now.year, now.month, now.day, 12, 0))) {
+    return 6;
+  } else if (syncTime.isAfter(DateTime(now.year, now.month, now.day, 12, 0)) &&
+      syncTime.isBefore(DateTime(now.year, now.month, now.day, 12, 30))) {
+    return 7;
+  } else if (syncTime.isAfter(DateTime(now.year, now.month, now.day, 12, 30)) &&
+      syncTime.isBefore(DateTime(now.year, now.month, now.day, 13, 0))) {
+    return 8;
+  } else if (syncTime.isAfter(DateTime(now.year, now.month, now.day, 14, 0)) &&
+      syncTime.isBefore(DateTime(now.year, now.month, now.day, 14, 30))) {
+    return 9;
+  } else if (syncTime.isAfter(DateTime(now.year, now.month, now.day, 14, 30)) &&
+      syncTime.isBefore(DateTime(now.year, now.month, now.day, 15, 0))) {
+    return 10;
+  } else if (syncTime.isAfter(DateTime(now.year, now.month, now.day, 15, 0)) &&
+      syncTime.isBefore(DateTime(now.year, now.month, now.day, 15, 30))) {
+    return 11;
+  } else if (syncTime.isAfter(DateTime(now.year, now.month, now.day, 15, 30)) &&
+      syncTime.isBefore(DateTime(now.year, now.month, now.day, 16, 0))) {
+    return 12;
+  } else if (syncTime.isAfter(DateTime(now.year, now.month, now.day, 16, 0)) &&
+      syncTime.isBefore(DateTime(now.year, now.month, now.day, 16, 30))) {
+    return 13;
+  } else if (syncTime.isAfter(DateTime(now.year, now.month, now.day, 16, 30)) &&
+      syncTime.isBefore(DateTime(now.year, now.month, now.day, 17, 0))) {
+    return 14;
+  } else if (syncTime.isAfter(DateTime(now.year, now.month, now.day, 17, 0)) &&
+      syncTime.isBefore(DateTime(now.year, now.month, now.day, 17, 30))) {
+    return 15;
+  } else {
+    return 16;
   }
 }

@@ -102,7 +102,7 @@ class MakeAppointment extends ConsumerWidget {
                   onTap: (() {
                     DatePicker.showDatePicker(context,
                         showTitleActions: true,
-                        minTime: now,
+                        minTime: DateTime.now(),
                         maxTime: now.add(const Duration(days: 31)),
                         onConfirm: (date) =>
                             ref.read(selectedDate.state).state = date);
@@ -124,7 +124,8 @@ class MakeAppointment extends ConsumerWidget {
           Expanded(
               flex: 10,
               child: FutureBuilder(
-                future: getMaxAvailableTimeSlot(now),
+                future:
+                    getMaxAvailableTimeSlot(ref.read(selectedDate.state).state),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
@@ -227,7 +228,7 @@ class MakeAppointment extends ConsumerWidget {
         //int.parse(ref.read(selectedDate.state).state))
         // .split(':')[1]
         // .subString(0, 2)))
-        .millisecond;
+        .millisecondsSinceEpoch;
 
     var submitData = {
       // 'businessId': ref.read(selectedBusiness.state).state.docId,
