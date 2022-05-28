@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_auth_ui/flutter_auth_ui.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:oua_bootcamp/cloud_firestore/all_business_ref.dart';
@@ -10,6 +11,7 @@ import 'package:oua_bootcamp/widgets/menu_widget.dart';
 import 'package:oua_bootcamp/constants.dart';
 import 'package:oua_bootcamp/widgets/CategoryItems.dart';
 import 'package:oua_bootcamp/widgets/CategoryView.dart';
+import 'package:flutter_auth_ui/flutter_auth_ui.dart';
 
 // ignore: import_of_legacy_library_into_null_safe
 
@@ -37,7 +39,7 @@ class CategoryPage extends ConsumerWidget {
             leading: const MenuWidget(),
             actions: [
               FutureBuilder(
-                future: checkLoginState(context, false, scaffoldState),
+                future: checkLoginState(context, ref, false, scaffoldState),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
@@ -46,15 +48,19 @@ class CategoryPage extends ConsumerWidget {
                   } else {
                     var userState = snapshot.data as LOGIN_STATE;
                     if (userState == LOGIN_STATE.LOGGED) {
-                      return Container();
+                      return IconButton(
+                        icon: Icon(Icons.logout),
+                        onPressed: () async {
+                          await FirebaseAuth.instance.signOut();
+                        },
+                      );
                     } else {
-                      IconButton(
-                        icon: const Icon(Icons.login),
-                        onPressed: () => processLogin,
+                      return IconButton(
+                        icon: const Icon(Icons.door_back_door),
+                        onPressed: () => processLogin(context, ref),
                       );
                     }
                   }
-                  return Container();
                 },
               )
             ],
@@ -117,116 +123,125 @@ class CategoryPage extends ConsumerWidget {
             }));
   }
 
-  processLogin(BuildContext context) async {
-    var user = FirebaseAuth.instance.currentUser;
-    // if (user == null) {
-    //   FirebaseAuthUi.instance()
-    //       .launchAuth([AuthProvider.email()]).then((firebaseUser) async {
-    //     context.read().state = FirebaseAuth.instance.currentUser;
-    //     // ScaffoldMessenger.of(scaffoldState.currentContext!).showSnackBar(SnackBar(
-    //     //     content: Text(
-    //     //         'Giriş Başarılı ${FirebaseAuth.instance.currentUser!.email}')));
-    //     await checkLoginState(context, true, scaffoldState);
-    //   }).catchError((e) {
-    //     if (e is PlatformException) if (e.code ==
-    //         FirebaseAuthUi.kUserCancelledError)
-    //       ScaffoldMessenger.of(scaffoldState.currentContext!)
-    //           .showSnackBar(SnackBar(content: Text('${e.message}')));
-    //     else
-    //       ScaffoldMessenger.of(scaffoldState.currentContext!)
-    //           .showSnackBar(SnackBar(content: Text('Error')));
-    //   });
-    // } else {}
+  deneme() {
+    return Container();
   }
 
-  Future<LOGIN_STATE> checkLoginState(BuildContext context, bool fromLogin,
-      GlobalKey<ScaffoldState> scaffoldState) async {
-    await Future.delayed(Duration(seconds: fromLogin == true ? 0 : 3))
-        .then((value) => {
-              FirebaseAuth.instance.currentUser
-                  ?.getIdToken()
-                  .then((token) async {
-                print(token);
-                context.read().state = token;
-                // Navigator.pushNamedAndRemoveUntil(
-                //     context, '/businessDetail', (route) => false);
+  processLogin(BuildContext context, WidgetRef ref) async {
+    var user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      FlutterAuthUi.startUi(
+              items: [AuthUiProvider.email],
+              tosAndPrivacyPolicy: const TosAndPrivacyPolicy(
+                  tosUrl: 'https://google.com',
+                  privacyPolicyUrl: 'https://google.com'),
+              androidOption: const AndroidOption(
+                  enableSmartLock: false, showLogo: true, overrideTheme: true))
+          .then((value) async {
+        ref.read(userLogged.state).state = FirebaseAuth.instance.currentUser;
+        await checkLoginState(context, ref, true, scaffoldState);
+      }).catchError((e) {
+        ScaffoldMessenger.of(scaffoldState.currentContext!)
+            .showSnackBar(SnackBar(content: Text('${e.toString()}')));
+      });
+    } else {}
+  }
+
+  Future<LOGIN_STATE> checkLoginState(BuildContext context, WidgetRef ref,
+      bool fromLogin, GlobalKey<ScaffoldState> scaffoldState) async {
+    if (!ref.read(forceReload.state).state) {
+      await Future.delayed(Duration(seconds: fromLogin == true ? 0 : 3))
+          .then((value) => {
+                FirebaseAuth.instance.currentUser
+                    ?.getIdToken()
+                    .then((token) async {
+                  ref.read(userToken.state).state = token;
+                  // Navigator.pushNamedAndRemoveUntil(
+                  //     context, '/businessDetail', (route) => false);
 
 //Kullanıcı var mı
-                CollectionReference userRef =
-                    FirebaseFirestore.instance.collection('User');
-                DocumentSnapshot snapshotUser = await userRef
-                    .doc(FirebaseAuth.instance.currentUser!.email)
-                    .get();
+                  CollectionReference userRef =
+                      FirebaseFirestore.instance.collection('User');
+                  DocumentSnapshot snapshotUser = await userRef
+                      .doc(FirebaseAuth.instance.currentUser!.email)
+                      .get();
 
-                context.read().state = true;
-                if (snapshotUser.exists) {
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, '/businessDetail', (route) => false);
-                } else {
-                  var fullNameController = TextEditingController();
-                  var mailController = TextEditingController();
-                  var phoneNumberController = TextEditingController();
-                  Alert(
-                    context: context,
-                    title: 'Profili Güncelle',
-                    content: Column(
-                      children: [
-                        TextField(
-                          decoration: InputDecoration(
-                              icon: Icon(Icons.account_circle),
-                              labelText: 'Tam Adınız'),
-                          controller: fullNameController,
-                        ),
-                        TextField(
-                          decoration: InputDecoration(
-                              icon: Icon(Icons.account_circle),
-                              labelText: 'Mail Adresiniz'),
-                          controller: mailController,
-                        ),
-                        TextField(
-                          decoration: InputDecoration(
-                              icon: Icon(Icons.account_circle),
-                              labelText: 'Telefon Numaranız'),
-                          controller: phoneNumberController,
-                        ),
-                      ],
-                    ),
-                    buttons: [
-                      DialogButton(
-                          child: Text('İptal'),
-                          onPressed: () => Navigator.pop(context)),
-                      DialogButton(
-                          child: Text('Kaydet'),
-                          onPressed: () {
-                            //Kullanıcı Güncelleme
-                            userRef
-                                .doc(FirebaseAuth.instance.currentUser!.email)
-                                .set({
-                              'fullName': fullNameController.text,
-                              'mail': mailController.text,
-                              'phoneNumber': phoneNumberController.text
-                            }).then((value) async {
-                              Navigator.pop(context);
-                              ScaffoldMessenger.of(
-                                      scaffoldState.currentContext!)
-                                  .showSnackBar(SnackBar(
-                                      content: Text('Profil Güncellendi')));
-                              await Future.delayed(Duration(seconds: 1));
-                              Navigator.pushNamedAndRemoveUntil(
-                                  context, '/businessDetail', (route) => false);
-                            }).catchError((e) {
-                              Navigator.pop(context);
-                              ScaffoldMessenger.of(
-                                      scaffoldState.currentContext!)
-                                  .showSnackBar(SnackBar(content: Text('$e')));
-                            });
-                          })
-                    ],
-                  );
-                }
-              })
-            });
-
+                  ref.read(forceReload.state).state = true;
+                  if (snapshotUser.exists) {
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, '/homePage', (route) => false);
+                  } else {
+                    var fullNameController = TextEditingController();
+                    var mailController = TextEditingController();
+                    var phoneNumberController = TextEditingController();
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text('Profili Kaydet'),
+                            content: Column(
+                              children: [
+                                TextField(
+                                  decoration: InputDecoration(
+                                      icon: Icon(Icons.account_circle),
+                                      labelText: 'Tam Adınız'),
+                                  controller: fullNameController,
+                                ),
+                                TextField(
+                                  decoration: InputDecoration(
+                                      icon: Icon(Icons.account_circle),
+                                      labelText: 'Mail Adresiniz'),
+                                  controller: mailController,
+                                ),
+                                TextField(
+                                  decoration: InputDecoration(
+                                      icon: Icon(Icons.account_circle),
+                                      labelText: 'Telefon Numaranız'),
+                                  controller: phoneNumberController,
+                                ),
+                              ],
+                            ),
+                            actions: [
+                              DialogButton(
+                                  child: Text('İptal'),
+                                  onPressed: () => Navigator.pop(context)),
+                              DialogButton(
+                                  child: Text('Kaydet'),
+                                  onPressed: () {
+                                    //Kullanıcı Güncelleme
+                                    userRef
+                                        .doc(FirebaseAuth
+                                            .instance.currentUser!.email)
+                                        .set({
+                                      'fullName': fullNameController.text,
+                                      'mail': mailController.text,
+                                      'phoneNumber': phoneNumberController.text
+                                    }).then((value) async {
+                                      Navigator.pop(context);
+                                      ScaffoldMessenger.of(
+                                              scaffoldState.currentContext!)
+                                          .showSnackBar(SnackBar(
+                                              content:
+                                                  Text('Profil Güncellendi')));
+                                      await Future.delayed(
+                                          Duration(seconds: 1));
+                                      Navigator.pushNamedAndRemoveUntil(context,
+                                          '/homePage', (route) => false);
+                                    }).catchError((e) {
+                                      Navigator.pop(context);
+                                      ScaffoldMessenger.of(
+                                              scaffoldState.currentContext!)
+                                          .showSnackBar(
+                                              SnackBar(content: Text('$e')));
+                                    });
+                                  })
+                            ],
+                          );
+                        });
+                  }
+                })
+              });
+    }
     return FirebaseAuth.instance.currentUser != null
         ? LOGIN_STATE.LOGGED
         : LOGIN_STATE.NOT_LOGIN;

@@ -40,7 +40,8 @@ dependencies:
   cloud_firestore: ^3.1.15
   firebase_core: ^1.17.0
   firebase_auth: ^3.3.18
-  #firebase_auth_ui: 
+  # firebase_auth_ui: 
+  flutter_auth_ui: ^3.0.0
   firebase_helpers: ^0.5.0
   http: ^0.13.4
   logger: ^1.1.0
