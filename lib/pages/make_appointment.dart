@@ -1,3 +1,4 @@
+import 'package:add_2_calendar/add_2_calendar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -30,31 +31,31 @@ class MakeAppointment extends ConsumerWidget {
         title: Text(_appbarTitle),
         actions: [
           IconButton(
-            icon: Icon(Icons.check_circle),
+            icon: const Icon(Icons.check_circle),
             onPressed: () => showModalBottomSheet<void>(
               context: context,
               builder: (BuildContext context) {
-                return Container(
+                return SizedBox(
                     height: 200,
                     child: Column(
                       children: [
                         Text(
                             '${ref.read(selectedTime.state).state} - ${DateFormat('dd/MM/yyyy').format(ref.read(selectedDate.state).state)}'),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Text('${ref.read(selectedBusiness.state).state.name}'),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Text(
                             '${ref.read(selectedBusiness.state).state.address}'),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         ElevatedButton(
                             onPressed: (() => confirmAppointment(context, ref)),
-                            child: Text('Randevuyu Kaydet'))
+                            child: const Text('Randevuyu Kaydet'))
                       ],
                     ));
               },
@@ -75,22 +76,23 @@ class MakeAppointment extends ConsumerWidget {
                       padding: const EdgeInsets.all(10),
                       child: Column(children: [
                         Text(
-                          '${DateFormat.MMMM().format(now)}',
-                          style: TextStyle(color: Colors.white),
+                          DateFormat.MMMM().format(now),
+                          style: const TextStyle(color: Colors.white),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Text(
                           '${now.day}',
-                          style: TextStyle(color: Colors.white, fontSize: 25),
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 25),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Text(
-                          '${DateFormat.EEEE().format(now)}',
-                          style: TextStyle(color: Colors.white),
+                          DateFormat.EEEE().format(now),
+                          style: const TextStyle(color: Colors.white),
                         ),
                       ]),
                     ),
@@ -101,7 +103,7 @@ class MakeAppointment extends ConsumerWidget {
                     DatePicker.showDatePicker(context,
                         showTitleActions: true,
                         minTime: now,
-                        maxTime: now.add(Duration(days: 31)),
+                        maxTime: now.add(const Duration(days: 31)),
                         onConfirm: (date) =>
                             ref.read(selectedDate.state).state = date);
                   }),
@@ -122,61 +124,90 @@ class MakeAppointment extends ConsumerWidget {
           Expanded(
               flex: 10,
               child: FutureBuilder(
-                future: getTimeIntervalOfAppointment(
-                    DateFormat('dd/MM/yyyy')
-                        .format(ref.read(selectedDate.state).state),
-                    businessWatch.toString()),
+                future: getMaxAvailableTimeSlot(now),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
                   } else {
-                    var listTimeInterval = snapshot.data as List<String>;
-                    print(listTimeInterval);
-                    return GridView.builder(
-                        itemCount: Time_Interval.length,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 3),
-                        itemBuilder: (context, index) {
-                          return GestureDetector(
-                            onTap: listTimeInterval
-                                    .contains(Time_Interval.elementAt(index))
-                                ? null
-                                : () {
-                                    print(businessWatch.toString());
-                                    ref.read(selectedTime.state).state =
-                                        Time_Interval.elementAt(index);
-                                    ref.read(selectedTimeInterval.state).state =
-                                        index;
-                                  },
-                            child: Card(
-                              color: listTimeInterval
-                                      .contains(Time_Interval.elementAt(index))
-                                  ? Colors.white10
-                                  : ref.read(selectedTime.state).state ==
-                                          Time_Interval.elementAt(index)
-                                      ? Colors.white54
-                                      : Colors.white,
-                              child: GridTile(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(Time_Interval.elementAt(index)),
-                                      Text(listTimeInterval.contains(
+                    var maxTimeInterval = snapshot.data as int;
+                    print(snapshot.data);
+                    return FutureBuilder(
+                      future: getTimeIntervalOfAppointment(
+                          DateFormat('dd/MM/yyyy')
+                              .format(ref.read(selectedDate.state).state),
+                          businessWatch.toString()),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        } else {
+                          var listTimeInterval = snapshot.data as List<String>;
+
+                          return GridView.builder(
+                              itemCount: Time_Interval.length,
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 3),
+                              itemBuilder: (context, index) {
+                                return GestureDetector(
+                                  onTap: maxTimeInterval > index ||
+                                          listTimeInterval.contains(
                                               Time_Interval.elementAt(index))
-                                          ? 'Dolu'
-                                          : 'Mevcut')
-                                    ],
+                                      ? null
+                                      : () {
+                                          ref.read(selectedTime.state).state =
+                                              Time_Interval.elementAt(index);
+                                          ref
+                                              .read(selectedTimeInterval.state)
+                                              .state = index;
+                                        },
+                                  child: Card(
+                                    color: listTimeInterval.contains(
+                                            Time_Interval.elementAt(index))
+                                        ? Colors.white10
+                                        : maxTimeInterval > index
+                                            ? Colors.white60
+                                            : ref
+                                                        .read(
+                                                            selectedTime.state)
+                                                        .state ==
+                                                    Time_Interval.elementAt(
+                                                        index)
+                                                ? Colors.white54
+                                                : Colors.white,
+                                    child: GridTile(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                                Time_Interval.elementAt(index)),
+                                            Text(listTimeInterval.contains(
+                                                    Time_Interval.elementAt(
+                                                        index))
+                                                ? 'Dolu'
+                                                : maxTimeInterval > index
+                                                    ? 'Uygun Değil'
+                                                    : 'Mevcut')
+                                          ],
+                                        ),
+                                        header: ref
+                                                    .read(selectedTime.state)
+                                                    .state ==
+                                                Time_Interval.elementAt(index)
+                                            ? const Icon(Icons.check)
+                                            : null),
                                   ),
-                                  header: ref.read(selectedTime.state).state ==
-                                          Time_Interval.elementAt(index)
-                                      ? Icon(Icons.check)
-                                      : null),
-                            ),
-                          );
-                        });
+                                );
+                              });
+                        }
+                      },
+                    );
                   }
                 },
               ))
@@ -211,7 +242,7 @@ class MakeAppointment extends ConsumerWidget {
       // 'time':
       //     '${ref.read(selectedTime.state).state}-${DateFormat('dd/MM/yyyy').format(ref.read(selectedDate.state).state)}'
       'time':
-          '${DateFormat('dd/MM/yyyy').format(ref.read(selectedDate.state).state)}'
+          DateFormat('dd/MM/yyyy').format(ref.read(selectedDate.state).state)
     };
 
     FirebaseFirestore.instance.collection("Appointment").add({
@@ -226,8 +257,23 @@ class MakeAppointment extends ConsumerWidget {
       'time':
           '${ref.read(selectedTime.state).state}-${DateFormat('dd/MM/yyyy').format(ref.read(selectedDate.state).state)}'
     }).then((value) {
+      final appointment = Event(
+          title: 'Randevu Bilgisi',
+          startDate: DateTime(
+              ref.read(selectedDate.state).state.year,
+              ref.read(selectedDate.state).state.month,
+              ref.read(selectedDate.state).state.day),
+          endDate: DateTime(
+              ref.read(selectedDate.state).state.year,
+              ref.read(selectedDate.state).state.month,
+              ref.read(selectedDate.state).state.day),
+          iosParams: IOSParams(reminder: Duration(minutes: 30)),
+          androidParams: AndroidParams(emailInvites: []));
+
+      Add2Calendar.addEvent2Cal(appointment).then((value) {});
+
       Navigator.popAndPushNamed(context, '/homePage');
-      print(value.id);
+
       FirebaseFirestore.instance
           .collection("BusinessList")
           .doc(value.id)
