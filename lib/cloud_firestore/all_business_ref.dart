@@ -23,7 +23,7 @@ Future<List<BusinessModal>> getBusinessByCategory(String categoryName) async {
   snapshot.docs.forEach((element) {
     var businesses = (BusinessModal.fromJson(element.data()));
     businesses.docId = element.id;
-    businesses.reference = element.reference;
+
     business.add(businesses);
   });
   return business;

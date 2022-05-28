@@ -36,7 +36,17 @@ class CategoryPage extends ConsumerWidget {
         key: scaffoldState,
         appBar: AppBar(
             //ZoomDraer eklentisi
-            leading: const MenuWidget(),
+            leading: MenuWidget(),
+            // leading: FutureBuilder(
+            //   future: checkLoginState(context, ref, false, scaffoldState),
+            //   builder: (context, snapshot) {
+            //     var userState = snapshot.data as LOGIN_STATE;
+            //     if (userState == LOGIN_STATE.LOGGED) {
+            //       const MenuWidget();
+            //     }
+            //     return Container();
+            //   },
+            // ),
             actions: [
               FutureBuilder(
                 future: checkLoginState(context, ref, false, scaffoldState),
@@ -168,8 +178,6 @@ class CategoryPage extends ConsumerWidget {
 
                   ref.read(forceReload.state).state = true;
                   if (snapshotUser.exists) {
-                    Navigator.pushNamedAndRemoveUntil(
-                        context, '/homePage', (route) => false);
                   } else {
                     var fullNameController = TextEditingController();
                     var mailController = TextEditingController();
@@ -182,19 +190,19 @@ class CategoryPage extends ConsumerWidget {
                             content: Column(
                               children: [
                                 TextField(
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                       icon: Icon(Icons.account_circle),
                                       labelText: 'Tam Adınız'),
                                   controller: fullNameController,
                                 ),
                                 TextField(
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                       icon: Icon(Icons.account_circle),
                                       labelText: 'Mail Adresiniz'),
                                   controller: mailController,
                                 ),
                                 TextField(
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                       icon: Icon(Icons.account_circle),
                                       labelText: 'Telefon Numaranız'),
                                   controller: phoneNumberController,

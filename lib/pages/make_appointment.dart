@@ -1,5 +1,6 @@
 import 'package:add_2_calendar/add_2_calendar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
@@ -230,22 +231,47 @@ class MakeAppointment extends ConsumerWidget {
         // .subString(0, 2)))
         .millisecondsSinceEpoch;
 
-    var submitData = {
-      // 'businessId': ref.read(selectedBusiness.state).state.docId,
-      'businessName': ref.read(selectedBusiness.state).state.name,
-      'category': ref.read(selectedCategory.state).state.category,
-      'userName': ref.read(userInformation.state).state.fullName,
-      'userMail': ref.read(userInformation.state).state.mail,
-      'done': false,
-      'businessAddress': ref.read(selectedBusiness.state).state.address,
-      'interval': ref.read(selectedTime.state).state,
-      'timeStamp': timeStamp,
-      // 'time':
-      //     '${ref.read(selectedTime.state).state}-${DateFormat('dd/MM/yyyy').format(ref.read(selectedDate.state).state)}'
-      'time':
-          DateFormat('dd/MM/yyyy').format(ref.read(selectedDate.state).state)
-    };
+    var appointmentModel = AppointmentModel(
+        businessName: ref.read(selectedBusiness.state).state.name,
+        category: ref.read(selectedCategory.state).state.category,
+        userName: ref.read(userInformation.state).state.fullName,
+        userMail: ref.read(userInformation.state).state.mail,
+        done: false,
+        businessAddress: ref.read(selectedBusiness.state).state.address,
+        interval: ref.read(selectedTime.state).state,
+        timeStamp: timeStamp,
+        // 'time':
+        //     '${ref.read(selectedTime.state).state}-${DateFormat('dd/MM/yyyy').format(ref.read(selectedDate.state).state)}'
+        time: DateFormat('dd/MM/yyyy')
+            .format(ref.read(selectedDate.state).state));
 
+    var batch = FirebaseFirestore.instance.batch();
+
+    // DocumentReference businessAppointment = ref
+    //     .read(selectedBusiness.state)
+    //     .state
+    //     .reference
+    //     .collection(
+    //         '${DateFormat('dd/MM/yyyy').format(ref.read(selectedDate.state).state)}')
+    //     .doc(ref.read(selectedTimeInterval.state).state.toString(),
+    //     );
+
+    // DocumentReference userAppointment = FirebaseFirestore.instance
+    //     .collection('User')
+    //     .doc(FirebaseAuth.instance.currentUser!.email)
+    //     .collection('Randevu_${FirebaseAuth.instance.currentUser!.uid}')
+    //     .doc();
+
+    // batch.set(businessAppointment, AppointmentModel().toJson());
+    // batch.set(userAppointment, AppointmentModel().toJson());
+    // batch.commit().then((value) {
+
+    FirebaseFirestore.instance
+        .collection('UserHistory')
+        .doc(FirebaseAuth.instance.currentUser!.email)
+        .collection(
+            '${DateFormat('dd-MM-yyyy').format(ref.read(selectedDate.state).state)}')
+        .add(appointmentModel.toJson());
     FirebaseFirestore.instance.collection("Appointment").add({
       'businessName': ref.read(selectedBusiness.state).state.name,
       'category': ref.read(selectedCategory.state).state.category,
@@ -275,12 +301,15 @@ class MakeAppointment extends ConsumerWidget {
 
       Navigator.popAndPushNamed(context, '/homePage');
 
-      FirebaseFirestore.instance
-          .collection("BusinessList")
-          .doc(value.id)
-          .collection("Appointment")
-          .add(submitData);
+      // FirebaseFirestore.instance
+      //     .collection('AllBusiness')
+      //     .doc(selectedCategory.toString())
+      //     .collection("BusinessList")
+      //     .doc(value.id)
+      //     .collection("Appointment")
+      //     .add(appointmentModel.toJson());
     });
+    // });
 
     // ref
     //     .read(selectedAppointment.state)

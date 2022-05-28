@@ -18,8 +18,6 @@ class BusinessModal {
     subtitle = json['subtitle'];
   }
 
-  set reference(DocumentReference<Map<String, dynamic>> reference) {}
-
   set docId(String docId) {}
 
   Map<String, dynamic> toJson() {
