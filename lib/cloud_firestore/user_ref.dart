@@ -12,6 +12,7 @@ Future<UserModel> getUserProfiles(WidgetRef ref, dynamic mail) async {
   if (snapshot.exists) {
     var userModel = UserModel.fromJson(snapshot.data() as Map<String, dynamic>);
     ref.read(userInformation.state).state = userModel;
+
     return userModel;
   } else {
     return UserModel();

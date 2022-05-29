@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_auth_ui/flutter_auth_ui.dart';
+import 'package:oua_bootcamp/cloud_firestore/user_ref.dart';
+import 'package:oua_bootcamp/model/user_model.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:oua_bootcamp/cloud_firestore/all_business_ref.dart';
@@ -80,57 +82,80 @@ class CategoryPage extends ConsumerWidget {
         extendBody: true,
         //Yan menü - drawer eklentisi (Widget klasöüründe)
         //drawer: const DrawerWidget(),
-        body: Categoryview(
-            direction: Axis.vertical,
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            color: kWhiteColor,
-            column: isList ? 1 : 2,
-            ratio: isList ? 2.6 : 1.3,
-            items: categoryList.length,
-            itemBuilder: (context, index) {
-              return FutureBuilder(
-                  future: getCategory(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    } else {
-                      var categories = snapshot.data as List<CategoryModal>;
-                      if (categories == null || categories.length == 0)
-                        return Center(
-                          child: Text('Kategori bulunamadı'),
-                        );
-                      else {
-                        return GestureDetector(
-                          onTap: () => Navigator.pushNamed(
-                              context, '/businessList',
-                              arguments: ref
-                                      .read(selectedCategory.state)
-                                      .state
-                                      .category =
-                                  categories[index].category.toString()),
-                          child: CategoryItems(
-                            height: 150.0,
-                            width: MediaQuery.of(context).size.width,
-                            paddingHorizontal: 0.0,
-                            paddingVertical: 0.0,
-                            align: Alignment.center,
-                            radius: kLessPadding,
-                            blendMode: BlendMode.difference,
-                            color: kDarkColor,
-                            image: categories[index].image!,
-                            title: categories[index].category!,
-                            titleSize: 20.0,
-                            amount: "",
-                            amountSize: 0.0,
-                          ),
-                        );
-                      }
-                    }
-                  });
-            }));
+        body: SingleChildScrollView(
+            child: Column(
+          children: [
+            Card(
+              child: FutureBuilder(
+                future: getUserProfiles(
+                    ref, FirebaseAuth.instance.currentUser?.email.toString()),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting)
+                    return Center(child: CircularProgressIndicator());
+                  else {
+                    var userModel = snapshot.data as UserModel;
+                    return Container(
+                      child: Text(userModel.fullName.toString()),
+                      //child: Text('${userModel.mail}'),
+                    );
+                  }
+                },
+              ),
+            ),
+            Categoryview(
+                direction: Axis.vertical,
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                color: kWhiteColor,
+                column: isList ? 1 : 2,
+                ratio: isList ? 2.6 : 1.3,
+                items: categoryList.length,
+                itemBuilder: (context, index) {
+                  return FutureBuilder(
+                      future: getCategory(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else {
+                          var categories = snapshot.data as List<CategoryModal>;
+                          if (categories == null || categories.length == 0)
+                            return Center(
+                              child: Text('Kategori bulunamadı'),
+                            );
+                          else {
+                            return GestureDetector(
+                              onTap: () => Navigator.pushNamed(
+                                  context, '/businessList',
+                                  arguments: ref
+                                          .read(selectedCategory.state)
+                                          .state
+                                          .category =
+                                      categories[index].category.toString()),
+                              child: CategoryItems(
+                                height: 150.0,
+                                width: MediaQuery.of(context).size.width,
+                                paddingHorizontal: 0.0,
+                                paddingVertical: 0.0,
+                                align: Alignment.center,
+                                radius: kLessPadding,
+                                blendMode: BlendMode.difference,
+                                color: kDarkColor,
+                                image: categories[index].image!,
+                                title: categories[index].category!,
+                                titleSize: 20.0,
+                                amount: "",
+                                amountSize: 0.0,
+                              ),
+                            );
+                          }
+                        }
+                      });
+                })
+          ],
+        )));
   }
 
   deneme() {

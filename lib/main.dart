@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:oua_bootcamp/constants.dart';
 import 'package:oua_bootcamp/pages/business_detail_page.dart';
+import 'package:oua_bootcamp/pages/business_home_page.dart';
 import 'package:oua_bootcamp/pages/businesses_page.dart';
 import 'package:oua_bootcamp/pages/category_page.dart';
 import 'package:oua_bootcamp/pages/home_page.dart';
@@ -52,6 +53,10 @@ class MyApp extends StatelessWidget {
           case '/makeAppointment':
             return PageTransition(
                 child: MakeAppointment(), type: PageTransitionType.fade);
+            break;
+          case '/businessManagement':
+            return PageTransition(
+                child: BusinessHomePage(), type: PageTransitionType.fade);
             break;
 
           default:

@@ -1,7 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:oua_bootcamp/cloud_firestore/user_ref.dart';
 import 'package:oua_bootcamp/constants.dart';
 import 'package:oua_bootcamp/model/menu_item.dart';
+import 'package:oua_bootcamp/state/state_management.dart';
+
+import '../model/user_model.dart';
 
 //ZoomDrawer menü elemanlarının oluşturulması ve özelliklerinin verilmesi
 class MenuItems {
@@ -24,7 +29,7 @@ class MenuItems {
   ];
 }
 
-class MenuPage extends StatelessWidget {
+class MenuPage extends ConsumerWidget {
   final MenuItemK currentItem;
   final ValueChanged<MenuItemK> onSelectedItem;
   const MenuPage(
@@ -32,7 +37,8 @@ class MenuPage extends StatelessWidget {
       : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    var userWatch = ref.watch(userInformation);
     return Theme(
       data: ThemeData.dark(),
       child: Scaffold(
@@ -43,7 +49,7 @@ class MenuPage extends StatelessWidget {
           children: [
             const Spacer(),
             Container(
-              height: 200,
+              height: 220,
               child: DrawerHeader(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,15 +85,23 @@ class MenuPage extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    InkWell(
-                      onTap: () {
-                        print("Profilimi Düzenle");
-                      },
-                      child: const Text(
-                        "Profilimi Düzenle",
-                        style: TextStyle(fontSize: 14, color: kFourthColor),
-                      ),
-                    ),
+                    userWatch.isBusiness == true
+                        ? IconButton(
+                            onPressed: () {
+                              Navigator.of(context)
+                                  .pushNamed('/businessManagement');
+                            },
+                            icon: Icon(Icons.admin_panel_settings))
+                        : InkWell(
+                            onTap: () {
+                              print("Profilimi Düzenle");
+                            },
+                            child: const Text(
+                              "Profilimi Düzenle",
+                              style:
+                                  TextStyle(fontSize: 14, color: kFourthColor),
+                            ),
+                          ),
                   ],
                 ),
               ),
