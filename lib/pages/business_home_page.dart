@@ -19,8 +19,12 @@ class BusinessHomePage extends ConsumerWidget {
           body: SingleChildScrollView(
               child: Column(children: [
             Card(
-              child: Text(businessWatch.fullName.toString()),
-            )
+                child: ElevatedButton(
+              child: Text('Kaydol'),
+              onPressed: () {
+                Navigator.of(context).pushNamed('/businessRegister');
+              },
+            )),
           ])),
         ));
   }

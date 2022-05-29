@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:oua_bootcamp/constants.dart';
 import 'package:oua_bootcamp/pages/business_detail_page.dart';
 import 'package:oua_bootcamp/pages/business_home_page.dart';
+import 'package:oua_bootcamp/pages/business_register_page.dart';
 import 'package:oua_bootcamp/pages/businesses_page.dart';
 import 'package:oua_bootcamp/pages/category_page.dart';
 import 'package:oua_bootcamp/pages/home_page.dart';
@@ -57,6 +58,10 @@ class MyApp extends StatelessWidget {
           case '/businessManagement':
             return PageTransition(
                 child: BusinessHomePage(), type: PageTransitionType.fade);
+            break;
+          case '/businessRegister':
+            return PageTransition(
+                child: BusinessRegister(), type: PageTransitionType.fade);
             break;
 
           default:
