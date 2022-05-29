@@ -60,7 +60,10 @@ class CategoryItems extends StatelessWidget {
                 children: [
                   TextSpan(
                     text: title,
-                    style: TextStyle(color: kWhiteColor, fontSize: titleSize),
+                    style: TextStyle(
+                        color: kWhiteColor,
+                        fontSize: titleSize,
+                        fontFamily: fontFamiy),
                   ),
                   WidgetSpan(
                     child: Container(
@@ -80,9 +83,9 @@ class CategoryItems extends StatelessWidget {
                             TextSpan(
                               text: amount,
                               style: TextStyle(
-                                color: kWhiteColor,
-                                fontSize: amountSize,
-                              ),
+                                  color: kWhiteColor,
+                                  fontSize: amountSize,
+                                  fontFamily: fontFamiy),
                             ),
                           ],
                         ),

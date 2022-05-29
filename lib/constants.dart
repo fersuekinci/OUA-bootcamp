@@ -17,6 +17,15 @@ const kLightColor = Color(0xFF808080);
 const kDarkColor = Color(0xFF303030);
 const kTransparent = Colors.transparent;
 
+const double appPadding = 25.0;
+const double spacer = 50.0;
+const double smallSpacer = 30.0;
+const double miniSpacer = 10.0;
+const Color textWhite = Color(0xFFFFFFFF);
+const Color textBlack = Color(0xFF000000);
+
+const String fontFamiy = "Ubuntu";
+
 const kDefaultPadding = 24.0;
 const kLessPadding = 10.0;
 const kFixPadding = 16.0;
@@ -34,6 +43,11 @@ const kHeadTextStyle = TextStyle(
 
 const kSubTextStyle = TextStyle(
   fontSize: 18.0,
+  color: kLightColor,
+);
+
+const kTextStyle = TextStyle(
+  fontSize: 15.0,
   color: kLightColor,
 );
 

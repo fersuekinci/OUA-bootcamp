@@ -47,8 +47,7 @@ class _HomePageState extends State<HomePage> {
     switch (currentItem) {
       case MenuItems.category:
         return CategoryPage();
-      case MenuItems.businessDetail:
-        return BusinessDetail();
+
       case MenuItems.businesses:
         return Businesses();
       case MenuItems.register:

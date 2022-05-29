@@ -31,46 +31,54 @@ class Businesses extends ConsumerWidget {
                   return ListView.builder(
                       itemCount: business.length,
                       itemBuilder: (context, index) {
-                        return Card(
-                          elevation: 20,
-                          clipBehavior: Clip.antiAlias,
-                          child: Column(
-                            children: [
-                              ListTile(
-                                leading:
-                                    const Icon(Icons.arrow_drop_down_circle),
-                                title: Text(business[index].name.toString()),
-                                subtitle: Text(
-                                  'Secondary Text',
-                                  style: TextStyle(
-                                      color: Colors.black.withOpacity(0.6)),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: Text(
-                                  'Greyhound divisively hello coldly wonderfully marginally far upon excluding.',
-                                  style: TextStyle(
-                                      color: Colors.black.withOpacity(0.6)),
-                                ),
-                              ),
-                              ButtonBar(
-                                alignment: MainAxisAlignment.start,
-                                children: [
-                                  TextButton(
-                                    onPressed: () => Navigator.pushNamed(
-                                        context, '/makeAppointment',
-                                        arguments: ref
-                                                .read(selectedBusiness.state)
-                                                .state
-                                                .name =
-                                            business[index].name.toString()),
-                                    child: const Text('Randevu Oluştur'),
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context, '/businessDetail',
+                                arguments: ref
+                                    .read(selectedBusiness.state)
+                                    .state = business[index]);
+                          },
+                          child: Card(
+                            elevation: 20,
+                            clipBehavior: Clip.antiAlias,
+                            child: Column(
+                              children: [
+                                ListTile(
+                                  leading:
+                                      const Icon(Icons.arrow_drop_down_circle),
+                                  title: Text(business[index].name.toString()),
+                                  subtitle: Text(
+                                    'Secondary Text',
+                                    style: TextStyle(
+                                        color: Colors.black.withOpacity(0.6)),
                                   ),
-                                ],
-                              ),
-//Image.asset('assets/card-sample-image.jpg'),
-                            ],
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Text(
+                                    'Greyhound divisively hello coldly wonderfully marginally far upon excluding.',
+                                    style: TextStyle(
+                                        color: Colors.black.withOpacity(0.6)),
+                                  ),
+                                ),
+                                ButtonBar(
+                                  alignment: MainAxisAlignment.start,
+                                  children: [
+                                    TextButton(
+                                      onPressed: () => Navigator.pushNamed(
+                                          context, '/makeAppointment',
+                                          arguments: ref
+                                                  .read(selectedBusiness.state)
+                                                  .state
+                                                  .name =
+                                              business[index].name.toString()),
+                                      child: const Text('Randevu Oluştur'),
+                                    ),
+                                  ],
+                                ),
+                                //Image.asset('assets/card-sample-image.jpg'),
+                              ],
+                            ),
                           ),
                         );
                       });

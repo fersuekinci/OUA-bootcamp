@@ -7,6 +7,7 @@ import 'package:oua_bootcamp/cloud_firestore/user_ref.dart';
 
 import 'package:oua_bootcamp/constants.dart';
 import 'package:oua_bootcamp/model/user_model.dart';
+import 'package:oua_bootcamp/state/state_management.dart';
 
 import 'package:oua_bootcamp/widgets/menu_widget.dart';
 
@@ -29,126 +30,110 @@ class BusinessDetail extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
+    var businessyWatch = ref.watch(selectedBusiness);
     return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            _appbarTitle,
-          ),
-          //Önceki erkana geçiş için
-          // leading: IconButton(
-          //   icon: const Icon(Icons.arrow_back),
-          //   onPressed: () => Navigator.of(context).pop(),
-          // ),
-
-          leading: const MenuWidget(),
+      appBar: AppBar(
+        title: Text(
+          _appbarTitle,
         ),
-        body: Scaffold(
-          body: SingleChildScrollView(
-              child: Column(children: [
-            //Resimlerin slyat olarak görüntülenmesi
-            CarouselSlider(
-              items: imageSlider(),
-              options: CarouselOptions(
-                autoPlay: true,
-                aspectRatio: 2.0,
-                enlargeCenterPage: true,
-                viewportFraction: 1,
+        //Önceki erkana geçiş için
+        // leading: IconButton(
+        //   icon: const Icon(Icons.arrow_back),
+        //   onPressed: () => Navigator.of(context).pop(),
+        // ),
+
+        // leading: const MenuWidget(),
+      ),
+      body: SingleChildScrollView(
+          child: Column(children: [
+        //Resimlerin slyat olarak görüntülenmesi
+        CarouselSlider(
+          items: imageSlider(),
+          options: CarouselOptions(
+            autoPlay: true,
+            aspectRatio: 2.0,
+            enlargeCenterPage: true,
+            viewportFraction: 1,
+          ),
+        ),
+
+        //İşletme bilgilerinin yazılması
+        Card(
+          clipBehavior: Clip.antiAlias,
+          child: Column(
+            children: [
+              ListTile(
+                title: Text(
+                  businessyWatch.name.toString(),
+                  style: TextStyle(fontSize: 18),
+                  textAlign: TextAlign.center,
+                ),
+                subtitle: Text(
+                  'Secondary Text',
+                  style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                ),
               ),
-            ),
-            Card(
-              child: FutureBuilder(
-                future: getUserProfiles(
-                    ref, FirebaseAuth.instance.currentUser!.email.toString()),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting)
-                    return Center(child: CircularProgressIndicator());
-                  else {
-                    var userModel = snapshot.data as UserModel;
-                    return Container(
-                      child: Text(userModel.fullName.toString()),
-                      //child: Text('${userModel.mail}'),
-                    );
-                  }
-                },
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  exampleString,
+                  style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                ),
               ),
-            ),
-            //İşletme bilgilerinin yazılması
-            Card(
-              clipBehavior: Clip.antiAlias,
-              child: Column(
-                children: [
-                  ListTile(
-                    title: const Text(
-                      'İşletme Başlık',
-                      style: TextStyle(fontSize: 18),
-                      textAlign: TextAlign.center,
-                    ),
-                    subtitle: Text(
-                      'Secondary Text',
-                      style: TextStyle(color: Colors.black.withOpacity(0.6)),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Text(
-                      exampleString,
-                      style: TextStyle(color: Colors.black.withOpacity(0.6)),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: ButtonBar(
-                      alignment: MainAxisAlignment.center,
-                      buttonPadding: const EdgeInsets.all(15),
-                      children: [
-                        FloatingActionButton(
-                          onPressed: () => _chatEkraninaGit(context),
-                          elevation: 20,
-                          child: const Icon(Icons.message),
-                        ),
-                        FloatingActionButton(
-                          onPressed: () {},
-                          elevation: 20,
-                          child: const Icon(Icons.navigation),
-                        ),
-                        FloatingActionButton(
-                          onPressed: () {
-                            showDialog(
-                                context: context,
-                                builder: (_) => AlertDialog(
-                                      title: const Text('Randevu Oluştur'),
-                                      content: const Text(
-                                          'Randevu oluşturabilmek için uygulamaya giriş yapmış olmanız gerekmektedir.'),
-                                      actions: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            TextButton(
-                                              onPressed: () {},
-                                              child: const Text('Giriş Yap'),
-                                            ),
-                                            TextButton(
-                                              onPressed: () {},
-                                              child: const Text('Kayıt Ol'),
-                                            ),
-                                          ],
-                                        )
-                                      ],
-                                    ));
-                          },
-                          elevation: 20,
-                          child: const Icon(Icons.calendar_month),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ])),
-          //bottomNavigationBar: const BottomNavigation(),
-        ));
+              // Padding(
+              //   padding: const EdgeInsets.only(bottom: 8.0),
+              //   child: ButtonBar(
+              //     alignment: MainAxisAlignment.center,
+              //     buttonPadding: const EdgeInsets.all(15),
+              //     children: [
+              //       FloatingActionButton(
+              //         onPressed: () => {},
+              //         elevation: 20,
+              //         child: const Icon(Icons.message),
+              //       ),
+              //       FloatingActionButton(
+              //         onPressed: () {},
+              //         elevation: 20,
+              //         child: const Icon(Icons.navigation),
+              //       ),
+              //       FloatingActionButton(
+              //         onPressed: () {
+              //           showDialog(
+              //               context: context,
+              //               builder: (_) => AlertDialog(
+              //                     title: const Text('Randevu Oluştur'),
+              //                     content: const Text(
+              //                         'Randevu oluşturabilmek için uygulamaya giriş yapmış olmanız gerekmektedir.'),
+              //                     actions: [
+              //                       Row(
+              //                         mainAxisAlignment:
+              //                             MainAxisAlignment.spaceEvenly,
+              //                         children: [
+              //                           TextButton(
+              //                             onPressed: () {},
+              //                             child: const Text('Giriş Yap'),
+              //                           ),
+              //                           TextButton(
+              //                             onPressed: () {},
+              //                             child: const Text('Kayıt Ol'),
+              //                           ),
+              //                         ],
+              //                       )
+              //                     ],
+              //                   ));
+              //         },
+              //         elevation: 20,
+              //         child: const Icon(Icons.calendar_month),
+              //       ),
+              //     ],
+              //   ),
+              // ),
+            ],
+          ),
+        ),
+      ])),
+      //bottomNavigationBar: const BottomNavigation(),
+    );
   }
 
   imageSlider() {
@@ -193,11 +178,11 @@ class BusinessDetail extends ConsumerWidget {
         .toList();
   }
 
-  void _chatEkraninaGit(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) {
-        return ChatPage();
-      },
-    ));
-  }
+  // void _chatEkraninaGit(BuildContext context) {
+  //   Navigator.of(context).push(MaterialPageRoute(
+  //     builder: (context) {
+  //       return ChatPage();
+  //     },
+  //   ));
+  // }
 }

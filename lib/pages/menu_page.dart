@@ -12,7 +12,7 @@ import '../model/user_model.dart';
 class MenuItems {
   //Menü elemanları ekleniyor.
   static const category = MenuItemK('Ana Sayfa', Icons.category);
-  static const businessDetail = MenuItemK('İşletme Detayları', Icons.details);
+
   static const businesses = MenuItemK('İşletmeler', Icons.list_alt);
   static const register = MenuItemK('Kayıt ol sayfası', Icons.list_alt);
   static const businessAppointment =
@@ -21,7 +21,6 @@ class MenuItems {
 
   static const all = <MenuItemK>[
     category,
-    businessDetail,
     businesses,
     register,
     businessAppointment,
@@ -66,8 +65,7 @@ class MenuPage extends ConsumerWidget {
                             color: Colors.white,
                             image: DecorationImage(
                               fit: BoxFit.contain,
-                              image: NetworkImage(
-                                  "https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes.png"),
+                              image: AssetImage('assets/images/avatar.png'),
                             )),
                       ),
                     ),
