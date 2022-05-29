@@ -78,3 +78,9 @@ Future<int> getMaxAvailableTimeSlot(DateTime time) async {
     return 16;
   }
 }
+
+Future<DateTime> syncTime() async {
+  var now = DateTime.now();
+  var offset = await NTP.getNtpOffset(localTime: now);
+  return now.add(Duration(microseconds: offset));
+}

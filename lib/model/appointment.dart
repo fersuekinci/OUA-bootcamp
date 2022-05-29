@@ -10,6 +10,7 @@ class AppointmentModel {
   String? interval;
   int? timeStamp;
   String? time;
+  String? date;
   String? docId;
 
   AppointmentModel({
@@ -22,6 +23,7 @@ class AppointmentModel {
     this.interval,
     this.timeStamp,
     this.time,
+    this.date,
     this.docId,
   });
 
@@ -35,6 +37,7 @@ class AppointmentModel {
     interval = json['interval'];
     timeStamp = json['timeStamp'];
     time = json['time'];
+    date = json['date'];
     docId = json['docId'];
   }
 
@@ -51,6 +54,7 @@ class AppointmentModel {
     data['interval'] = this.interval;
     data['timeStamp'] = this.timeStamp;
     data['time'] = this.time;
+    data['date'] = this.date;
     data['docId'] = this.docId;
 
     return data;

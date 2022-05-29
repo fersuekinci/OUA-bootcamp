@@ -18,25 +18,14 @@ Future<UserModel> getUserProfiles(WidgetRef ref, dynamic mail) async {
   }
 }
 
-Future<List<AppointmentModel>> getUserHistory(String time) async {
-  // var listAppointment = List<AppointmentModel>.empty(growable: true);
-  // var userRef = FirebaseFirestore.instance
-  //     .collection('UserHistory')
-  //     .doc(FirebaseAuth.instance.currentUser!.email)
-  //     .collection(selectedDate.toString());
-
-  // var snapshot = await userRef.orderBy('timeStamp').get();
-  // snapshot.docs.forEach((element) {
-  //   var appointment = AppointmentModel.fromJson(element.data());
-  //   listAppointment.add(appointment);
-  // });
-  // return listAppointment;
+Future<List<AppointmentModel>> getUserHistory(String date) async {
   var listAppointment = List<AppointmentModel>.empty(growable: true);
   var result = await FirebaseFirestore.instance
       .collection("UserHistory")
       .doc(FirebaseAuth.instance.currentUser!.email.toString())
-      .collection(time.toString())
-      // .where("mail", isEqualTo: FirebaseAuth.instance.currentUser!.email)
+      .collection(date)
+      // .orderBy('timeStamp', descending: true)
+      //.where(, isEqualTo: FirebaseAuth.instance.currentUser!.email)
       .get();
 
   result.docs.forEach((res) {

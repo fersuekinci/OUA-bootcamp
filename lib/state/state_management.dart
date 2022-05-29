@@ -20,3 +20,5 @@ final selectedDate = StateProvider((ref) => DateTime.now());
 //Zaman aralığı seçmeden ilerleyememsi için kullanılacak
 final selectedTimeInterval = StateProvider((ref) => -1);
 final selectedTime = StateProvider((ref) => '');
+
+final deleteFlagRefresh = StateProvider((ref) => false);

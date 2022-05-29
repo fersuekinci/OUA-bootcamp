@@ -57,9 +57,13 @@ Future<List<AppointmentModel>> getAppointmentByBusiness(
 // }
 
 Future<List<String>> getTimeIntervalOfAppointment(
-    String time, String businessName) async {
+    String time, String businessName, String date) async {
   var appointment = List<String>.empty(growable: true);
-  var appointmentRed = FirebaseFirestore.instance.collection('Appointment');
+  var appointmentRed = FirebaseFirestore.instance
+      .collection('Appointment')
+      .doc(businessName)
+      .collection(date);
+
   var snapshot = await appointmentRed.get();
   snapshot.docs.forEach((element) {
     var appointments = (AppointmentModel.fromJson(element.data()));

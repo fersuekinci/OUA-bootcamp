@@ -65,8 +65,7 @@ class BusinessDetail extends ConsumerWidget {
                   else {
                     var userModel = snapshot.data as UserModel;
                     return Container(
-                      child: Text(
-                          FirebaseAuth.instance.currentUser!.email.toString()),
+                      child: Text(userModel.fullName.toString()),
                       //child: Text('${userModel.mail}'),
                     );
                   }

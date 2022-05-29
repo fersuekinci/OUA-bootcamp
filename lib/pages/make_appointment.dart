@@ -20,12 +20,13 @@ class MakeAppointment extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    var businessWatch = ref.watch(selectedBusiness);
+    var businessWatch = ref.watch(selectedBusiness).name;
+    var categoryWatch = ref.watch(selectedCategory);
     var now = ref.watch(selectedDate.state).state;
     var timeWatch = ref.watch(selectedTime.state).state;
     var timeIntervalWatch = ref.watch(selectedTimeInterval.state).state;
 
-    final String _appbarTitle = businessWatch.name.toString();
+    final String _appbarTitle = businessWatch.toString();
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
@@ -45,12 +46,11 @@ class MakeAppointment extends ConsumerWidget {
                         const SizedBox(
                           height: 10,
                         ),
-                        Text('${ref.read(selectedBusiness.state).state.name}'),
+                        Text('${ref.watch(selectedBusiness).name}'),
                         const SizedBox(
                           height: 10,
                         ),
-                        Text(
-                            '${ref.read(selectedBusiness.state).state.address}'),
+                        Text('${ref.watch(selectedBusiness).address}'),
                         const SizedBox(
                           height: 10,
                         ),
@@ -139,7 +139,9 @@ class MakeAppointment extends ConsumerWidget {
                       future: getTimeIntervalOfAppointment(
                           DateFormat('dd/MM/yyyy')
                               .format(ref.read(selectedDate.state).state),
-                          businessWatch.toString()),
+                          businessWatch.toString(),
+                          DateFormat('dd-MM-yyyy')
+                              .format(ref.read(selectedDate.state).state)),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
@@ -232,7 +234,7 @@ class MakeAppointment extends ConsumerWidget {
         .millisecondsSinceEpoch;
 
     var appointmentModel = AppointmentModel(
-        businessName: ref.read(selectedBusiness.state).state.name,
+        businessName: ref.watch(selectedBusiness).name,
         category: ref.read(selectedCategory.state).state.category,
         userName: ref.read(userInformation.state).state.fullName,
         userMail: ref.read(userInformation.state).state.mail,
@@ -242,7 +244,9 @@ class MakeAppointment extends ConsumerWidget {
         timeStamp: timeStamp,
         // 'time':
         //     '${ref.read(selectedTime.state).state}-${DateFormat('dd/MM/yyyy').format(ref.read(selectedDate.state).state)}'
-        time: DateFormat('dd/MM/yyyy')
+        time:
+            DateFormat('dd/MM/yyyy').format(ref.read(selectedDate.state).state),
+        date: DateFormat('dd-MM-yyyy')
             .format(ref.read(selectedDate.state).state));
 
     var batch = FirebaseFirestore.instance.batch();
@@ -270,9 +274,17 @@ class MakeAppointment extends ConsumerWidget {
         .collection('UserHistory')
         .doc(FirebaseAuth.instance.currentUser!.email)
         .collection(
-            '${DateFormat('dd-MM-yyyy').format(ref.read(selectedDate.state).state)}')
-        .add(appointmentModel.toJson());
-    FirebaseFirestore.instance.collection("Appointment").add({
+            DateFormat('dd-MM-yyyy').format(ref.read(selectedDate.state).state))
+        .doc(ref.read(selectedTime.state).state.toString())
+        .set(appointmentModel.toJson());
+
+    FirebaseFirestore.instance
+        .collection("Appointment")
+        .doc(ref.read(selectedBusiness.state).state.name.toString())
+        .collection(
+            DateFormat('dd-MM-yyyy').format(ref.read(selectedDate.state).state))
+        .doc(ref.read(selectedTime.state).state.toString())
+        .set({
       'businessName': ref.read(selectedBusiness.state).state.name,
       'category': ref.read(selectedCategory.state).state.category,
       'userName': ref.read(userInformation.state).state.fullName,
@@ -282,7 +294,9 @@ class MakeAppointment extends ConsumerWidget {
       'interval': ref.read(selectedTime.state).state,
       'timeStamp': timeStamp,
       'time':
-          '${ref.read(selectedTime.state).state}-${DateFormat('dd/MM/yyyy').format(ref.read(selectedDate.state).state)}'
+          '${ref.read(selectedTime.state).state}-${DateFormat('dd/MM/yyyy').format(ref.read(selectedDate.state).state)}',
+      'date':
+          '${DateFormat('dd-MM-yyyy').format(ref.read(selectedDate.state).state)}'
     }).then((value) {
       final appointment = Event(
           title: 'Randevu Bilgisi',
