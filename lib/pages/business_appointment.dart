@@ -1,14 +1,9 @@
-import 'dart:collection';
-import 'dart:convert';
-
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:oua_bootcamp/constants.dart';
 import 'package:oua_bootcamp/model/api_service.dart';
 import 'package:oua_bootcamp/model/appointment.dart';
 import 'package:oua_bootcamp/widgets/calendar_utils.dart';
 import 'package:oua_bootcamp/widgets/menu_widget.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 
@@ -101,7 +96,7 @@ class _BusinessAppointmentState extends State<BusinessAppointment> {
       body: Column(
         children: [
           Card(
-            margin: EdgeInsets.only(right: 15, left: 15),
+            margin: const EdgeInsets.only(right: 15, left: 15),
             elevation: 15,
             child: Padding(
               padding: const EdgeInsets.all(10.0),
@@ -154,9 +149,9 @@ class _BusinessAppointmentState extends State<BusinessAppointment> {
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.done:
-                  appointmentList = snapshot.data!;
+                  appointmentList = snapshot.data;
                   return Container(
-                    padding: EdgeInsets.only(right: 15, left: 15),
+                    padding: const EdgeInsets.only(right: 15, left: 15),
                     child: ListView.separated(
                         itemBuilder: (context, index) {
                           return Card(
@@ -169,7 +164,7 @@ class _BusinessAppointmentState extends State<BusinessAppointment> {
                               onTap: () {},
                               title: Text(
                                 '${appointmentList[index].category.toString()} \n${appointmentList[index].time.toString()}',
-                                style: TextStyle(color: Colors.white),
+                                style: const TextStyle(color: Colors.white),
                               ),
                             ),
                           );

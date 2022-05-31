@@ -1,17 +1,15 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:logger/logger.dart';
 import 'package:oua_bootcamp/model/appointment.dart';
-import 'package:oua_bootcamp/widgets/calendar_utils.dart';
 
 class ApiService {
   String? _baseUrl;
 
-  static ApiService _instance = ApiService._privateConstructor();
+  static final ApiService _instance = ApiService._privateConstructor();
   ApiService._privateConstructor() {
     _baseUrl = "https://oua-bootcamp-default-rtdb.firebaseio.com/";
   }

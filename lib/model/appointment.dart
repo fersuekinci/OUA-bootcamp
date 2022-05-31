@@ -45,17 +45,17 @@ class AppointmentModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['businessName'] = businessName;
-    data['category'] = category;
-    data['userName'] = userName;
-    data['userMail'] = userMail;
-    data['done'] = done;
-    data['businessAddress'] = businessAddress;
-    data['interval'] = interval;
-    data['timeStamp'] = timeStamp;
-    data['time'] = time;
-    data['date'] = date;
-    data['docId'] = docId;
+    data['businessName'] = this.businessName;
+    data['category'] = this.category;
+    data['userName'] = this.userName;
+    data['userMail'] = this.userMail;
+    data['done'] = this.done;
+    data['businessAddress'] = this.businessAddress;
+    data['interval'] = this.interval;
+    data['timeStamp'] = this.timeStamp;
+    data['time'] = this.time;
+    data['date'] = this.date;
+    data['docId'] = this.docId;
 
     return data;
   }

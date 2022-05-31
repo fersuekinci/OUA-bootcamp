@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:oua_bootcamp/state/state_management.dart';
 
 class BusinessHomePage extends ConsumerWidget {
-  BusinessHomePage({Key? key}) : super(key: key);
+  const BusinessHomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

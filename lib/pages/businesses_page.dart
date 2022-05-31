@@ -2,18 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:oua_bootcamp/cloud_firestore/all_business_ref.dart';
 import 'package:oua_bootcamp/model/business_model.dart';
+import 'package:oua_bootcamp/repositories/repo_business_detail.dart';
 import 'package:oua_bootcamp/state/state_management.dart';
 import 'package:oua_bootcamp/widgets/menu_widget.dart';
-import 'package:provider/provider.dart';
+import 'business_detail_page.dart';
 
 class Businesses extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     var categoryWatch = ref.watch(selectedCategory);
 
-    final String _appbarTitle = categoryWatch.category.toString();
+    final businessRepoProvider = ref.read(businessDetailPageProvider);
+
+
     return Scaffold(
-        appBar: AppBar(leading: const MenuWidget(), title: Text(_appbarTitle)),
+        appBar: AppBar(leading: const MenuWidget(), title: Text("???")),
         body: FutureBuilder(
             future: getBusinessByCategory(categoryWatch.category.toString()),
             builder: (context, snapshot) {
@@ -33,10 +36,23 @@ class Businesses extends ConsumerWidget {
                       itemBuilder: (context, index) {
                         return GestureDetector(
                           onTap: () {
-                            Navigator.pushNamed(context, '/businessDetail',
+
+                            businessRepoProvider.companyName = business[index].name.toString();
+                            businessRepoProvider.address = business[index].address.toString();
+                            businessRepoProvider.content = business[index].content.toString();
+                            businessRepoProvider.phone = business[index].phone.toString();
+                            businessRepoProvider.subtitle = business[index].subtitle.toString();
+                            businessRepoProvider.notifyAll();
+
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => BusinessDetail()));
+
+                           /* Navigator.pushNamed(context, '/businessDetail',
                                 arguments: ref
                                     .read(selectedBusiness.state)
                                     .state = business[index]);
+
+                            */
+
                           },
                           child: Card(
                             elevation: 20,

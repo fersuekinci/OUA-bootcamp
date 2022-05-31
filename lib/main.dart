@@ -15,7 +15,7 @@ import 'package:page_transition/page_transition.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  initializeDateFormatting().then((_) => runApp(ProviderScope(child: MyApp())));
+  initializeDateFormatting().then((_) => runApp(const ProviderScope(child: MyApp())));
 }
 
 class MyApp extends StatelessWidget {
@@ -42,27 +42,21 @@ class MyApp extends StatelessWidget {
           case '/homePage':
             return PageTransition(
                 child: CategoryPage(), type: PageTransitionType.fade);
-            break;
           case '/businessDetail':
             return PageTransition(
                 child: BusinessDetail(), type: PageTransitionType.fade);
-            break;
           case '/businessList':
             return PageTransition(
                 child: Businesses(), type: PageTransitionType.fade);
-            break;
           case '/makeAppointment':
             return PageTransition(
                 child: MakeAppointment(), type: PageTransitionType.fade);
-            break;
           case '/businessManagement':
             return PageTransition(
                 child: BusinessHomePage(), type: PageTransitionType.fade);
-            break;
           case '/businessRegister':
             return PageTransition(
                 child: BusinessRegister(), type: PageTransitionType.fade);
-            break;
 
           default:
             return null;

@@ -34,7 +34,7 @@ dependencies:
   carousel_slider: ^4.1.1
 
   #Drawer eklentisi
-  flutter_zoom_drawer: ^2.1.1
+  flutter_zoom_drawer: ^3.0.2
 
   #Firebase eklentileri
   cloud_firestore: ^3.1.15
@@ -48,8 +48,7 @@ dependencies:
 
   #Takvim Eklentisi
   table_calendar: ^3.0.5
-  flutter_datetime_picker:
- 
+  flutter_datetime_picker: ^1.5.1
 
   #Google Fonts
   google_fonts: ^3.0.0
@@ -92,7 +91,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^1.0.0
+  flutter_lints: ^2.0.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

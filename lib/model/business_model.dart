@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class BusinessModal {
   String? name;
   String? content;
@@ -21,12 +19,12 @@ class BusinessModal {
   set docId(String docId) {}
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['content'] = this.content;
-    data['address'] = this.address;
-    data['phone'] = this.phone;
-    data['subtitle'] = this.subtitle;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['name'] = name;
+    data['content'] = content;
+    data['address'] = address;
+    data['phone'] = phone;
+    data['subtitle'] = subtitle;
     return data;
   }
 }

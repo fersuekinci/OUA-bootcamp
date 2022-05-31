@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_zoom_drawer/config.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:oua_bootcamp/constants.dart';
 import 'package:oua_bootcamp/pages/business_appointment.dart';
-import 'package:oua_bootcamp/pages/business_detail_page.dart';
 import 'package:oua_bootcamp/pages/businesses_page.dart';
 import 'package:oua_bootcamp/pages/category_page.dart';
 import 'package:oua_bootcamp/pages/menu_page.dart';
@@ -23,12 +23,12 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return ZoomDrawer(
-      style: DrawerStyle.Style1,
+      style: DrawerStyle.style1,
       borderRadius: 40,
       angle: -10,
       slideWidth: MediaQuery.of(context).size.width * 0.7,
       showShadow: true,
-      backgroundColor: kThirdColor,
+      menuBackgroundColor: kThirdColor,
       menuScreen: Builder(builder: (context) {
         return MenuPage(
           currentItem: currentItem,

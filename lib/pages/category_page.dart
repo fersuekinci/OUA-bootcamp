@@ -1,16 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_auth_ui/flutter_auth_ui.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:oua_bootcamp/cloud_firestore/user_ref.dart';
 import 'package:oua_bootcamp/model/user_model.dart';
 import 'package:oua_bootcamp/widgets/bottom_clipper.dart';
 import 'package:oua_bootcamp/widgets/custom_heading.dart';
 import 'package:oua_bootcamp/widgets/custom_search.dart';
-import 'package:oua_bootcamp/widgets/custom_small_card.dart';
-import 'package:oua_bootcamp/widgets/custom_title.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:oua_bootcamp/cloud_firestore/all_business_ref.dart';
 import 'package:oua_bootcamp/model/CategoryModal.dart';
@@ -19,15 +14,12 @@ import 'package:oua_bootcamp/widgets/menu_widget.dart';
 import 'package:oua_bootcamp/constants.dart';
 import 'package:oua_bootcamp/widgets/CategoryItems.dart';
 import 'package:oua_bootcamp/widgets/CategoryView.dart';
-import 'package:flutter_auth_ui/flutter_auth_ui.dart';
 
 // ignore: import_of_legacy_library_into_null_safe
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:oua_bootcamp/state/state_management.dart';
-import 'package:flutter/services.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 class CategoryPage extends ConsumerWidget {
@@ -37,7 +29,7 @@ class CategoryPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    const String _appbarTitle = 'Kategoriler';
+
     bool isList = false;
 
     return Scaffold(
@@ -73,7 +65,7 @@ class CategoryPage extends ConsumerWidget {
               )
             ],
             title: const Text(
-              _appbarTitle,
+              "Burası Neresi?",
             )),
         extendBody: true,
         //Yan menü - drawer eklentisi (Widget klasöüründe)

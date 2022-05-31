@@ -10,9 +10,9 @@ class CategoryModal {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['image'] = this.image;
-    data['category'] = this.category;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['image'] = image;
+    data['category'] = category;
     return data;
   }
 }
