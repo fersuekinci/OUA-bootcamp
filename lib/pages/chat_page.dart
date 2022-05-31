@@ -1,6 +1,11 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:oua_bootcamp/model/mesaj_model.dart';
+import 'package:oua_bootcamp/repositories/repo_chatpage.dart';
+
+import '../model/business_model.dart';
+import '../repositories/repo_business_detail.dart';
 
 
 // mesajlar kaydırıldığında mesajın gönderildiği tarih eklenecek
@@ -9,25 +14,24 @@ import 'package:oua_bootcamp/model/mesaj_model.dart';
 
 // mesaj gönderenin tespiti için riverpod kullanıldığı zaman isim oradan çekilecek
 
-class ChatPage extends StatefulWidget {
-  const ChatPage({Key? key}) : super(key: key);
+class ChatPage extends ConsumerWidget {
+  ChatPage({Key? key}) : super(key: key);
 
-  @override
-  State<ChatPage> createState() => _ChatPageState();
-}
-
-class _ChatPageState extends State<ChatPage> {
-  String anlikMesaj = "";
   List<Mesaj> mesajlar = [
     Mesaj("Merhaba, size nasıl yardımcı olabilirim?", "İşletme 1", DateTime.now()),
   ];
   final _controller = TextEditingController();
+  final business = List<BusinessModal>;
 
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final businessRepoProvider = ref.watch(businessDetailPageProvider);
+    final chatRepoProvider = ref.watch(chatPageProvider);
+    final anlikMesaj = chatRepoProvider.anlikMesaj;
+
     return Scaffold(
-      appBar: AppBar(title: Text("İşletme Adı")),
+      appBar: AppBar(title: Text(businessRepoProvider.companyName)),
       body: Column(
         children: [
           Expanded(
@@ -54,9 +58,7 @@ class _ChatPageState extends State<ChatPage> {
                           child: TextField(
                             controller: _controller,
                             onChanged: (value) {
-                              setState(() {
-                              anlikMesaj = value;
-                              });
+                              chatRepoProvider.notifyAnlikMesaj(value);
                             },
                             decoration: const InputDecoration(
                               border: InputBorder.none,
@@ -75,12 +77,10 @@ class _ChatPageState extends State<ChatPage> {
                             primary: Colors.red,
                           ),
                           onPressed: () {
-                            setState(() {
                               mesajlar.add(Mesaj(anlikMesaj, "Yasin", DateTime.now()));
                               _controller.clear();
-                              anlikMesaj = "";
-                            });
-                          },
+                              chatRepoProvider.notifyAnlikMesaj("");
+                              },
                           child: const Text("Gönder"),
                         ),
                       )
@@ -141,4 +141,3 @@ class MesajGorunumu extends StatelessWidget {
     );
   }
 }
-
