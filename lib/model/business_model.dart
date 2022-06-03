@@ -4,9 +4,10 @@ class BusinessModal {
   String? address;
   String? phone;
   String? subtitle;
+  String? email;
 
   BusinessModal(
-      {this.name, this.content, this.address, this.phone, this.subtitle});
+      {this.name, this.content, this.address, this.phone, this.subtitle, this.email});
 
   BusinessModal.fromJson(Map<String, dynamic> json) {
     name = json['name'];
@@ -14,6 +15,7 @@ class BusinessModal {
     address = json['address'];
     phone = json['phone'];
     subtitle = json['subtitle'];
+    email = json['email'];
   }
 
   set docId(String docId) {}
@@ -25,6 +27,7 @@ class BusinessModal {
     data['address'] = address;
     data['phone'] = phone;
     data['subtitle'] = subtitle;
+    data['email'] = email;
     return data;
   }
 }

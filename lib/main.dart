@@ -10,6 +10,8 @@ import 'package:oua_bootcamp/pages/home_page.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:oua_bootcamp/pages/make_appointment.dart';
+import 'package:oua_bootcamp/pages/signin.dart';
+import 'package:oua_bootcamp/sercices/auth.dart';
 import 'package:page_transition/page_transition.dart';
 
 Future<void> main() async {
@@ -57,12 +59,20 @@ class MyApp extends StatelessWidget {
           case '/businessRegister':
             return PageTransition(
                 child: BusinessRegister(), type: PageTransitionType.fade);
-
           default:
             return null;
         }
       },
-      home: const HomePage(),
+      home: FutureBuilder(
+        future: AuthMethods().getCurrentUser(),
+        builder: (context, AsyncSnapshot<dynamic> snapshot) {
+          if (snapshot.hasData) {
+            return HomePage();
+          } else {
+            return SignIn();
+          }
+        },
+      ),
     );
   }
 }

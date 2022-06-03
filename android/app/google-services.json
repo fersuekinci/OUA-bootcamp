@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "1046811946263",
+    "firebase_url": "https://oua-bootcamp-default-rtdb.firebaseio.com",
     "project_id": "oua-bootcamp",
     "storage_bucket": "oua-bootcamp.appspot.com"
   },

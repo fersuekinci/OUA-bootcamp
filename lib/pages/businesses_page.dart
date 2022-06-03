@@ -42,6 +42,7 @@ class Businesses extends ConsumerWidget {
                             businessRepoProvider.content = business[index].content.toString();
                             businessRepoProvider.phone = business[index].phone.toString();
                             businessRepoProvider.subtitle = business[index].subtitle.toString();
+                            businessRepoProvider.email = business[index].email.toString();
                             businessRepoProvider.notifyAll();
 
                             Navigator.push(context, MaterialPageRoute(builder: (context) => BusinessDetail()));

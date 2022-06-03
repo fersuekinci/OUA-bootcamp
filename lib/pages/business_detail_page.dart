@@ -1,11 +1,15 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:oua_bootcamp/cloud_firestore/user_ref.dart';
 import 'package:oua_bootcamp/widgets/menu_widget.dart';
+import '../helperfun/sharedpref_helper.dart';
 import '../repositories/repo_business_detail.dart';
+import '../repositories/repo_chatpage.dart';
 import 'chat_page.dart';
+import 'chat_screen.dart';
 
 class BusinessDetail extends ConsumerWidget {
   BusinessDetail({Key? key}) : super(key: key);
@@ -21,11 +25,13 @@ class BusinessDetail extends ConsumerWidget {
     'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80'
   ];
 
-
-
   @override
   Widget build(BuildContext context, ref) {
     final businessRepoProvider = ref.watch(businessDetailPageProvider);
+    final chatRepoProvider = ref.watch(chatPageProvider);
+
+    final String email = businessRepoProvider.getEmailForChatPage();
+    final String companyName = businessRepoProvider.getCompanyName();
 
 
     return Scaffold(
@@ -102,16 +108,28 @@ class BusinessDetail extends ConsumerWidget {
                       buttonPadding: const EdgeInsets.all(15),
                       children: [
                         FloatingActionButton(
-                          onPressed: () => _chatEkraninaGit(context),
+                          heroTag: "startChat",
+                          onPressed: () {
+                            if(0==0){
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ChatScreen(email, companyName)));
+                            }else{
+                              Center(child: Text("Giriş Yap uyarısı dialog popup hazırlanacak"));
+                            }
+                          },
                           elevation: 20,
                           child: const Icon(Icons.message),
                         ),
                         FloatingActionButton(
+                          heroTag: "navigation",
                           onPressed: () {},
                           elevation: 20,
                           child: const Icon(Icons.navigation),
                         ),
                         FloatingActionButton(
+                          heroTag: "calendar",
                           onPressed: () {
                             showDialog(
                                 context: context,
@@ -192,12 +210,14 @@ class BusinessDetail extends ConsumerWidget {
             ))
         .toList();
   }
+}
 
-  void _chatEkraninaGit(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) {
-        return ChatPage();
-      },
-    ));
+
+String getChatRoomId(String a, String b){
+
+  if (a.substring(0,1).codeUnitAt(0) > b.substring(0, 1).codeUnitAt(0)){
+    return "$b\_$a";
+  }else{
+    return "$a\_$b";
   }
 }

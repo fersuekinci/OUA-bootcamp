@@ -82,3 +82,6 @@ final categoryList = [
   CategoryModal(
       image: "assets/images/Boya-Badana.jpg", category: "Boya-Badana"),
 ];
+
+
+String myName = "";

@@ -3,15 +3,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:oua_bootcamp/cloud_firestore/all_business_ref.dart';
 import 'package:oua_bootcamp/cloud_firestore/user_ref.dart';
 import 'package:oua_bootcamp/constants.dart';
 import 'package:oua_bootcamp/model/appointment.dart';
-import 'package:oua_bootcamp/model/business_model.dart';
 import 'package:oua_bootcamp/state/state_management.dart';
 import 'package:oua_bootcamp/utils/utils.dart';
 import 'package:oua_bootcamp/widgets/menu_widget.dart';
-import 'package:provider/provider.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 class UserHistoryPage extends ConsumerWidget {

@@ -7,6 +7,19 @@ class BusinessDetailRepository extends ChangeNotifier{
   String content = "";
   String phone = "";
   String subtitle = "";
+  String email = "";
+
+  String getEmailForChatPage(){
+    String emailForChat = email.replaceAll("@gmail.com", "");
+    print("mail = $email");
+    return emailForChat;
+  }
+
+  String getCompanyName(){
+    print("company name = $companyName");
+    return companyName;
+  }
+
 
   void notifyAll(){
     notifyListeners();

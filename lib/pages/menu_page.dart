@@ -7,6 +7,8 @@ import 'package:oua_bootcamp/model/menu_item.dart';
 import 'package:oua_bootcamp/state/state_management.dart';
 
 import '../model/user_model.dart';
+import '../sercices/auth.dart';
+import 'home_page.dart';
 
 //ZoomDrawer menü elemanlarının oluşturulması ve özelliklerinin verilmesi
 class MenuItems {
@@ -48,37 +50,58 @@ class MenuPage extends ConsumerWidget {
           children: [
             const Spacer(),
             Container(
-              height: 220,
+              height: 250,
               child: DrawerHeader(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      width: 70,
+                      width: 200,
                       height: 70,
-                      padding: const EdgeInsets.only(
-                        bottom: 10,
-                      ),
-                      child: const DecoratedBox(
+                      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                      child: DecoratedBox(
                         decoration: ShapeDecoration(
                             shape: CircleBorder(),
                             color: Colors.white,
                             image: DecorationImage(
                               fit: BoxFit.contain,
-                              image: AssetImage('assets/images/avatar.png'),
+                              //image: AssetImage('assets/images/avatar.png'),
+                                image: FirebaseAuth.instance.currentUser?.email == null
+                                    ? const AssetImage('assets/images/avatar.png')
+                                    : NetworkImage(FirebaseAuth.instance.currentUser!.photoURL.toString()) as ImageProvider
                             )),
                       ),
                     ),
-                    Text(
-                      FirebaseAuth.instance.currentUser?.email == null
-                          ? 'Giriş Yapılması'
-                          : FirebaseAuth.instance.currentUser!.email.toString(),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    const Text(
-                      "Çıkış Yap",
+                    FirebaseAuth.instance.currentUser?.email == null ?
+                    InkWell(
+                      onTap: () {
+                        AuthMethods().signInWithGoogle(context);
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.only(top: 10.0),
+                        child: Text('Giriş Yap'),
+                      )
+                    ):
+                    Column(
+                      children: [
+                        Text(FirebaseAuth.instance.currentUser!.displayName.toString()),
+                        const SizedBox(height: 10),
+                        Text(FirebaseAuth.instance.currentUser!.email.toString()),
+                        InkWell(
+                          onTap: () {
+                            AuthMethods().signOut().then((s) {
+                              Navigator.pushReplacement(
+                                  context, MaterialPageRoute(builder: (context) => HomePage()));
+                            });
+                        },
+                          child: const Padding(
+                            padding: EdgeInsets.only(top: 10.0),
+                            child: Text(
+                              "Çıkış Yap", style: TextStyle(color: Colors.red),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(
                       height: 10,

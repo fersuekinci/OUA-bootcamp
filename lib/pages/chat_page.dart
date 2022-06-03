@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,11 +16,10 @@ import '../repositories/repo_business_detail.dart';
 // mesaj gönderenin tespiti için riverpod kullanıldığı zaman isim oradan çekilecek
 
 class ChatPage extends ConsumerWidget {
-  ChatPage({Key? key}) : super(key: key);
+  final String chatRoomId;
 
-  List<Mesaj> mesajlar = [
-    Mesaj("Merhaba, size nasıl yardımcı olabilirim?", "İşletme 1", DateTime.now()),
-  ];
+  ChatPage({Key? key, required this.chatRoomId}) : super(key: key);
+
   final _controller = TextEditingController();
   final business = List<BusinessModal>;
 
@@ -29,19 +29,14 @@ class ChatPage extends ConsumerWidget {
     final businessRepoProvider = ref.watch(businessDetailPageProvider);
     final chatRepoProvider = ref.watch(chatPageProvider);
     final anlikMesaj = chatRepoProvider.anlikMesaj;
+    final Stream<QuerySnapshot> chatStream = chatRepoProvider.getChatroom("Yasin_myscod3r@gmail.com");
 
     return Scaffold(
       appBar: AppBar(title: Text(businessRepoProvider.companyName)),
       body: Column(
         children: [
           Expanded(
-            child: ListView.builder(
-              reverse: true,
-              itemCount: mesajlar.length,
-              itemBuilder: (context, index) {
-                return MesajGorunumu(mesajlar[mesajlar.length - index - 1]);
-              },
-            ),
+            child: chatMessages(chatStream: chatStream),
           ),
           DecoratedBox(
             decoration: BoxDecoration(border: Border.all()),
@@ -77,9 +72,11 @@ class ChatPage extends ConsumerWidget {
                             primary: Colors.red,
                           ),
                           onPressed: () {
-                              mesajlar.add(Mesaj(anlikMesaj, "Yasin", DateTime.now()));
+                              chatRepoProvider.mesajlar.add(Mesaj(anlikMesaj, "Yasin", DateTime.now()));
+
                               _controller.clear();
-                              chatRepoProvider.notifyAnlikMesaj("");
+                              chatRepoProvider.getChatroom("Yasin_myscod3r@gmail.com");
+
                               },
                           child: const Text("Gönder"),
                         ),
@@ -101,9 +98,48 @@ class ChatPage extends ConsumerWidget {
   }
 }
 
+class chatMessages extends StatelessWidget {
+  const chatMessages({
+    Key? key,
+    required this.chatStream,
+  }) : super(key: key);
+
+  final Stream<QuerySnapshot<Object?>> chatStream;
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<QuerySnapshot>(
+      stream: chatStream,
+      builder: (context, AsyncSnapshot<QuerySnapshot>  snapshot) {
+        if (snapshot.hasError) {
+          print("1");
+          return const Text('Something went wrong');
+        }
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          print("2");
+          return const Text("Loading");
+        }
+        print("3");
+        return ListView(
+          children: snapshot.data!.docs
+              .map((DocumentSnapshot document) {
+            Map<String, dynamic> data =
+            document.data()! as Map<String, dynamic>;
+            return MesajGorunumu(Mesaj(data[0].toString(), "Yasin", DateTime.now()));
+          })
+              .toList()
+              .cast(),
+        );
+      }
+    );
+  }
+}
+
+
+
 class MesajGorunumu extends StatelessWidget {
   final Mesaj mesaj;
-  MesajGorunumu(
+  const MesajGorunumu(
       this.mesaj, {
         Key? key,
       }) : super(key: key);
@@ -129,7 +165,7 @@ class MesajGorunumu extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(25.0),
             child: Text(
-                mesaj.yazi,
+                mesaj.yazi!,
                 style: TextStyle(
                   color: mesaj.gonderen == "Yasin" ? Colors.red : Colors.white,
                   fontSize: 14.0,
@@ -137,6 +173,62 @@ class MesajGorunumu extends StatelessWidget {
                 )),
           ),
         ),
+      ),
+    );
+  }
+}
+
+
+class MessageTile extends StatelessWidget {
+  final String message;
+  final bool sendByMe;
+
+  MessageTile({required this.message, required this.sendByMe});
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(
+          top: 8,
+          bottom: 8,
+          left: sendByMe ? 0 : 24,
+          right: sendByMe ? 24 : 0),
+      alignment: sendByMe ? Alignment.centerRight : Alignment.centerLeft,
+      child: Container(
+        margin: sendByMe
+            ? EdgeInsets.only(left: 30)
+            : EdgeInsets.only(right: 30),
+        padding: EdgeInsets.only(
+            top: 17, bottom: 17, left: 20, right: 20),
+        decoration: BoxDecoration(
+            borderRadius: sendByMe ? BorderRadius.only(
+                topLeft: Radius.circular(23),
+                topRight: Radius.circular(23),
+                bottomLeft: Radius.circular(23)
+            ) :
+            BorderRadius.only(
+                topLeft: Radius.circular(23),
+                topRight: Radius.circular(23),
+                bottomRight: Radius.circular(23)),
+            gradient: LinearGradient(
+              colors: sendByMe ? [
+                const Color(0xff007EF4),
+                const Color(0xff2A75BC)
+              ]
+                  : [
+                const Color(0x1AFFFFFF),
+                const Color(0x1AFFFFFF)
+              ],
+            )
+        ),
+        child: Text(message,
+            textAlign: TextAlign.start,
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+                fontFamily: 'OverpassRegular',
+                fontWeight: FontWeight.w300)),
       ),
     );
   }

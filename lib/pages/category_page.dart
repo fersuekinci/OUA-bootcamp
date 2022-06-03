@@ -102,29 +102,33 @@ class CategoryPage extends ConsumerWidget {
                                       .toString()),
                               builder: (context, snapshot) {
                                 if (snapshot.connectionState ==
-                                    ConnectionState.waiting)
-                                  return Center(
+                                    ConnectionState.waiting) {
+                                  return const Center(
                                       child: CircularProgressIndicator());
-                                else {
+                                } else {
                                   var userModel = snapshot.data as UserModel;
                                   return CustomHeading(
-                                    title: userModel.fullName.toString() == null
-                                        ? 'Anonim'
-                                        : userModel.fullName.toString(),
-                                    subTitle: userModel.mail.toString() == null
-                                        ? ''
-                                        : userModel.mail.toString(),
+                                    title: userModel.fullName.toString(),
+                                    subTitle: userModel.mail.toString(),
                                     color: textWhite,
                                   );
                                 }
                               },
                             ),
                             SizedBox(
-                              height: spacer,
-                              width: spacer,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(100),
-                                child: Image.asset('assets/images/avatar.png'),
+                              height: spacer*1.5,
+                              width: spacer*1.5,
+                              child: DecoratedBox(
+                                decoration: ShapeDecoration(
+                                    shape: CircleBorder(),
+                                    color: Colors.white,
+                                    image: DecorationImage(
+                                        fit: BoxFit.contain,
+                                        //image: AssetImage('assets/images/avatar.png'),
+                                        image: FirebaseAuth.instance.currentUser?.email == null
+                                            ? const AssetImage('assets/images/avatar.png')
+                                            : NetworkImage(FirebaseAuth.instance.currentUser!.photoURL.toString()) as ImageProvider
+                                    )),
                               ),
                             )
                           ],
