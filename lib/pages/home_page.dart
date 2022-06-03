@@ -9,6 +9,7 @@ import 'package:oua_bootcamp/pages/menu_page.dart';
 import 'package:oua_bootcamp/model/menu_item.dart';
 import 'package:oua_bootcamp/pages/splashh.dart';
 import 'package:oua_bootcamp/pages/user_history_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'signup_page.dart';
 
@@ -17,10 +18,25 @@ class HomePage extends StatefulWidget {
 
   @override
   State<HomePage> createState() => _HomePageState();
+
+
+
 }
 
 class _HomePageState extends State<HomePage> {
   MenuItemK currentItem = MenuItems.category;
+
+  loadUsername() async {
+    await SharedPreferences.getInstance();
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadUsername();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ZoomDrawer(
@@ -60,4 +76,5 @@ class _HomePageState extends State<HomePage> {
         return CategoryPage();
     }
   }
+
 }
