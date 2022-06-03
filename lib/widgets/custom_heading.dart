@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 class CustomHeading extends StatelessWidget {
   CustomHeading({
@@ -13,20 +12,19 @@ class CustomHeading extends StatelessWidget {
   final String title;
   final String subTitle;
   final Color color;
-  bool isGuest = true;
+
+  // Giriş yapılmamışsa deaktif olacak yerleri alttaki koddan kontrol edebiliriz.
+  final bool isAnonymous = FirebaseAuth.instance.currentUser!.isAnonymous;
 
   @override
   Widget build(BuildContext context) {
 
-    if(FirebaseAuth.instance.currentUser != null){
-      isGuest = false;
-    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          isGuest
+          isAnonymous
           ? "Misafir"
           : "Hoşgeldin\n${FirebaseAuth.instance.currentUser!.displayName.toString()}" ,
           style: TextStyle(
@@ -37,7 +35,7 @@ class CustomHeading extends StatelessWidget {
         ),
         const SizedBox(height: 10.0),
         Text(
-          isGuest
+          isAnonymous
           ? "" : FirebaseAuth.instance.currentUser!.email.toString(),
           style: TextStyle(
             color: color,

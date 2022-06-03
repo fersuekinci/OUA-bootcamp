@@ -9,6 +9,7 @@ class BusinessDetailRepository extends ChangeNotifier{
   String subtitle = "";
   String email = "";
 
+
   String getEmailForChatPage(){
     String emailForChat = email.replaceAll("@gmail.com", "");
     print("mail = $email");
@@ -19,7 +20,6 @@ class BusinessDetailRepository extends ChangeNotifier{
     print("company name = $companyName");
     return companyName;
   }
-
 
   void notifyAll(){
     notifyListeners();

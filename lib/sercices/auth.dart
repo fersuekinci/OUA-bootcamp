@@ -63,4 +63,23 @@ class AuthMethods {
     await _googleSignIn.signOut();
 
   }
+
+  Future signInAnon(BuildContext context) async{
+    try {
+      await FirebaseAuth.instance.signInAnonymously();
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => HomePage()));
+
+    } on FirebaseAuthException catch (e) {
+      switch (e.code) {
+        case "operation-not-allowed":
+          print("Anonymous auth hasn't been enabled for this project.");
+          break;
+        default:
+          print("$e");
+          print("Unknown error.");
+      }
+    }
+  }
+
 }

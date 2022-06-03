@@ -1,14 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:oua_bootcamp/cloud_firestore/user_ref.dart';
 import 'package:oua_bootcamp/widgets/menu_widget.dart';
-import '../helperfun/sharedpref_helper.dart';
 import '../repositories/repo_business_detail.dart';
-import '../repositories/repo_chatpage.dart';
-import 'chat_page.dart';
+import '../sercices/auth.dart';
 import 'chat_screen.dart';
 
 class BusinessDetail extends ConsumerWidget {
@@ -25,13 +22,15 @@ class BusinessDetail extends ConsumerWidget {
     'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80'
   ];
 
+  final bool isAnonymous = FirebaseAuth.instance.currentUser!.isAnonymous;
+
   @override
   Widget build(BuildContext context, ref) {
     final businessRepoProvider = ref.watch(businessDetailPageProvider);
-    final chatRepoProvider = ref.watch(chatPageProvider);
 
     final String email = businessRepoProvider.getEmailForChatPage();
     final String companyName = businessRepoProvider.getCompanyName();
+
 
 
     return Scaffold(
@@ -110,13 +109,13 @@ class BusinessDetail extends ConsumerWidget {
                         FloatingActionButton(
                           heroTag: "startChat",
                           onPressed: () {
-                            if(0==0){
+                            if(isAnonymous){
+                              girisYapDialog(context);
+                            }else{
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => ChatScreen(email, companyName)));
-                            }else{
-                              Center(child: Text("Giriş Yap uyarısı dialog popup hazırlanacak"));
                             }
                           },
                           elevation: 20,
@@ -212,6 +211,38 @@ class BusinessDetail extends ConsumerWidget {
   }
 }
 
+
+girisYapDialog(BuildContext context) {
+
+  Widget okButton = TextButton(
+    child: const Text("Giriş Yap"),
+    onPressed: () {
+      AuthMethods().signInWithGoogle(context);
+    },
+  );
+  Widget noButton = TextButton(
+    child: const Text("Vazgeç"),
+    onPressed: () {
+      Navigator.of(context).pop();
+    },
+  );
+
+  AlertDialog alert = AlertDialog(
+    title: const Text("Misafir Kullanıcı"),
+    content: const Text("İşletme ile iletişime geçebilmeniz için giriş yapmanız gerekmektedir."),
+    actions: [
+      noButton,
+      okButton,
+    ],
+  );
+
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
 
 String getChatRoomId(String a, String b){
 

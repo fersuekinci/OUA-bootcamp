@@ -30,8 +30,6 @@ class CategoryPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
-    bool isList = false;
-
     return Scaffold(
         key: scaffoldState,
         appBar: AppBar(
@@ -155,8 +153,8 @@ class CategoryPage extends ConsumerWidget {
                   height: MediaQuery.of(context).size.height - 350,
                   width: MediaQuery.of(context).size.width,
                   color: kWhiteColor,
-                  column: isList ? 1 : 2,
-                  ratio: isList ? 2.6 : 1.3,
+                  column: 2,
+                  ratio: 1.3,
                   items: categoryList.length,
                   itemBuilder: (context, index) {
                     return FutureBuilder(
@@ -206,7 +204,6 @@ class CategoryPage extends ConsumerWidget {
             ],
           ),
         ));
-    ;
   }
 
   deneme() {
