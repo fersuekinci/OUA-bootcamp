@@ -1,14 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:oua_bootcamp/cloud_firestore/user_ref.dart';
 import 'package:oua_bootcamp/constants.dart';
 import 'package:oua_bootcamp/model/menu_item.dart';
 import 'package:oua_bootcamp/state/state_management.dart';
-
-import '../model/user_model.dart';
 import '../sercices/auth.dart';
-import 'home_page.dart';
 
 //ZoomDrawer menü elemanlarının oluşturulması ve özelliklerinin verilmesi
 class MenuItems {
@@ -89,9 +85,9 @@ class MenuPage extends ConsumerWidget {
                         Text(FirebaseAuth.instance.currentUser!.email.toString()),
                         InkWell(
                           onTap: () {
+
                             AuthMethods().signOut().then((s) {
-                              Navigator.pushReplacement(
-                                  context, MaterialPageRoute(builder: (context) => HomePage()));
+                              AuthMethods().signInAnon(context);
                             });
                         },
                           child: const Padding(

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:oua_bootcamp/model/CategoryModal.dart';
 
+// Giriş yapılmamışsa deaktif olacak yerleri alttaki koddan kontrol edebiliriz.
+// final bool isAnonymous = FirebaseAuth.instance.currentUser!.isAnonymous;
+
 //Renk ve font tanımlamaları için kullanılacaktır.
 const Color appbarColor = kPrimaryColor;
 

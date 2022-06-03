@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../sercices/auth.dart';
-import 'home_page.dart';
 
 class SignIn extends StatefulWidget {
   @override
@@ -38,8 +37,7 @@ class _SignInState extends State<SignIn> {
             const SizedBox(height: 50),
             GestureDetector(
               onTap: () {
-                Navigator.pushReplacement(
-                    context, MaterialPageRoute(builder: (context) => const HomePage()));
+                AuthMethods().signInAnon(context);
               },
               child: Container(
                 decoration: BoxDecoration(
