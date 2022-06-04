@@ -4,10 +4,16 @@ class BusinessModal {
   String? address;
   String? phone;
   String? subtitle;
+  dynamic? key;
   String? email;
 
   BusinessModal(
-      {this.name, this.content, this.address, this.phone, this.subtitle, this.email});
+      {this.name,
+      this.content,
+      this.address,
+      this.phone,
+      this.subtitle,
+      this.email});
 
   BusinessModal.fromJson(Map<String, dynamic> json) {
     name = json['name'];

@@ -1,5 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+
+import 'package:google_fonts/google_fonts.dart';
 import 'package:oua_bootcamp/constants.dart';
 import 'package:oua_bootcamp/pages/business_detail_page.dart';
 import 'package:oua_bootcamp/pages/business_home_page.dart';
@@ -17,7 +19,8 @@ import 'package:page_transition/page_transition.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  initializeDateFormatting().then((_) => runApp(const ProviderScope(child: MyApp())));
+  initializeDateFormatting()
+      .then((_) => runApp(const ProviderScope(child: MyApp())));
 }
 
 class MyApp extends StatelessWidget {
@@ -29,15 +32,27 @@ class MyApp extends StatelessWidget {
       //debug logosunu kaldırmak için kullanıldı.
       debugShowCheckedModeBanner: false,
       title: 'Material App',
-      theme: ThemeData.light().copyWith(
-        //appBarTheme : proje kapsamında appbar teması özellikleri
+      // theme: ThemeData.light().copyWith(
+      //   //appBarTheme : proje kapsamında appbar teması özellikleri
+      //   appBarTheme: const AppBarTheme(
+      //     centerTitle: true,
+      //     backgroundColor: appbarColor,
+      //     elevation: 15,
+      //     iconTheme: IconThemeData(color: Colors.black),
+      //     titleTextStyle: TextStyle(color: Colors.black, fontSize: 20),
+      //   ),
+      // ),
+
+      theme: ThemeData(
+        // We set Poppins as our default font
+        textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
+        primaryColor: kSecondaryColor,
         appBarTheme: const AppBarTheme(
           centerTitle: true,
-          backgroundColor: appbarColor,
-          elevation: 15,
-          iconTheme: IconThemeData(color: Colors.black),
-          titleTextStyle: TextStyle(color: Colors.black, fontSize: 20),
+          backgroundColor: kSecondaryColor,
+          elevation: 0,
         ),
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       onGenerateRoute: (settings) {
         switch (settings.name) {
@@ -63,16 +78,18 @@ class MyApp extends StatelessWidget {
             return null;
         }
       },
-      home: FutureBuilder(
-        future: AuthMethods().getCurrentUser(),
-        builder: (context, AsyncSnapshot<dynamic> snapshot) {
-          if (snapshot.hasData) {
-            return HomePage();
-          } else {
-            return SignIn();
-          }
-        },
-      ),
+
+      home: HomePage(),
+      // home: FutureBuilder(
+      //   future: AuthMethods().getCurrentUser(),
+      //   builder: (context, AsyncSnapshot<dynamic> snapshot) {
+      //     if (snapshot.hasData) {
+      //       return HomePage();
+      //     } else {
+      //       return SignIn();
+      //     }
+      //   },
+      // ),
     );
   }
 }

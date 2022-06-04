@@ -84,3 +84,5 @@ Future<DateTime> syncTime() async {
   var offset = await NTP.getNtpOffset(localTime: now);
   return now.add(Duration(microseconds: offset));
 }
+
+enum SlidableAction { appointment, detail }

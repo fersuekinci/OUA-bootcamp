@@ -14,7 +14,6 @@ import 'chat_screen.dart';
 class BusinessDetail extends ConsumerWidget {
   BusinessDetail({Key? key}) : super(key: key);
 
-
   //İşletmenin yüklediği resimler yer alacak.
   final List<String> imgList = [
     'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
@@ -32,7 +31,6 @@ class BusinessDetail extends ConsumerWidget {
 
     final String email = businessRepoProvider.getEmailForChatPage();
     final String companyName = businessRepoProvider.getCompanyName();
-
 
     return Scaffold(
         appBar: AppBar(
@@ -58,46 +56,50 @@ class BusinessDetail extends ConsumerWidget {
                 viewportFraction: 1,
               ),
             ),
-            Card(
-              child: FutureBuilder(
-                future: getUserProfiles(
-                    ref, FirebaseAuth.instance.currentUser?.email.toString()),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting)
-                    return Center(child: CircularProgressIndicator());
-                  else {
-                    //var userModel = snapshot.data as UserModel;
-                    return Container(
-                      child: Text("Bu ekranın değişkenlerinin yerinin ayarlanması gerekiyor"),
-                      //child: Text('${userModel.mail}'),
-                    );
-                  }
-                },
-              ),
-            ),
+            // Card(
+            //   child: FutureBuilder(
+            //     future: getUserProfiles(
+            //         ref, FirebaseAuth.instance.currentUser?.email.toString()),
+            //     builder: (context, snapshot) {
+            //       if (snapshot.connectionState == ConnectionState.waiting)
+            //         return Center(child: CircularProgressIndicator());
+            //       else {
+            //         //var userModel = snapshot.data as UserModel;
+            //         return Container(
+            //           child: Text("Bu ekranın değişkenlerinin yerinin ayarlanması gerekiyor"),
+            //           //child: Text('${userModel.mail}'),
+            //         );
+            //       }
+            //     },
+            //   ),
+            // ),
             //İşletme bilgilerinin yazılması
             Card(
               clipBehavior: Clip.antiAlias,
               child: Column(
                 children: [
                   ListTile(
-                    title: Text(businessRepoProvider.subtitle,
+                    title: Text(
+                      businessRepoProvider.subtitle,
                       style: const TextStyle(fontSize: 18),
                       textAlign: TextAlign.center,
                     ),
-                    subtitle: Text(businessRepoProvider.phone,
+                    subtitle: Text(
+                      businessRepoProvider.phone,
                       style: TextStyle(color: Colors.black.withOpacity(0.6)),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(16.0),
-                    child: Text(businessRepoProvider.address,
+                    child: Text(
+                      businessRepoProvider.address,
                       style: TextStyle(color: Colors.black.withOpacity(0.6)),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(16.0),
-                    child: Text(businessRepoProvider.content,
+                    child: Text(
+                      businessRepoProvider.content,
                       style: TextStyle(color: Colors.black.withOpacity(0.6)),
                     ),
                   ),
@@ -110,13 +112,16 @@ class BusinessDetail extends ConsumerWidget {
                         FloatingActionButton(
                           heroTag: "startChat",
                           onPressed: () {
-                            if(0==0){
+                            if (0 == 0) {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => ChatScreen(email, companyName)));
-                            }else{
-                              Center(child: Text("Giriş Yap uyarısı dialog popup hazırlanacak"));
+                                      builder: (context) =>
+                                          ChatScreen(email, companyName)));
+                            } else {
+                              Center(
+                                  child: Text(
+                                      "Giriş Yap uyarısı dialog popup hazırlanacak"));
                             }
                           },
                           elevation: 20,
@@ -212,12 +217,10 @@ class BusinessDetail extends ConsumerWidget {
   }
 }
 
-
-String getChatRoomId(String a, String b){
-
-  if (a.substring(0,1).codeUnitAt(0) > b.substring(0, 1).codeUnitAt(0)){
+String getChatRoomId(String a, String b) {
+  if (a.substring(0, 1).codeUnitAt(0) > b.substring(0, 1).codeUnitAt(0)) {
     return "$b\_$a";
-  }else{
+  } else {
     return "$a\_$b";
   }
 }

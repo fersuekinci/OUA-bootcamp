@@ -1,27 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_auth_ui/flutter_auth_ui.dart';
-import 'package:oua_bootcamp/cloud_firestore/user_ref.dart';
-import 'package:oua_bootcamp/model/user_model.dart';
-import 'package:oua_bootcamp/widgets/bottom_clipper.dart';
-import 'package:oua_bootcamp/widgets/custom_heading.dart';
-import 'package:oua_bootcamp/widgets/custom_search.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:oua_bootcamp/cloud_firestore/all_business_ref.dart';
 import 'package:oua_bootcamp/model/CategoryModal.dart';
 import 'package:oua_bootcamp/utils/utils.dart';
-import 'package:oua_bootcamp/widgets/menu_widget.dart';
 import 'package:oua_bootcamp/constants.dart';
 import 'package:oua_bootcamp/widgets/CategoryItems.dart';
-import 'package:oua_bootcamp/widgets/CategoryView.dart';
-
 // ignore: import_of_legacy_library_into_null_safe
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'package:oua_bootcamp/state/state_management.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
+// ignore: must_be_immutable
 class CategoryPage extends ConsumerWidget {
   GlobalKey<ScaffoldState> scaffoldState = GlobalKey();
 
@@ -29,188 +23,176 @@ class CategoryPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
-    bool isList = false;
+    const String appbarTitle = 'U S T A S I N I   B U L';
 
     return Scaffold(
+        backgroundColor: kSecondaryColor,
         key: scaffoldState,
         appBar: AppBar(
-            //ZoomDraer eklentisi
-            leading: MenuWidget(),
-            actions: [
-              FutureBuilder(
-                future: checkLoginState(context, ref, false, scaffoldState),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else {
-                    var userState = snapshot.data as LOGIN_STATE;
-                    if (userState == LOGIN_STATE.LOGGED) {
-                      return IconButton(
-                        icon: Icon(Icons.logout),
-                        onPressed: () async {
-                          await FirebaseAuth.instance.signOut();
-                        },
-                      );
-                    } else {
-                      return IconButton(
-                        icon: const Icon(Icons.door_back_door),
-                        onPressed: () => processLogin(context, ref),
-                      );
-                    }
-                  }
-                },
-              )
-            ],
-            title: const Text(
-              "Burası Neresi?",
+            automaticallyImplyLeading: false,
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SvgPicture.asset(
+                  'assets/svg/logo.svg',
+                  width: 75,
+                  height: 75,
+                ),
+                const Text(
+                  appbarTitle,
+                  style: TextStyle(
+                      fontFamily: fontFamiyKanadaka,
+                      fontWeight: FontWeight.bold),
+                )
+              ],
             )),
-        extendBody: true,
-        //Yan menü - drawer eklentisi (Widget klasöüründe)
-        //drawer: const DrawerWidget(),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Stack(
-                alignment: Alignment.topCenter,
-                children: [
-                  ClipPath(
-                    clipper: BottomClipper(),
-                    child: Container(
-                      //width: size.width,
-                      height: 300,
-                      decoration: const BoxDecoration(color: kSecondColor),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        left: appPadding, right: appPadding),
-                    child: Column(
-                      children: [
-                        const SizedBox(
-                          height: spacer + 24,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            FutureBuilder(
-                              future: getUserProfiles(
-                                  ref,
-                                  FirebaseAuth.instance.currentUser?.email
-                                      .toString()),
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState ==
-                                    ConnectionState.waiting) {
-                                  return const Center(
-                                      child: CircularProgressIndicator());
-                                } else {
-                                  var userModel = snapshot.data as UserModel;
-                                  return CustomHeading(
-                                    title: userModel.fullName.toString(),
-                                    subTitle: userModel.mail.toString(),
-                                    color: textWhite,
-                                  );
-                                }
-                              },
-                            ),
-                            SizedBox(
-                              height: spacer*1.5,
-                              width: spacer*1.5,
-                              child: DecoratedBox(
-                                decoration: ShapeDecoration(
-                                    shape: CircleBorder(),
-                                    color: Colors.white,
-                                    image: DecorationImage(
-                                        fit: BoxFit.contain,
-                                        //image: AssetImage('assets/images/avatar.png'),
-                                        image: FirebaseAuth.instance.currentUser?.email == null
-                                            ? const AssetImage('assets/images/avatar.png')
-                                            : NetworkImage(FirebaseAuth.instance.currentUser!.photoURL.toString()) as ImageProvider
-                                    )),
-                              ),
-                            )
-                          ],
-                        ),
-                        const SizedBox(
-                          height: spacer,
-                        ),
-                        const CustomSearchField(
-                          hintField: "Aramak için tıklayınız...",
-                          backgroundColor: Colors.white,
-                        ),
-                        SizedBox(height: spacer - 30.0),
-                        //CustomCategoryCard(),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-              const SizedBox(
-                height: smallSpacer,
-              ),
-              Categoryview(
-                  direction: Axis.vertical,
-                  height: MediaQuery.of(context).size.height - 350,
-                  width: MediaQuery.of(context).size.width,
-                  color: kWhiteColor,
-                  column: isList ? 1 : 2,
-                  ratio: isList ? 2.6 : 1.3,
-                  items: categoryList.length,
-                  itemBuilder: (context, index) {
-                    return FutureBuilder(
-                        future: getCategory(),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          } else {
-                            var categories =
-                                snapshot.data as List<CategoryModal>;
-                            if (categories == null || categories.length == 0)
-                              return Center(
-                                child: Text('Kategori bulunamadı'),
-                              );
-                            else {
-                              return GestureDetector(
-                                onTap: () => Navigator.pushNamed(
-                                    context, '/businessList',
-                                    arguments: ref
-                                            .read(selectedCategory.state)
-                                            .state
-                                            .category =
-                                        categories[index].category.toString()),
-                                child: CategoryItems(
-                                  height: 150.0,
-                                  width: MediaQuery.of(context).size.width,
-                                  paddingHorizontal: 0.0,
-                                  paddingVertical: 0.0,
-                                  align: Alignment.center,
-                                  radius: kLessPadding,
-                                  blendMode: BlendMode.difference,
-                                  color: kDarkColor,
-                                  image: categories[index].image!,
-                                  title: categories[index].category!,
-                                  titleSize: 18.0,
-                                  amount: "",
-                                  amountSize: 0.0,
-                                ),
-                              );
-                            }
-                          }
-                        });
-                  })
-            ],
-          ),
-        ));
-    ;
+        body: getBody(ref));
   }
 
-  deneme() {
-    return Container();
+  Widget getBody(WidgetRef ref) {
+    bool isList = false;
+    return SafeArea(
+      bottom: false,
+      child: Column(
+        children: [
+          Container(
+            margin: const EdgeInsets.all(kDefaultPadding),
+            padding: const EdgeInsets.symmetric(
+              horizontal: kDefaultPadding,
+              vertical: kDefaultPadding / 4,
+            ),
+            decoration: BoxDecoration(
+              color: kThirdColor,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: const [
+                Text(
+                  'Kategori Seç',
+                  style: TextStyle(
+                      color: kSecondaryColor,
+                      fontSize: 20,
+                      fontFamily: fontFamiyKanadaka),
+                ),
+                Text(
+                  'İşletmeleri Listele',
+                  style: TextStyle(
+                      color: kPrimaryColor,
+                      fontSize: 20,
+                      fontFamily: fontFamiyKanadaka),
+                ),
+              ],
+            ),
+          ),
+          Container(
+              margin: const EdgeInsets.all(kDefaultPadding),
+              padding: const EdgeInsets.only(
+                  left: kDefaultPadding, right: kDefaultPadding),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  const Text(
+                    'Giriş Yap / Kayıt Ol',
+                    style: TextStyle(color: kThirdColor, fontSize: 18),
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: SvgPicture.asset(
+                      'assets/svg/icons8-google.svg',
+                      width: 24,
+                      height: 24,
+                    ),
+                  ),
+                  IconButton(
+                      onPressed: () {},
+                      icon: SvgPicture.asset(
+                        'assets/svg/icons8-microsoft-outlook.svg',
+                        width: 24,
+                        height: 24,
+                      ))
+                ],
+              )),
+          Expanded(
+            child: Stack(
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(top: 70),
+                  decoration: const BoxDecoration(
+                    color: kPrimaryColor,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(40),
+                      topRight: Radius.circular(40),
+                    ),
+                  ),
+                ),
+                FutureBuilder(
+                    future: getCategory(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(
+                          child: SpinKitThreeInOut(
+                            color: kThirdColor,
+                          ),
+                        );
+                      } else {
+                        var categories = snapshot.data as List<CategoryModal>;
+                        if (categories.isEmpty) {
+                          return const Center(
+                            child: Text('Kategori bulunamadı'),
+                          );
+                        } else {
+                          return GridView.builder(
+                              padding: const EdgeInsets.all(24),
+                              scrollDirection: Axis.vertical,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: isList ? 1 : 2,
+                                childAspectRatio: isList ? 2.6 : 1.3,
+                                mainAxisSpacing: 0.0,
+                                crossAxisSpacing: 0.0,
+                              ),
+                              itemCount: 8,
+                              itemBuilder: (context, index) {
+                                return GestureDetector(
+                                  onTap: () => Navigator.pushNamed(
+                                      context, '/businessList',
+                                      arguments: ref
+                                              .read(selectedCategory.state)
+                                              .state
+                                              .category =
+                                          categories[index]
+                                              .category
+                                              .toString()),
+                                  child: CategoryItems(
+                                    height: 150.0,
+                                    width: MediaQuery.of(context).size.width,
+                                    paddingHorizontal: 0.0,
+                                    paddingVertical: 0.0,
+                                    align: Alignment.center,
+                                    radius: kLessPadding,
+                                    blendMode: BlendMode.difference,
+                                    color: kDarkColor,
+                                    image: categories[index].image!,
+                                    title: categories[index].category!,
+                                    titleSize: 18.0,
+                                    amount: "",
+                                    amountSize: 0.0,
+                                  ),
+                                );
+                              });
+                        }
+                      }
+                    }),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   processLogin(BuildContext context, WidgetRef ref) async {

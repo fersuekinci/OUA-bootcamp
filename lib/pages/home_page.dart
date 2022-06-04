@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/config.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:oua_bootcamp/constants.dart';
-import 'package:oua_bootcamp/pages/business_appointment.dart';
+
 import 'package:oua_bootcamp/pages/businesses_page.dart';
 import 'package:oua_bootcamp/pages/category_page.dart';
 import 'package:oua_bootcamp/pages/menu_page.dart';
 import 'package:oua_bootcamp/model/menu_item.dart';
+import 'package:oua_bootcamp/pages/splashh.dart';
 import 'package:oua_bootcamp/pages/user_history_page.dart';
 
 import 'signup_page.dart';
@@ -46,14 +47,13 @@ class _HomePageState extends State<HomePage> {
   Widget getScreen() {
     switch (currentItem) {
       case MenuItems.category:
-        return CategoryPage();
+        return Splash();
 
       case MenuItems.businesses:
         return Businesses();
       case MenuItems.register:
         return const SignUp();
-      case MenuItems.businessAppointment:
-        return const BusinessAppointment();
+
       case MenuItems.userHistory:
         return UserHistoryPage();
       default:

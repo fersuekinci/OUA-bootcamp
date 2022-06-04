@@ -6,7 +6,8 @@ import '../sercices/database.dart';
 
 class ChatScreen extends StatefulWidget {
   final String chatWithUsername, name;
-  const ChatScreen(this.chatWithUsername, this.name, {Key? key}) : super(key: key);
+  const ChatScreen(this.chatWithUsername, this.name, {Key? key})
+      : super(key: key);
   @override
   _ChatScreenState createState() => _ChatScreenState();
 }
@@ -20,16 +21,13 @@ class _ChatScreenState extends State<ChatScreen> {
   getMyInfoFromSharedPreference() async {
     myName = await SharedPreferenceHelper().getDisplayName();
     myProfilePic = await SharedPreferenceHelper().getUserProfileUrl();
-    myUserName = await SharedPreferenceHelper().getUserName();
+    myUserName = 'Murat '; //await SharedPreferenceHelper().getUserName();
     myEmail = await SharedPreferenceHelper().getUserEmail();
 
     chatRoomId = getChatRoomIdByUsernames(widget.chatWithUsername, myUserName!);
   }
 
   getChatRoomIdByUsernames(String a, String b) {
-    print(a);
-    print(b);
-    print("123");
     if (a.substring(0, 1).codeUnitAt(0) > b.substring(0, 1).codeUnitAt(0)) {
       return "$b\_$a";
     } else {
@@ -64,7 +62,8 @@ class _ChatScreenState extends State<ChatScreen> {
           "lastMessageSendTs": lastMessageTs,
           "lastMessageSendBy": myUserName
         };
-        DatabaseMethods().updateLastMessageSend(chatRoomId!, lastMessageInfoMap);
+        DatabaseMethods()
+            .updateLastMessageSend(chatRoomId!, lastMessageInfoMap);
         if (sendClicked) {
           // remove the text in the message input field
           messageTextEdittingController.text = "";
@@ -78,7 +77,7 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget chatMessageTile(String message, bool sendByMe) {
     return Row(
       mainAxisAlignment:
-      sendByMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+          sendByMe ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: [
         Flexible(
           child: Container(
@@ -86,11 +85,13 @@ class _ChatScreenState extends State<ChatScreen> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
                   topLeft: const Radius.circular(24),
-                  bottomRight:
-                  sendByMe ? const Radius.circular(0) : const Radius.circular(24),
+                  bottomRight: sendByMe
+                      ? const Radius.circular(0)
+                      : const Radius.circular(24),
                   topRight: const Radius.circular(24),
-                  bottomLeft:
-                  sendByMe ? const Radius.circular(24) : const Radius.circular(0),
+                  bottomLeft: sendByMe
+                      ? const Radius.circular(24)
+                      : const Radius.circular(0),
                 ),
                 color: sendByMe ? Colors.red : Colors.blue,
               ),
@@ -110,16 +111,17 @@ class _ChatScreenState extends State<ChatScreen> {
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         return snapshot.hasData
             ? ListView.builder(
-            padding: const EdgeInsets.only(bottom: 70, top: 16),
-            itemCount: snapshot.data!.docs.length,
-            reverse: true,
-            itemBuilder: (context, index) {
-              DocumentSnapshot ds = snapshot.data!.docs[index];
-              return chatMessageTile(
-                  ds["message"], myUserName == ds["sendBy"]);
-            })
-            : const Center(child: Text('No messages...'),
-        );
+                padding: const EdgeInsets.only(bottom: 70, top: 16),
+                itemCount: snapshot.data!.docs.length,
+                reverse: true,
+                itemBuilder: (context, index) {
+                  DocumentSnapshot ds = snapshot.data!.docs[index];
+                  return chatMessageTile(
+                      ds["message"], myUserName == ds["sendBy"]);
+                })
+            : const Center(
+                child: Text('No messages...'),
+              );
       },
     );
   }
@@ -158,17 +160,17 @@ class _ChatScreenState extends State<ChatScreen> {
                 children: [
                   Expanded(
                       child: TextField(
-                        controller: messageTextEdittingController,
-                        onSubmitted: (value){
-                          addMessage(false);
-                        },
-                        style: const TextStyle(color: Colors.white),
-                        decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "Mesaj yaz..",
-                            hintStyle:
+                    controller: messageTextEdittingController,
+                    onSubmitted: (value) {
+                      addMessage(false);
+                    },
+                    style: const TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "Mesaj yaz..",
+                        hintStyle:
                             TextStyle(color: Colors.white.withOpacity(0.6))),
-                      )),
+                  )),
                   GestureDetector(
                     onTap: () {
                       print("1");

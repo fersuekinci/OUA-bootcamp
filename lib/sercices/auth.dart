@@ -16,19 +16,17 @@ class AuthMethods {
   }
 
   signInWithGoogle(BuildContext context) async {
-
     final GoogleSignInAccount? googleSignInAccount =
-    await _googleSignIn.signIn();
+        await _googleSignIn.signIn();
 
     final GoogleSignInAuthentication? googleSignInAuthentication =
-    await googleSignInAccount?.authentication;
+        await googleSignInAccount?.authentication;
 
     final AuthCredential credential = GoogleAuthProvider.credential(
         idToken: googleSignInAuthentication?.idToken,
         accessToken: googleSignInAuthentication?.accessToken);
 
-    UserCredential result =
-    await _auth.signInWithCredential(credential);
+    UserCredential result = await _auth.signInWithCredential(credential);
 
     User userDetails = result.user!;
 
@@ -61,6 +59,5 @@ class AuthMethods {
     prefs.clear();
     await _auth.signOut();
     await _googleSignIn.signOut();
-
   }
 }

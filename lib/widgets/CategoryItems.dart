@@ -1,8 +1,8 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'package:flutter/material.dart';
 
 import 'package:oua_bootcamp/constants.dart';
-import 'package:oua_bootcamp/state/state_management.dart';
-import 'package:provider/provider.dart';
 
 class CategoryItems extends StatelessWidget {
   final double height,
@@ -47,9 +47,11 @@ class CategoryItems extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(radius),
               image: DecorationImage(
+                colorFilter: ColorFilter.mode(
+                    kPrimaryColor.withOpacity(0.8), BlendMode.dstATop),
                 image: AssetImage(image),
                 fit: BoxFit.cover,
-                colorFilter: ColorFilter.mode(color, blendMode),
+                // colorFilter: ColorFilter.mode(color, blendMode),
               ),
             ),
           ),

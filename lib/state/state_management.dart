@@ -11,6 +11,7 @@ final forceReload = StateProvider((ref) => false);
 
 //CategoryState
 final currentState = StateProvider((ref) => 1);
+final allCategory = StateProvider((ref) => CategoryModal());
 final selectedCategory = StateProvider((ref) => CategoryModal());
 final selectedBusiness = StateProvider((ref) => BusinessModal());
 final selectedAppointment = StateProvider((ref) => AppointmentModel());
