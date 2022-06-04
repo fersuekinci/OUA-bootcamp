@@ -35,8 +35,8 @@ class CategoryPage extends ConsumerWidget {
               children: [
                 SvgPicture.asset(
                   'assets/svg/logo.svg',
-                  width: 75,
-                  height: 75,
+                  width: 70,
+                  height: 70,
                 ),
                 const Text(
                   appbarTitle,
