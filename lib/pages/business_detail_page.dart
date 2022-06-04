@@ -1,14 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:oua_bootcamp/cloud_firestore/user_ref.dart';
 import 'package:oua_bootcamp/widgets/menu_widget.dart';
-import '../helperfun/sharedpref_helper.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+import '../constants.dart';
 import '../repositories/repo_business_detail.dart';
-import '../repositories/repo_chatpage.dart';
-import 'chat_page.dart';
 import 'chat_screen.dart';
 
 class BusinessDetail extends ConsumerWidget {
@@ -27,7 +24,6 @@ class BusinessDetail extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     final businessRepoProvider = ref.watch(businessDetailPageProvider);
-    final chatRepoProvider = ref.watch(chatPageProvider);
 
     final String email = businessRepoProvider.getEmailForChatPage();
     final String companyName = businessRepoProvider.getCompanyName();
@@ -112,16 +108,14 @@ class BusinessDetail extends ConsumerWidget {
                         FloatingActionButton(
                           heroTag: "startChat",
                           onPressed: () {
-                            if (0 == 0) {
+                            if (FirebaseAuth.instance.currentUser?.email != null) {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
                                           ChatScreen(email, companyName)));
                             } else {
-                              Center(
-                                  child: Text(
-                                      "Giriş Yap uyarısı dialog popup hazırlanacak"));
+                              alertMethod(context).show();
                             }
                           },
                           elevation: 20,
@@ -214,6 +208,37 @@ class BusinessDetail extends ConsumerWidget {
                   )),
             ))
         .toList();
+  }
+
+
+  Alert alertMethod(context) {
+    return Alert(
+        style: AlertStyle(
+            titleStyle: TextStyle(fontFamily: fontFamiy, fontSize: 16),
+            descStyle: TextStyle(fontFamily: fontFamiy, fontSize: 16),
+            backgroundColor: Colors.white,
+            alertElevation: 20),
+        context: context,
+        type: AlertType.warning,
+        title: 'Giriş Yap !',
+        desc:
+        'Seçilen işletmeyle mesajlaşabilmek için giriş yapmanız ya da kayıt olmanız gerekmektedir. ',
+        buttons: [
+          DialogButton(
+              color: Colors.red,
+              child: Text(
+                'Vazgeç',
+                style:
+                TextStyle(color: Colors.white, fontFamily: fontFamiy),
+              ),
+              onPressed: () => Navigator.of(context).pop()),
+          DialogButton(
+              color: kPrimaryColor,
+              child: Text('Giriş Yap',
+                  style: TextStyle(
+                      color: Colors.white, fontFamily: fontFamiy)),
+              onPressed: () {})
+        ]);
   }
 }
 

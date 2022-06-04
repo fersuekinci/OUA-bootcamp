@@ -13,6 +13,8 @@ import 'package:oua_bootcamp/state/state_management.dart';
 import 'package:oua_bootcamp/utils/utils.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
+import '../sercices/auth.dart';
+
 // ignore: must_be_immutable
 class Businesses extends ConsumerWidget {
   List<BusinessModal> businessList = [];
@@ -173,6 +175,10 @@ class Businesses extends ConsumerWidget {
                     }),
               ],
               child: GestureDetector(
+                onTap: () {
+                  AuthMethods().signInWithGoogle(context);
+                  //AuthMethods().signOut();
+                },
                 child: Column(
                   children: [
                     ListTile(
@@ -209,39 +215,12 @@ class Businesses extends ConsumerWidget {
 
   Future<void> onDismissed(int index, SlidableAction action, context, ref,
       businessRepoProvider) async {
-    final item = businessList;
     // setState(() => businessList.removeAt(index));
 
     switch (action) {
       case SlidableAction.appointment:
         if (FirebaseAuth.instance.currentUser?.email == null) {
-          Alert(
-              style: AlertStyle(
-                  titleStyle: TextStyle(fontFamily: fontFamiy, fontSize: 16),
-                  descStyle: TextStyle(fontFamily: fontFamiy, fontSize: 16),
-                  backgroundColor: Colors.white,
-                  alertElevation: 20),
-              context: context,
-              type: AlertType.warning,
-              title: 'Randevu Al',
-              desc:
-                  'Seçilen işletmeden randevu alabilmek için giriş yapmanız ya da kayıt olmanız gerekmektedir. ',
-              buttons: [
-                DialogButton(
-                    color: Colors.red,
-                    child: Text(
-                      'Vazgeç',
-                      style:
-                          TextStyle(color: Colors.white, fontFamily: fontFamiy),
-                    ),
-                    onPressed: () => Navigator.of(context).pop()),
-                DialogButton(
-                    color: kPrimaryColor,
-                    child: Text('Giriş Yap',
-                        style: TextStyle(
-                            color: Colors.white, fontFamily: fontFamiy)),
-                    onPressed: () {})
-              ]).show();
+          alertMethod(context).show();
         } else {
           Navigator.pushNamed(context, '/makeAppointment',
               arguments: ref.read(selectedBusiness.state).state.name =
@@ -262,5 +241,35 @@ class Businesses extends ConsumerWidget {
             context, MaterialPageRoute(builder: (context) => BusinessDetail()));
         break;
     }
+  }
+
+  Alert alertMethod(context) {
+    return Alert(
+            style: AlertStyle(
+                titleStyle: TextStyle(fontFamily: fontFamiy, fontSize: 16),
+                descStyle: TextStyle(fontFamily: fontFamiy, fontSize: 16),
+                backgroundColor: Colors.white,
+                alertElevation: 20),
+            context: context,
+            type: AlertType.warning,
+            title: 'Randevu Al',
+            desc:
+                'Seçilen işletmeden randevu alabilmek için giriş yapmanız ya da kayıt olmanız gerekmektedir. ',
+            buttons: [
+              DialogButton(
+                  color: Colors.red,
+                  child: Text(
+                    'Vazgeç',
+                    style:
+                        TextStyle(color: Colors.white, fontFamily: fontFamiy),
+                  ),
+                  onPressed: () => Navigator.of(context).pop()),
+              DialogButton(
+                  color: kPrimaryColor,
+                  child: Text('Giriş Yap',
+                      style: TextStyle(
+                          color: Colors.white, fontFamily: fontFamiy)),
+                  onPressed: () {})
+            ]);
   }
 }

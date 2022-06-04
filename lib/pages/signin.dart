@@ -37,7 +37,7 @@ class _SignInState extends State<SignIn> {
             const SizedBox(height: 50),
             GestureDetector(
               onTap: () {
-                AuthMethods().signInAnon(context);
+               // AuthMethods().signInAnon(context);
               },
               child: Container(
                 decoration: BoxDecoration(

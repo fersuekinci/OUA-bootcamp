@@ -4,7 +4,6 @@ import 'package:flutter_auth_ui/flutter_auth_ui.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:oua_bootcamp/cloud_firestore/all_business_ref.dart';
 import 'package:oua_bootcamp/model/CategoryModal.dart';
 import 'package:oua_bootcamp/utils/utils.dart';
@@ -50,7 +49,6 @@ class CategoryPage extends ConsumerWidget {
   }
 
   Widget getBody(WidgetRef ref) {
-    bool isList = false;
     return SafeArea(
       bottom: false,
       child: Column(
@@ -95,9 +93,16 @@ class CategoryPage extends ConsumerWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  const Text(
-                    'Giriş Yap / Kayıt Ol',
-                    style: TextStyle(color: kThirdColor, fontSize: 18),
+                  GestureDetector(
+                    onTap: () {
+                      FirebaseAuth.instance.signOut();
+                      //print(FirebaseAuth.instance.currentUser!.email.toString());
+
+                    },
+                    child: const Text(
+                      'Giriş Yap / Kayıt Ol',
+                      style: TextStyle(color: kThirdColor, fontSize: 18),
+                    ),
                   ),
                   IconButton(
                     onPressed: () {},
@@ -150,15 +155,15 @@ class CategoryPage extends ConsumerWidget {
                               scrollDirection: Axis.vertical,
                               gridDelegate:
                                   SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: isList ? 1 : 2,
-                                childAspectRatio: isList ? 2.6 : 1.3,
+                                crossAxisCount: 2,
+                                childAspectRatio: 1.3,
                                 mainAxisSpacing: 0.0,
                                 crossAxisSpacing: 0.0,
                               ),
                               itemCount: 8,
                               itemBuilder: (context, index) {
                                 return GestureDetector(
-                                  onTap: () => Navigator.pushNamed(
+                                  onTap: () => Navigator.pushReplacementNamed(
                                       context, '/businessList',
                                       arguments: ref
                                               .read(selectedCategory.state)

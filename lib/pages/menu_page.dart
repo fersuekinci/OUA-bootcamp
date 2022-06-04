@@ -87,7 +87,7 @@ class MenuPage extends ConsumerWidget {
                           onTap: () {
 
                             AuthMethods().signOut().then((s) {
-                              AuthMethods().signInAnon(context);
+                     //         AuthMethods().signInAnon(context);
                             });
                         },
                           child: const Padding(
