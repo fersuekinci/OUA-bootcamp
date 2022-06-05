@@ -8,14 +8,12 @@ import 'package:oua_bootcamp/constants.dart';
 import 'package:oua_bootcamp/model/CategoryModal.dart';
 import 'package:oua_bootcamp/model/business_model.dart';
 import 'package:oua_bootcamp/pages/business_detail_page.dart';
+import 'package:oua_bootcamp/pages/chat_history_page.dart';
 import 'package:oua_bootcamp/repositories/repo_business_detail.dart';
 import 'package:oua_bootcamp/state/state_management.dart';
 import 'package:oua_bootcamp/utils/utils.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
-import '../sercices/auth.dart';
-
-// ignore: must_be_immutable
 class Businesses extends ConsumerWidget {
   List<BusinessModal> businessList = [];
 
@@ -176,8 +174,13 @@ class Businesses extends ConsumerWidget {
               ],
               child: GestureDetector(
                 onTap: () {
-                  AuthMethods().signInWithGoogle(context);
-                  //AuthMethods().signOut();
+                //  AuthMethods().signInWithGoogle(context);
+              //   AuthMethods().signOut();
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ChatHistoryPage()));
+
                 },
                 child: Column(
                   children: [

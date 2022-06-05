@@ -41,10 +41,8 @@ class DatabaseMethods {
         .get();
 
     if (snapShot.exists) {
-      // chatroom already exists
       return true;
     } else {
-      // chatroom does not exists
       return FirebaseFirestore.instance
           .collection("chatRoom")
           .doc(chatRoomId)

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:oua_bootcamp/pages/chat_history_page.dart';
 import 'package:random_string/random_string.dart';
 import '../helperfun/sharedpref_helper.dart';
 import '../sercices/database.dart';
@@ -36,6 +37,14 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   addMessage(bool sendClicked) {
+
+    DatabaseMethods().createChatRoom(chatRoomId!, {
+      "lastMessage": "",
+      "lastMessageSendTs": "",
+      "lastMessageSendBy": "",
+      "users": [myUserName, widget.chatWithUsername],
+    });
+
     if (messageTextEdittingController.text != "") {
       String message = messageTextEdittingController.text;
 
@@ -51,9 +60,6 @@ class _ChatScreenState extends State<ChatScreen> {
       if (messageId == "") {
         messageId = randomAlphaNumeric(12);
       }
-      print(chatRoomId);
-      print(messageId);
-      print(messageInfoMap);
       DatabaseMethods()
           .addMessage(chatRoomId!, messageId!, messageInfoMap)
           .then((value) {
@@ -65,9 +71,7 @@ class _ChatScreenState extends State<ChatScreen> {
         DatabaseMethods()
             .updateLastMessageSend(chatRoomId!, lastMessageInfoMap);
         if (sendClicked) {
-          // remove the text in the message input field
           messageTextEdittingController.text = "";
-          // make message id blank to get regenerated on next message send
           messageId = "";
         }
       });
@@ -120,7 +124,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       ds["message"], myUserName == ds["sendBy"]);
                 })
             : const Center(
-                child: Text('No messages...'),
+                child: Text('...'),
               );
       },
     );
@@ -146,6 +150,16 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          IconButton(onPressed: () {
+            Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder:
+                  (context) => const ChatHistoryPage(),
+            ),
+            ).then((_) {
+              // Call setState() here or handle this appropriately
+            });          }, icon: Icon(Icons.back_hand_sharp))
+        ],
         title: Text(widget.name),
       ),
       body: Stack(
@@ -173,9 +187,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   )),
                   GestureDetector(
                     onTap: () {
-                      print("1");
                       addMessage(true);
-                      print("2");
                     },
                     child: const Icon(
                       Icons.send,
