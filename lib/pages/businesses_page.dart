@@ -9,6 +9,7 @@ import 'package:oua_bootcamp/model/CategoryModal.dart';
 import 'package:oua_bootcamp/model/business_model.dart';
 import 'package:oua_bootcamp/pages/business_detail_page.dart';
 import 'package:oua_bootcamp/pages/chat_history_page.dart';
+import 'package:oua_bootcamp/pages/make_appointment.dart';
 import 'package:oua_bootcamp/repositories/repo_business_detail.dart';
 import 'package:oua_bootcamp/repositories/repo_categories.dart';
 import 'package:oua_bootcamp/state/state_management.dart';
@@ -212,13 +213,23 @@ class Businesses extends ConsumerWidget {
         if (FirebaseAuth.instance.currentUser?.email == null) {
           getAlert(
                   context,
+                  ref,
                   'Seçilen işletmeden randevu alabilmek için giriş yapmanız ya da kayıt olmanız gerekmektedir',
                   'Giriş Yap')
               .show();
         } else {
-          Navigator.pushReplacementNamed(context, '/makeAppointment',
-              arguments: ref.read(selectedBusiness.state).state.name =
-                  businessList[index].name.toString());
+          businessRepoProvider.companyName =
+              businessList[index].name.toString();
+          businessRepoProvider.address = businessList[index].address.toString();
+          businessRepoProvider.content = businessList[index].content.toString();
+          businessRepoProvider.phone = businessList[index].phone.toString();
+          businessRepoProvider.subtitle =
+              businessList[index].subtitle.toString();
+          businessRepoProvider.email = businessList[index].email.toString();
+          businessRepoProvider.notifyAll();
+
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => MakeAppointment()));
         }
 
         break;

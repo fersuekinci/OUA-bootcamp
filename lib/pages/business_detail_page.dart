@@ -35,7 +35,7 @@ class BusinessDetail extends ConsumerWidget {
               children: [
                 getBusinessData(businessRepoProvider),
                 getServices(businessRepoProvider),
-                getContanct(businessRepoProvider, context),
+                getContanct(businessRepoProvider, context, ref),
               ],
             ),
           ),
@@ -161,7 +161,7 @@ class BusinessDetail extends ConsumerWidget {
     );
   }
 
-  getContanct(BusinessDetailRepository businessRepoProvider, context) {
+  getContanct(BusinessDetailRepository businessRepoProvider, context, ref) {
     return Container(
       color: kPrimaryColor,
       child: Center(
@@ -261,6 +261,7 @@ class BusinessDetail extends ConsumerWidget {
                         FirebaseAuth.instance.currentUser?.email == null
                             ? getAlert(
                                     context,
+                                    ref,
                                     'Seçilen işletmeden randevu alabilmek için giriş yapmanız ya da kayıt olmanız gerekmektedir. ',
                                     'Giriş Yap')
                                 .show()
@@ -273,6 +274,7 @@ class BusinessDetail extends ConsumerWidget {
                         FirebaseAuth.instance.currentUser?.email == null
                             ? getAlert(
                                     context,
+                                    ref,
                                     'Seçilen işletmeyle mesajlaşabilmek için giriş yapmanız ya da kayıt olmanız gerekmektedir. ',
                                     'Giriş Yap')
                                 .show()

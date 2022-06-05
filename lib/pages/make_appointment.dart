@@ -11,6 +11,7 @@ import 'package:oua_bootcamp/constants.dart';
 import 'package:oua_bootcamp/model/CategoryModal.dart';
 import 'package:oua_bootcamp/model/appointment.dart';
 import 'package:oua_bootcamp/model/business_model.dart';
+import 'package:oua_bootcamp/repositories/repo_business_detail.dart';
 import 'package:oua_bootcamp/state/state_management.dart';
 import 'package:oua_bootcamp/utils/utils.dart';
 
@@ -25,8 +26,9 @@ class MakeAppointment extends ConsumerWidget {
     var now = ref.watch(selectedDate.state).state;
     var timeWatch = ref.watch(selectedTime.state).state;
     var timeIntervalWatch = ref.watch(selectedTimeInterval.state).state;
+    final businessRepoProvider = ref.read(businessDetailPageProvider);
 
-    final String _appbarTitle = businessWatch.toString();
+    final String _appbarTitle = businessRepoProvider.companyName;
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
@@ -34,31 +36,57 @@ class MakeAppointment extends ConsumerWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.check_circle),
-            onPressed: () => showModalBottomSheet<void>(
+            onPressed: () => showModalBottomSheet(
+              backgroundColor: kThirdColor,
+              elevation: 30,
               context: context,
               builder: (BuildContext context) {
-                return SizedBox(
-                    height: 200,
-                    child: Column(
-                      children: [
-                        Text(
-                            '${ref.read(selectedTime.state).state} - ${DateFormat('dd/MM/yyyy').format(ref.read(selectedDate.state).state)}'),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text('${ref.watch(selectedBusiness).name}'),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text('${ref.watch(selectedBusiness).address}'),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        ElevatedButton(
-                            onPressed: (() => confirmAppointment(context, ref)),
-                            child: const Text('Randevuyu Kaydet'))
-                      ],
-                    ));
+                return Container(
+                  margin: const EdgeInsets.only(
+                      top: 20, right: 20, left: 20, bottom: 20),
+                  decoration: const BoxDecoration(
+                    color: kPrimaryColor,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(40),
+                      topRight: Radius.circular(40),
+                      bottomLeft: Radius.circular(40),
+                      bottomRight: Radius.circular(40),
+                    ),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                          'Saat ve Tarihiniz : ${ref.read(selectedTime.state).state} - ${DateFormat('dd/MM/yyyy').format(ref.read(selectedDate.state).state)}',
+                          style: const TextStyle(
+                              color: Colors.white, fontFamily: fontFamiy)),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Text('İşletme : ${businessRepoProvider.companyName}',
+                          style: const TextStyle(
+                              color: Colors.white, fontFamily: fontFamiy)),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Text('Adres : ${businessRepoProvider.address}',
+                          style: const TextStyle(
+                              color: Colors.white, fontFamily: fontFamiy)),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      ElevatedButton(
+                          style: ElevatedButton.styleFrom(primary: kThirdColor),
+                          onPressed: (() => confirmAppointment(context, ref,
+                              businessRepoProvider, categoryWatch)),
+                          child: const Text(
+                            'Randevuyu Kaydet',
+                            style: TextStyle(
+                                fontFamily: fontFamiy, color: Colors.black),
+                          ))
+                    ],
+                  ),
+                );
               },
             ),
           )
@@ -67,37 +95,37 @@ class MakeAppointment extends ConsumerWidget {
       body: Column(
         children: [
           Container(
-            color: kSecondColor,
+            color: kSecondaryColor,
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Expanded(
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: Column(children: [
-                        Text(
-                          DateFormat.MMMM().format(now),
-                          style: const TextStyle(color: Colors.white),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          '${now.day}',
-                          style: const TextStyle(
-                              color: Colors.white, fontSize: 25),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          DateFormat.EEEE().format(now),
-                          style: const TextStyle(color: Colors.white),
-                        ),
-                      ]),
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Column(children: [
+                    Text(
+                      DateFormat.MMMM().format(now),
+                      style: const TextStyle(
+                          color: Colors.white, fontFamily: fontFamiy),
                     ),
-                  ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      '${now.day}',
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 30,
+                          fontFamily: fontFamiy),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      DateFormat.EEEE().format(now),
+                      style: const TextStyle(
+                          color: Colors.white, fontFamily: fontFamiy),
+                    ),
+                  ]),
                 ),
                 GestureDetector(
                   onTap: (() {
@@ -108,15 +136,12 @@ class MakeAppointment extends ConsumerWidget {
                         onConfirm: (date) =>
                             ref.read(selectedDate.state).state = date);
                   }),
-                  child: const Padding(
-                    padding: EdgeInsets.all(10),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
                     child: Align(
-                      alignment: Alignment.centerRight,
-                      child: Icon(
-                        Icons.calendar_today,
-                        color: kFourthColor,
-                      ),
-                    ),
+                        alignment: Alignment.centerRight,
+                        child: Image.asset(
+                            'assets/images/icons8-tear-off-calendar-48.png')),
                   ),
                 )
               ],
@@ -139,7 +164,7 @@ class MakeAppointment extends ConsumerWidget {
                       future: getTimeIntervalOfAppointment(
                           DateFormat('dd/MM/yyyy')
                               .format(ref.read(selectedDate.state).state),
-                          businessWatch.toString(),
+                          businessRepoProvider.companyName,
                           DateFormat('dd-MM-yyyy')
                               .format(ref.read(selectedDate.state).state)),
                       builder: (context, snapshot) {
@@ -150,65 +175,69 @@ class MakeAppointment extends ConsumerWidget {
                         } else {
                           var listTimeInterval = snapshot.data as List<String>;
 
-                          return GridView.builder(
-                              itemCount: Time_Interval.length,
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 3),
-                              itemBuilder: (context, index) {
-                                return GestureDetector(
-                                  onTap: maxTimeInterval > index ||
-                                          listTimeInterval.contains(
+                          return Container(
+                            color: kPrimaryColor,
+                            child: GridView.builder(
+                                itemCount: Time_Interval.length,
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 3),
+                                itemBuilder: (context, index) {
+                                  return GestureDetector(
+                                    onTap: maxTimeInterval > index ||
+                                            listTimeInterval.contains(
+                                                Time_Interval.elementAt(index))
+                                        ? null
+                                        : () {
+                                            ref.read(selectedTime.state).state =
+                                                Time_Interval.elementAt(index);
+                                            ref
+                                                .read(
+                                                    selectedTimeInterval.state)
+                                                .state = index;
+                                          },
+                                    child: Card(
+                                      color: listTimeInterval.contains(
                                               Time_Interval.elementAt(index))
-                                      ? null
-                                      : () {
-                                          ref.read(selectedTime.state).state =
-                                              Time_Interval.elementAt(index);
-                                          ref
-                                              .read(selectedTimeInterval.state)
-                                              .state = index;
-                                        },
-                                  child: Card(
-                                    color: listTimeInterval.contains(
-                                            Time_Interval.elementAt(index))
-                                        ? Colors.white10
-                                        : maxTimeInterval > index
-                                            ? Colors.white60
-                                            : ref
-                                                        .read(
-                                                            selectedTime.state)
-                                                        .state ==
-                                                    Time_Interval.elementAt(
-                                                        index)
-                                                ? Colors.white54
-                                                : Colors.white,
-                                    child: GridTile(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                                Time_Interval.elementAt(index)),
-                                            Text(listTimeInterval.contains(
-                                                    Time_Interval.elementAt(
-                                                        index))
-                                                ? 'Dolu'
-                                                : maxTimeInterval > index
-                                                    ? 'Uygun Değil'
-                                                    : 'Mevcut')
-                                          ],
-                                        ),
-                                        header: ref
-                                                    .read(selectedTime.state)
-                                                    .state ==
-                                                Time_Interval.elementAt(index)
-                                            ? const Icon(Icons.check)
-                                            : null),
-                                  ),
-                                );
-                              });
+                                          ? Colors.white10
+                                          : maxTimeInterval > index
+                                              ? Colors.white60
+                                              : ref
+                                                          .read(selectedTime
+                                                              .state)
+                                                          .state ==
+                                                      Time_Interval.elementAt(
+                                                          index)
+                                                  ? Colors.white54
+                                                  : Colors.white,
+                                      child: GridTile(
+                                          header: ref
+                                                      .read(selectedTime.state)
+                                                      .state ==
+                                                  Time_Interval.elementAt(index)
+                                              ? const Icon(Icons.check)
+                                              : null,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(Time_Interval.elementAt(
+                                                  index)),
+                                              Text(listTimeInterval.contains(
+                                                      Time_Interval.elementAt(
+                                                          index))
+                                                  ? 'Dolu'
+                                                  : maxTimeInterval > index
+                                                      ? 'Zaman Geçmiş'
+                                                      : 'Mevcut')
+                                            ],
+                                          )),
+                                    ),
+                                  );
+                                }),
+                          );
                         }
                       },
                     );
@@ -220,7 +249,11 @@ class MakeAppointment extends ConsumerWidget {
     );
   }
 
-  confirmAppointment(BuildContext context, ref) {
+  confirmAppointment(
+      BuildContext context,
+      ref,
+      BusinessDetailRepository businessRepoProvider,
+      CategoryModal categoryWatch) {
     var timeStamp = DateTime(
             ref.read(selectedDate.state).state.year,
             ref.read(selectedDate.state).state.month,
@@ -234,12 +267,12 @@ class MakeAppointment extends ConsumerWidget {
         .millisecondsSinceEpoch;
 
     var appointmentModel = AppointmentModel(
-        businessName: ref.watch(selectedBusiness).name,
-        category: ref.read(selectedCategory.state).state.category,
+        businessName: businessRepoProvider.companyName,
+        category: categoryWatch.category,
         userName: ref.read(userInformation.state).state.fullName,
         userMail: ref.read(userInformation.state).state.mail,
         done: false,
-        businessAddress: ref.read(selectedBusiness.state).state.address,
+        businessAddress: businessRepoProvider.address,
         interval: ref.read(selectedTime.state).state,
         timeStamp: timeStamp,
         // 'time':
@@ -280,17 +313,17 @@ class MakeAppointment extends ConsumerWidget {
 
     FirebaseFirestore.instance
         .collection("Appointment")
-        .doc(ref.read(selectedBusiness.state).state.name.toString())
+        .doc(businessRepoProvider.companyName)
         .collection(
             DateFormat('dd-MM-yyyy').format(ref.read(selectedDate.state).state))
         .doc(ref.read(selectedTime.state).state.toString())
         .set({
-      'businessName': ref.read(selectedBusiness.state).state.name,
-      'category': ref.read(selectedCategory.state).state.category,
+      'businessName': businessRepoProvider.companyName,
+      'category': categoryWatch.category,
       'userName': ref.read(userInformation.state).state.fullName,
       'userMail': ref.read(userInformation.state).state.mail,
       'done': false,
-      'businessAddress': ref.read(selectedBusiness.state).state.address,
+      'businessAddress': businessRepoProvider.address,
       'interval': ref.read(selectedTime.state).state,
       'timeStamp': timeStamp,
       'time':

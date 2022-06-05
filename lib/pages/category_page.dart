@@ -4,11 +4,15 @@ import 'package:flutter_auth_ui/flutter_auth_ui.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:oua_bootcamp/cloud_firestore/all_business_ref.dart';
+import 'package:oua_bootcamp/cloud_firestore/user_ref.dart';
 import 'package:oua_bootcamp/model/CategoryModal.dart';
+import 'package:oua_bootcamp/model/user_model.dart';
 import 'package:oua_bootcamp/pages/businesses_page.dart';
 import 'package:oua_bootcamp/pages/signup_page.dart';
 import 'package:oua_bootcamp/repositories/repo_categories.dart';
+import 'package:oua_bootcamp/repositories/repo_user.dart';
 import 'package:oua_bootcamp/sercices/auth.dart';
 import 'package:oua_bootcamp/utils/utils.dart';
 import 'package:oua_bootcamp/constants.dart';
@@ -16,6 +20,8 @@ import 'package:oua_bootcamp/widgets/CategoryItems.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:oua_bootcamp/state/state_management.dart';
+import 'package:oua_bootcamp/widgets/login_precess.dart';
+import 'package:oua_bootcamp/widgets/menu_widget.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 // ignore: must_be_immutable
@@ -31,29 +37,34 @@ class CategoryPage extends ConsumerWidget {
     return Scaffold(
         backgroundColor: kSecondaryColor,
         key: scaffoldState,
-        appBar: AppBar(
-            automaticallyImplyLeading: false,
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SvgPicture.asset(
-                  'assets/svg/logo.svg',
-                  width: 75,
-                  height: 75,
-                ),
-                const Text(
-                  appbarTitle,
-                  style: TextStyle(
-                      fontFamily: fontFamiyKanadaka,
-                      fontWeight: FontWeight.bold),
-                )
-              ],
-            )),
+        appBar: getAppBar(appbarTitle, context),
         body: getBody(context, ref));
+  }
+
+  getAppBar(appbarTitle, context) {
+    if (FirebaseAuth.instance.currentUser?.email == null) {
+      return AppBar(
+          automaticallyImplyLeading: false,
+          title: Text(
+            appbarTitle,
+            style: const TextStyle(
+                fontFamily: fontFamiyKanadaka, fontWeight: FontWeight.bold),
+          ));
+    } else if (FirebaseAuth.instance.currentUser?.email != null) {
+      return AppBar(
+          leading: MenuWidget(),
+          automaticallyImplyLeading: false,
+          title: Text(
+            appbarTitle,
+            style: const TextStyle(
+                fontFamily: fontFamiyKanadaka, fontWeight: FontWeight.bold),
+          ));
+    }
   }
 
   Widget getBody(context, WidgetRef ref) {
     final categoryRepoProvider = ref.read(categoriesPageProvider);
+    final userRepoProvider = ref.read(userProvider);
     return SafeArea(
       bottom: false,
       child: Column(
@@ -76,61 +87,109 @@ class CategoryPage extends ConsumerWidget {
                   style: TextStyle(
                       color: kSecondaryColor,
                       fontSize: 20,
-                      fontFamily: fontFamiyKanadaka),
+                      fontFamily: fontFamiy),
                 ),
                 Text(
                   'İşletmeleri Listele',
                   style: TextStyle(
                       color: kPrimaryColor,
                       fontSize: 20,
-                      fontFamily: fontFamiyKanadaka),
+                      fontFamily: fontFamiy),
                 ),
               ],
             ),
           ),
-          Container(
-              margin: const EdgeInsets.all(kDefaultPadding),
-              padding: const EdgeInsets.only(
-                  left: kDefaultPadding, right: kDefaultPadding),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  if (FirebaseAuth.instance.currentUser == null)
-                    GestureDetector(
-                      onTap: () {
-                        //FirebaseAuth.instance.signOut();
-                        //print(FirebaseAuth.instance.currentUser!.email.toString());
-                      },
-                      child: const Text(
-                        'Giriş Yap / Kayıt Ol',
-                        style: TextStyle(color: kThirdColor, fontSize: 18),
+          if (FirebaseAuth.instance.currentUser?.email == null)
+            Container(
+                margin: const EdgeInsets.all(kDefaultPadding),
+                padding: const EdgeInsets.only(
+                    left: kDefaultPadding, right: kDefaultPadding),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    if (FirebaseAuth.instance.currentUser == null)
+                      GestureDetector(
+                        onTap: () {
+                          //FirebaseAuth.instance.signOut();
+                          //print(FirebaseAuth.instance.currentUser!.email.toString());
+                        },
+                        child: const Text(
+                          'Giriş Yap / Kayıt Ol',
+                          style: TextStyle(
+                              color: kThirdColor,
+                              fontSize: 18,
+                              fontFamily: fontFamiy),
+                        ),
                       ),
-                    ),
-                  IconButton(
-                    onPressed: () {
-                      AuthMethods().signInWithGoogle(context);
-                    },
-                    icon: SvgPicture.asset(
-                      'assets/svg/icons8-google.svg',
-                      width: 24,
-                      height: 24,
-                    ),
-                  ),
-                  IconButton(
+                    IconButton(
                       onPressed: () {
-                        processLogin(context, ref);
-                        //FirebaseAuth.instance.signOut();
+                        AuthMethods().signInWithGoogle(context);
                       },
                       icon: SvgPicture.asset(
-                        'assets/svg/icons8-microsoft-outlook.svg',
+                        'assets/svg/icons8-google.svg',
                         width: 24,
                         height: 24,
-                      ))
-                ],
-              )),
+                      ),
+                    ),
+                    IconButton(
+                        onPressed: () {
+                          processLogin(context, ref, scaffoldState);
+                        },
+                        icon: Image.asset(
+                          'assets/images/icons_mail.png',
+                          width: 24,
+                          height: 24,
+                        )),
+                  ],
+                )),
+          if (FirebaseAuth.instance.currentUser?.email != null)
+            Container(
+                margin: const EdgeInsets.all(kDefaultPadding),
+                padding: const EdgeInsets.only(
+                    left: kDefaultPadding, right: kDefaultPadding),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    FutureBuilder(
+                      future: getUserProfiles(ref,
+                          FirebaseAuth.instance.currentUser?.email.toString()),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                            child: SpinKitThreeInOut(
+                              color: kThirdColor,
+                            ),
+                          );
+                        } else {
+                          var userModel = snapshot.data as UserModel;
+                          return Text(
+                            'Hoş geldin  ${userModel.fullName.toString()}',
+                            style: const TextStyle(
+                                color: kThirdColor,
+                                fontSize: 18,
+                                fontFamily: fontFamiy),
+                          );
+                        }
+                      },
+                    ),
+                    IconButton(
+                        onPressed: () {
+                          FirebaseAuth.instance.signOut();
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CategoryPage()));
+                        },
+                        icon: const Icon(Icons.exit_to_app))
+                  ],
+                )),
           Expanded(
             child: Stack(
               children: [
@@ -213,56 +272,5 @@ class CategoryPage extends ConsumerWidget {
         ],
       ),
     );
-  }
-
-  processLogin(BuildContext context, WidgetRef ref) async {
-    var user = FirebaseAuth.instance.currentUser;
-    if (user == null) {
-      FlutterAuthUi.startUi(
-              items: [AuthUiProvider.email],
-              tosAndPrivacyPolicy: const TosAndPrivacyPolicy(
-                  tosUrl: 'https://google.com',
-                  privacyPolicyUrl: 'https://google.com'),
-              androidOption: const AndroidOption(
-                  enableSmartLock: false, showLogo: true, overrideTheme: true))
-          .then((value) async {
-        ref.read(userLogged.state).state = FirebaseAuth.instance.currentUser;
-        await checkLoginState(context, ref, true, scaffoldState);
-      }).catchError((e) {
-        ScaffoldMessenger.of(scaffoldState.currentContext!)
-            .showSnackBar(SnackBar(content: Text('${e.toString()}')));
-      });
-    } else {}
-  }
-
-  Future<LOGIN_STATE> checkLoginState(BuildContext context, WidgetRef ref,
-      bool fromLogin, GlobalKey<ScaffoldState> scaffoldState) async {
-    if (!ref.read(forceReload.state).state) {
-      await Future.delayed(Duration(seconds: fromLogin == true ? 0 : 3))
-          .then((value) => {
-                FirebaseAuth.instance.currentUser
-                    ?.getIdToken()
-                    .then((token) async {
-                  ref.read(userToken.state).state = token;
-
-//Kullanıcı var mı
-                  CollectionReference userRef =
-                      FirebaseFirestore.instance.collection('User');
-                  DocumentSnapshot snapshotUser = await userRef
-                      .doc(FirebaseAuth.instance.currentUser!.email)
-                      .get();
-
-                  ref.read(forceReload.state).state = true;
-                  if (snapshotUser.exists) {
-                  } else {
-                    return Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => SignUp()));
-                  }
-                })
-              });
-    }
-    return FirebaseAuth.instance.currentUser != null
-        ? LOGIN_STATE.LOGGED
-        : LOGIN_STATE.NOT_LOGIN;
   }
 }

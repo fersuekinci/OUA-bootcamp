@@ -18,9 +18,6 @@ class HomePage extends StatefulWidget {
 
   @override
   State<HomePage> createState() => _HomePageState();
-
-
-
 }
 
 class _HomePageState extends State<HomePage> {
@@ -65,16 +62,10 @@ class _HomePageState extends State<HomePage> {
       case MenuItems.category:
         return Splash();
 
-      case MenuItems.businesses:
-        return Businesses();
-      case MenuItems.register:
-        return const SignUp();
-
       case MenuItems.userHistory:
         return UserHistoryPage();
       default:
         return CategoryPage();
     }
   }
-
 }

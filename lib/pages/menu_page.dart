@@ -11,19 +11,9 @@ class MenuItems {
   //Menü elemanları ekleniyor.
   static const category = MenuItemK('Ana Sayfa', Icons.category);
 
-  static const businesses = MenuItemK('İşletmeler', Icons.list_alt);
-  static const register = MenuItemK('Kayıt ol sayfası', Icons.list_alt);
-  static const businessAppointment =
-      MenuItemK('Randevu Al', Icons.calendar_month);
   static const userHistory = MenuItemK('Kullanıcı Geçmişi', Icons.history);
 
-  static const all = <MenuItemK>[
-    category,
-    businesses,
-    register,
-    businessAppointment,
-    userHistory
-  ];
+  static const all = <MenuItemK>[category, userHistory];
 }
 
 class MenuPage extends ConsumerWidget {
@@ -54,51 +44,58 @@ class MenuPage extends ConsumerWidget {
                     Container(
                       width: 200,
                       height: 70,
-                      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 5, vertical: 5),
                       child: DecoratedBox(
                         decoration: ShapeDecoration(
                             shape: CircleBorder(),
                             color: Colors.white,
                             image: DecorationImage(
-                              fit: BoxFit.contain,
-                              //image: AssetImage('assets/images/avatar.png'),
-                                image: FirebaseAuth.instance.currentUser?.email == null
-                                    ? const AssetImage('assets/images/avatar.png')
-                                    : NetworkImage(FirebaseAuth.instance.currentUser!.photoURL.toString()) as ImageProvider
-                            )),
+                                fit: BoxFit.contain,
+                                //image: AssetImage('assets/images/avatar.png'),
+                                image:
+                                    FirebaseAuth.instance.currentUser?.email ==
+                                            null
+                                        ? const AssetImage(
+                                            'assets/images/avatar.png')
+                                        : NetworkImage(FirebaseAuth
+                                            .instance.currentUser!.photoURL
+                                            .toString()) as ImageProvider)),
                       ),
                     ),
-                    FirebaseAuth.instance.currentUser?.email == null ?
-                    InkWell(
-                      onTap: () {
-                        AuthMethods().signInWithGoogle(context);
-                      },
-                      child: const Padding(
-                        padding: EdgeInsets.only(top: 10.0),
-                        child: Text('Giriş Yap'),
-                      )
-                    ):
-                    Column(
-                      children: [
-                        Text(FirebaseAuth.instance.currentUser!.displayName.toString()),
-                        const SizedBox(height: 10),
-                        Text(FirebaseAuth.instance.currentUser!.email.toString()),
-                        InkWell(
-                          onTap: () {
-
-                            AuthMethods().signOut().then((s) {
-                     //         AuthMethods().signInAnon(context);
-                            });
-                        },
-                          child: const Padding(
-                            padding: EdgeInsets.only(top: 10.0),
-                            child: Text(
-                              "Çıkış Yap", style: TextStyle(color: Colors.red),
-                            ),
+                    FirebaseAuth.instance.currentUser?.email == null
+                        ? InkWell(
+                            onTap: () {
+                              AuthMethods().signInWithGoogle(context);
+                            },
+                            child: const Padding(
+                              padding: EdgeInsets.only(top: 10.0),
+                              child: Text('Giriş Yap'),
+                            ))
+                        : Column(
+                            children: [
+                              Text(FirebaseAuth
+                                  .instance.currentUser!.displayName
+                                  .toString()),
+                              const SizedBox(height: 10),
+                              Text(FirebaseAuth.instance.currentUser!.email
+                                  .toString()),
+                              InkWell(
+                                onTap: () {
+                                  AuthMethods().signOut().then((s) {
+                                    //         AuthMethods().signInAnon(context);
+                                  });
+                                },
+                                child: const Padding(
+                                  padding: EdgeInsets.only(top: 10.0),
+                                  child: Text(
+                                    "Çıkış Yap",
+                                    style: TextStyle(color: Colors.red),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
-                    ),
                     const SizedBox(
                       height: 10,
                     ),
