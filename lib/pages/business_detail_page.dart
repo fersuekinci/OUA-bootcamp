@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:oua_bootcamp/pages/category_page.dart';
+import 'package:oua_bootcamp/pages/map_page.dart';
 import 'package:oua_bootcamp/widgets/alert.dart';
 import 'package:oua_bootcamp/widgets/menu_widget.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -247,7 +248,12 @@ class BusinessDetail extends ConsumerWidget {
                   children: [
                     IconButton(
                       icon: const Icon(Icons.navigation),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => GoogleMaps()));
+                      },
                     ),
                     IconButton(
                       icon: const Icon(Icons.calendar_month),
