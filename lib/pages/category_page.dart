@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:oua_bootcamp/cloud_firestore/all_business_ref.dart';
 import 'package:oua_bootcamp/model/CategoryModal.dart';
 import 'package:oua_bootcamp/pages/businesses_page.dart';
+import 'package:oua_bootcamp/pages/signup_page.dart';
 import 'package:oua_bootcamp/repositories/repo_categories.dart';
 import 'package:oua_bootcamp/sercices/auth.dart';
 import 'package:oua_bootcamp/utils/utils.dart';
@@ -97,16 +98,17 @@ class CategoryPage extends ConsumerWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  GestureDetector(
-                    onTap: () {
-                      //FirebaseAuth.instance.signOut();
-                      //print(FirebaseAuth.instance.currentUser!.email.toString());
-                    },
-                    child: const Text(
-                      'Giriş Yap / Kayıt Ol',
-                      style: TextStyle(color: kThirdColor, fontSize: 18),
+                  if (FirebaseAuth.instance.currentUser == null)
+                    GestureDetector(
+                      onTap: () {
+                        //FirebaseAuth.instance.signOut();
+                        //print(FirebaseAuth.instance.currentUser!.email.toString());
+                      },
+                      child: const Text(
+                        'Giriş Yap / Kayıt Ol',
+                        style: TextStyle(color: kThirdColor, fontSize: 18),
+                      ),
                     ),
-                  ),
                   IconButton(
                     onPressed: () {
                       AuthMethods().signInWithGoogle(context);
@@ -118,7 +120,10 @@ class CategoryPage extends ConsumerWidget {
                     ),
                   ),
                   IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        processLogin(context, ref);
+                        //FirebaseAuth.instance.signOut();
+                      },
                       icon: SvgPicture.asset(
                         'assets/svg/icons8-microsoft-outlook.svg',
                         width: 24,
@@ -250,73 +255,8 @@ class CategoryPage extends ConsumerWidget {
                   ref.read(forceReload.state).state = true;
                   if (snapshotUser.exists) {
                   } else {
-                    var fullNameController = TextEditingController();
-                    var mailController = TextEditingController();
-                    var phoneNumberController = TextEditingController();
-                    showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            title: Text('Profili Kaydet'),
-                            content: Column(
-                              children: [
-                                TextField(
-                                  decoration: const InputDecoration(
-                                      icon: Icon(Icons.account_circle),
-                                      labelText: 'Tam Adınız'),
-                                  controller: fullNameController,
-                                ),
-                                TextField(
-                                  decoration: const InputDecoration(
-                                      icon: Icon(Icons.account_circle),
-                                      labelText: 'Mail Adresiniz'),
-                                  controller: mailController,
-                                ),
-                                TextField(
-                                  decoration: const InputDecoration(
-                                      icon: Icon(Icons.account_circle),
-                                      labelText: 'Telefon Numaranız'),
-                                  controller: phoneNumberController,
-                                ),
-                              ],
-                            ),
-                            actions: [
-                              DialogButton(
-                                  child: Text('İptal'),
-                                  onPressed: () => Navigator.pop(context)),
-                              DialogButton(
-                                  child: Text('Kaydet'),
-                                  onPressed: () {
-                                    //Kullanıcı Güncelleme
-                                    userRef
-                                        .doc(FirebaseAuth
-                                            .instance.currentUser!.email)
-                                        .set({
-                                      'fullName': fullNameController.text,
-                                      'mail': mailController.text,
-                                      'phoneNumber': phoneNumberController.text
-                                    }).then((value) async {
-                                      Navigator.pop(context);
-                                      ScaffoldMessenger.of(
-                                              scaffoldState.currentContext!)
-                                          .showSnackBar(SnackBar(
-                                              content:
-                                                  Text('Profil Güncellendi')));
-                                      await Future.delayed(
-                                          Duration(seconds: 1));
-                                      Navigator.pushNamedAndRemoveUntil(context,
-                                          '/homePage', (route) => false);
-                                    }).catchError((e) {
-                                      Navigator.pop(context);
-                                      ScaffoldMessenger.of(
-                                              scaffoldState.currentContext!)
-                                          .showSnackBar(
-                                              SnackBar(content: Text('$e')));
-                                    });
-                                  })
-                            ],
-                          );
-                        });
+                    return Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => SignUp()));
                   }
                 })
               });
