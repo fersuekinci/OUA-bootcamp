@@ -2,6 +2,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:oua_bootcamp/pages/category_page.dart';
+import 'package:oua_bootcamp/widgets/alert.dart';
 import 'package:oua_bootcamp/widgets/menu_widget.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import '../constants.dart';
@@ -11,161 +14,69 @@ import 'chat_screen.dart';
 class BusinessDetail extends ConsumerWidget {
   BusinessDetail({Key? key}) : super(key: key);
 
-  //İşletmenin yüklediği resimler yer alacak.
-  final List<String> imgList = [
-    'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
-    'https://images.unsplash.com/photo-1522205408450-add114ad53fe?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=368f45b0888aeb0b7b08e3a1084d3ede&auto=format&fit=crop&w=1950&q=80',
-    'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=94a1e718d89ca60a6337a6008341ca50&auto=format&fit=crop&w=1950&q=80',
-    'https://images.unsplash.com/photo-1523205771623-e0faa4d2813d?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=89719a0d55dd05e2deae4120227e6efc&auto=format&fit=crop&w=1953&q=80',
-    'https://images.unsplash.com/photo-1508704019882-f9cf40e475b4?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=8c6e5e3aba713b17aa1fe71ab4f0ae5b&auto=format&fit=crop&w=1352&q=80',
-    'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80'
-  ];
-
   @override
   Widget build(BuildContext context, ref) {
     final businessRepoProvider = ref.watch(businessDetailPageProvider);
-
     final String email = businessRepoProvider.getEmailForChatPage();
     final String companyName = businessRepoProvider.getCompanyName();
+    Size size = MediaQuery.of(context).size;
+    return DefaultTabController(
+      length: 3,
+      child: Stack(
+        children: [
+          Scaffold(
+            appBar: AppBar(
+                elevation: 30,
+                automaticallyImplyLeading: false,
+                toolbarHeight: 100,
+                title: getAppBar(businessRepoProvider)),
+            body: TabBarView(
+              children: [
+                getBusinessData(businessRepoProvider),
+                getServices(businessRepoProvider),
+                getContanct(businessRepoProvider, context),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
-    return Scaffold(
-        appBar: AppBar(
-          title: Text(businessRepoProvider.companyName),
-          //Önceki erkana geçiş için
-          // leading: IconButton(
-          //   icon: const Icon(Icons.arrow_back),
-          //   onPressed: () => Navigator.of(context).pop(),
-          // ),
-
-          leading: const MenuWidget(),
+  getAppBar(businessRepoProvider) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 13.0),
+          child: Text(businessRepoProvider.companyName),
         ),
-        body: Scaffold(
-          body: SingleChildScrollView(
-              child: Column(children: [
-            //Resimlerin slyat olarak görüntülenmesi
-            CarouselSlider(
-              items: imageSlider(),
-              options: CarouselOptions(
-                autoPlay: true,
-                aspectRatio: 2.0,
-                enlargeCenterPage: true,
-                viewportFraction: 1,
-              ),
-            ),
-            // Card(
-            //   child: FutureBuilder(
-            //     future: getUserProfiles(
-            //         ref, FirebaseAuth.instance.currentUser?.email.toString()),
-            //     builder: (context, snapshot) {
-            //       if (snapshot.connectionState == ConnectionState.waiting)
-            //         return Center(child: CircularProgressIndicator());
-            //       else {
-            //         //var userModel = snapshot.data as UserModel;
-            //         return Container(
-            //           child: Text("Bu ekranın değişkenlerinin yerinin ayarlanması gerekiyor"),
-            //           //child: Text('${userModel.mail}'),
-            //         );
-            //       }
-            //     },
-            //   ),
-            // ),
-            //İşletme bilgilerinin yazılması
-            Card(
-              clipBehavior: Clip.antiAlias,
-              child: Column(
-                children: [
-                  ListTile(
-                    title: Text(
-                      businessRepoProvider.subtitle,
-                      style: const TextStyle(fontSize: 18),
-                      textAlign: TextAlign.center,
-                    ),
-                    subtitle: Text(
-                      businessRepoProvider.phone,
-                      style: TextStyle(color: Colors.black.withOpacity(0.6)),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Text(
-                      businessRepoProvider.address,
-                      style: TextStyle(color: Colors.black.withOpacity(0.6)),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Text(
-                      businessRepoProvider.content,
-                      style: TextStyle(color: Colors.black.withOpacity(0.6)),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: ButtonBar(
-                      alignment: MainAxisAlignment.center,
-                      buttonPadding: const EdgeInsets.all(15),
-                      children: [
-                        FloatingActionButton(
-                          heroTag: "startChat",
-                          onPressed: () {
-                            if (FirebaseAuth.instance.currentUser?.email != null) {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          ChatScreen(email, companyName)));
-                            } else {
-                              alertMethod(context).show();
-                            }
-                          },
-                          elevation: 20,
-                          child: const Icon(Icons.message),
-                        ),
-                        FloatingActionButton(
-                          heroTag: "navigation",
-                          onPressed: () {},
-                          elevation: 20,
-                          child: const Icon(Icons.navigation),
-                        ),
-                        FloatingActionButton(
-                          heroTag: "calendar",
-                          onPressed: () {
-                            showDialog(
-                                context: context,
-                                builder: (_) => AlertDialog(
-                                      title: const Text('Randevu Oluştur'),
-                                      content: const Text(
-                                          'Randevu oluşturabilmek için uygulamaya giriş yapmış olmanız gerekmektedir.'),
-                                      actions: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            TextButton(
-                                              onPressed: () {},
-                                              child: const Text('Giriş Yap'),
-                                            ),
-                                            TextButton(
-                                              onPressed: () {},
-                                              child: const Text('Kayıt Ol'),
-                                            ),
-                                          ],
-                                        )
-                                      ],
-                                    ));
-                          },
-                          elevation: 20,
-                          child: const Icon(Icons.calendar_month),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ])),
-          //bottomNavigationBar: const BottomNavigation(),
-        ));
+        const SizedBox(
+          height: 8,
+        ),
+        const TabBar(
+          indicatorSize: TabBarIndicatorSize.label,
+          indicatorWeight: 3,
+          labelColor: Colors.white,
+          unselectedLabelColor: Colors.white38,
+          indicatorColor: Colors.white,
+          tabs: [
+            Tab(
+                child: Text(
+              "Bilgiler",
+            )),
+            Tab(
+                child: Text(
+              "Hizmetler",
+            )),
+            Tab(
+                child: Text(
+              "İletişim",
+            ))
+          ],
+        ),
+      ],
+    );
   }
 
   imageSlider() {
@@ -210,35 +121,215 @@ class BusinessDetail extends ConsumerWidget {
         .toList();
   }
 
-
-  Alert alertMethod(context) {
-    return Alert(
-        style: AlertStyle(
-            titleStyle: TextStyle(fontFamily: fontFamiy, fontSize: 16),
-            descStyle: TextStyle(fontFamily: fontFamiy, fontSize: 16),
-            backgroundColor: Colors.white,
-            alertElevation: 20),
-        context: context,
-        type: AlertType.warning,
-        title: 'Giriş Yap !',
-        desc:
-        'Seçilen işletmeyle mesajlaşabilmek için giriş yapmanız ya da kayıt olmanız gerekmektedir. ',
-        buttons: [
-          DialogButton(
-              color: Colors.red,
-              child: Text(
-                'Vazgeç',
-                style:
-                TextStyle(color: Colors.white, fontFamily: fontFamiy),
+  getBusinessData(BusinessDetailRepository businessRepoProvider) {
+    return Container(
+      color: kPrimaryColor,
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(30),
+          child: Card(
+            elevation: 30,
+            color: kThirdColor,
+            clipBehavior: Clip.antiAlias,
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    ListTile(
+                      //title: Text(businessRepoProvider.subtitle),
+                      subtitle: Text(
+                        businessRepoProvider.subtitle,
+                        style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(
+                        businessRepoProvider.content,
+                        style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              onPressed: () => Navigator.of(context).pop()),
-          DialogButton(
-              color: kPrimaryColor,
-              child: Text('Giriş Yap',
-                  style: TextStyle(
-                      color: Colors.white, fontFamily: fontFamiy)),
-              onPressed: () {})
-        ]);
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  getContanct(BusinessDetailRepository businessRepoProvider, context) {
+    return Container(
+      color: kPrimaryColor,
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(30),
+          child: Column(
+            children: [
+              Card(
+                elevation: 30,
+                color: kThirdColor,
+                clipBehavior: Clip.antiAlias,
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        ListTile(
+                          leading: Icon(Icons.phone),
+                          title: Text(businessRepoProvider.phone,
+                              style: TextStyle(
+                                  color: Colors.black.withOpacity(0.6))),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Card(
+                elevation: 30,
+                color: kThirdColor,
+                clipBehavior: Clip.antiAlias,
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        ListTile(
+                          leading: const Icon(Icons.navigation),
+                          title: Text(businessRepoProvider.address,
+                              style: TextStyle(
+                                  color: Colors.black.withOpacity(0.6))),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Card(
+                elevation: 30,
+                color: kThirdColor,
+                clipBehavior: Clip.antiAlias,
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        ListTile(
+                          leading: const Icon(Icons.mail),
+                          title: Text(businessRepoProvider.email,
+                              style: TextStyle(
+                                  color: Colors.black.withOpacity(0.6))),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 50,
+              ),
+              Card(
+                elevation: 30,
+                color: kThirdColor,
+                child: ToggleButtons(
+                  color: Colors.black.withOpacity(0.60),
+                  isSelected: [false, false, false],
+                  onPressed: (index) {},
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.navigation),
+                      onPressed: () {},
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.calendar_month),
+                      onPressed: () {
+                        FirebaseAuth.instance.currentUser?.email == null
+                            ? getAlert(
+                                    context,
+                                    'Seçilen işletmeden randevu alabilmek için giriş yapmanız ya da kayıt olmanız gerekmektedir. ',
+                                    'Giriş Yap')
+                                .show()
+                            : '';
+                      },
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.message),
+                      onPressed: () {
+                        FirebaseAuth.instance.currentUser?.email == null
+                            ? getAlert(
+                                    context,
+                                    'Seçilen işletmeyle mesajlaşabilmek için giriş yapmanız ya da kayıt olmanız gerekmektedir. ',
+                                    'Giriş Yap')
+                                .show()
+                            : '';
+                      },
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  getServices(BusinessDetailRepository businessRepoProvider) {
+    return Container(
+      color: kPrimaryColor,
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(30),
+          child: Card(
+            elevation: 30,
+            color: kThirdColor,
+            clipBehavior: Clip.antiAlias,
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    CarouselSlider(
+                      items: imageSlider(),
+                      options: CarouselOptions(
+                        autoPlay: true,
+                        aspectRatio: 2.0,
+                        enlargeCenterPage: true,
+                        viewportFraction: 1,
+                      ),
+                    ),
+                    Container(
+                      height: 300,
+                      child: ListView(
+                        children: [
+                          for (int count
+                              in List.generate(9, (index) => index + 1))
+                            ListTile(
+                              title: Text('List item $count'),
+                              isThreeLine: true,
+                              subtitle: Text('Secondary text\nTertiary text'),
+                              leading: Icon(Icons.label),
+                            ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
 

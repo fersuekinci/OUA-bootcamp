@@ -10,9 +10,10 @@ import 'package:oua_bootcamp/model/business_model.dart';
 import 'package:oua_bootcamp/pages/business_detail_page.dart';
 import 'package:oua_bootcamp/pages/chat_history_page.dart';
 import 'package:oua_bootcamp/repositories/repo_business_detail.dart';
+import 'package:oua_bootcamp/repositories/repo_categories.dart';
 import 'package:oua_bootcamp/state/state_management.dart';
 import 'package:oua_bootcamp/utils/utils.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:oua_bootcamp/widgets/alert.dart';
 
 class Businesses extends ConsumerWidget {
   List<BusinessModal> businessList = [];
@@ -20,8 +21,10 @@ class Businesses extends ConsumerWidget {
   Businesses({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context, ref) {
-    var categoryWatch = ref.watch(selectedCategory);
-    final String appbarTitle = categoryWatch.category.toString();
+    final categoriesRepoProvider = ref.watch(categoriesPageProvider);
+    ;
+
+    final String appbarTitle = categoriesRepoProvider.category.toString();
 
     return Scaffold(
         backgroundColor: kSecondaryColor,
@@ -29,10 +32,10 @@ class Businesses extends ConsumerWidget {
           title: Text(appbarTitle),
           automaticallyImplyLeading: false,
         ),
-        body: getBody(context, ref, categoryWatch));
+        body: getBody(context, ref, categoriesRepoProvider));
   }
 
-  getBody(context, ref, CategoryModal categoryWatch) {
+  getBody(context, ref, CategoriesRepository categoriesRepoProvider) {
     final businessRepoProvider = ref.read(businessDetailPageProvider);
     return SafeArea(
       child: Column(
@@ -51,6 +54,14 @@ class Businesses extends ConsumerWidget {
                       return FutureBuilder(
                           future: getCategory(),
                           builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const Center(
+                                child: SpinKitThreeInOut(
+                                  color: kThirdColor,
+                                ),
+                              );
+                            }
                             var categories =
                                 snapshot.data as List<CategoryModal>;
                             if (categories == null || categories.isEmpty) {
@@ -59,13 +70,11 @@ class Businesses extends ConsumerWidget {
                               );
                             } else {
                               return GestureDetector(
-                                onTap: () => Navigator.pushNamed(
-                                    context, '/businessList',
-                                    arguments: ref
-                                            .read(selectedCategory.state)
-                                            .state
-                                            .category =
-                                        categories[index].category.toString()),
+                                onTap: () {
+                                  categoriesRepoProvider.category =
+                                      categories[index].category.toString();
+                                  categoriesRepoProvider.notifyAll();
+                                },
                                 child: Container(
                                   alignment: Alignment.center,
                                   margin: EdgeInsets.only(
@@ -79,7 +88,7 @@ class Businesses extends ConsumerWidget {
                                   decoration: BoxDecoration(
                                     //color: kPrimaryColor,
                                     color: categories[index].category ==
-                                            categoryWatch.category
+                                            categoriesRepoProvider.category
                                         ? kPrimaryColor.withOpacity(0.5)
                                         : kPrimaryColor,
                                     borderRadius: BorderRadius.circular(6),
@@ -103,27 +112,8 @@ class Businesses extends ConsumerWidget {
                   )),
             ],
           ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height - 150,
-            child: FutureBuilder(
-                future:
-                    getBusinessByCategory(categoryWatch.category.toString()),
-                builder:
-                    (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                  switch (snapshot.connectionState) {
-                    case ConnectionState.done:
-                      businessList = snapshot.data!;
-                      return listView(ref, businessRepoProvider);
-
-                    default:
-                      return const Center(
-                        child: SpinKitThreeInOut(
-                          color: kThirdColor,
-                        ),
-                      );
-                  }
-                }),
-          ),
+          getBusinessList(
+              context, ref, categoriesRepoProvider, businessRepoProvider),
         ],
       ),
     );
@@ -174,13 +164,12 @@ class Businesses extends ConsumerWidget {
               ],
               child: GestureDetector(
                 onTap: () {
-                //  AuthMethods().signInWithGoogle(context);
-              //   AuthMethods().signOut();
+                  //  AuthMethods().signInWithGoogle(context);
+                  //   AuthMethods().signOut();
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => const ChatHistoryPage()));
-
                 },
                 child: Column(
                   children: [
@@ -218,14 +207,16 @@ class Businesses extends ConsumerWidget {
 
   Future<void> onDismissed(int index, SlidableAction action, context, ref,
       businessRepoProvider) async {
-    // setState(() => businessList.removeAt(index));
-
     switch (action) {
       case SlidableAction.appointment:
         if (FirebaseAuth.instance.currentUser?.email == null) {
-          alertMethod(context).show();
+          getAlert(
+                  context,
+                  'Seçilen işletmeden randevu alabilmek için giriş yapmanız ya da kayıt olmanız gerekmektedir',
+                  'Giriş Yap')
+              .show();
         } else {
-          Navigator.pushNamed(context, '/makeAppointment',
+          Navigator.pushReplacementNamed(context, '/makeAppointment',
               arguments: ref.read(selectedBusiness.state).state.name =
                   businessList[index].name.toString());
         }
@@ -246,33 +237,26 @@ class Businesses extends ConsumerWidget {
     }
   }
 
-  Alert alertMethod(context) {
-    return Alert(
-            style: AlertStyle(
-                titleStyle: TextStyle(fontFamily: fontFamiy, fontSize: 16),
-                descStyle: TextStyle(fontFamily: fontFamiy, fontSize: 16),
-                backgroundColor: Colors.white,
-                alertElevation: 20),
-            context: context,
-            type: AlertType.warning,
-            title: 'Randevu Al',
-            desc:
-                'Seçilen işletmeden randevu alabilmek için giriş yapmanız ya da kayıt olmanız gerekmektedir. ',
-            buttons: [
-              DialogButton(
-                  color: Colors.red,
-                  child: Text(
-                    'Vazgeç',
-                    style:
-                        TextStyle(color: Colors.white, fontFamily: fontFamiy),
+  getBusinessList(context, ref, categoriesRepoProvider, businessRepoProvider) {
+    return SizedBox(
+      height: MediaQuery.of(context).size.height - 150,
+      child: FutureBuilder(
+          future:
+              getBusinessByCategory(categoriesRepoProvider.category.toString()),
+          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.done:
+                businessList = snapshot.data!;
+                return listView(ref, businessRepoProvider);
+
+              default:
+                return const Center(
+                  child: SpinKitThreeInOut(
+                    color: kThirdColor,
                   ),
-                  onPressed: () => Navigator.of(context).pop()),
-              DialogButton(
-                  color: kPrimaryColor,
-                  child: Text('Giriş Yap',
-                      style: TextStyle(
-                          color: Colors.white, fontFamily: fontFamiy)),
-                  onPressed: () {})
-            ]);
+                );
+            }
+          }),
+    );
   }
 }

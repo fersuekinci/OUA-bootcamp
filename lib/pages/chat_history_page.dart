@@ -14,7 +14,6 @@ class ChatHistoryPage extends StatefulWidget {
 }
 
 class _ChatHistoryPageState extends State<ChatHistoryPage> {
-
   String? myName, myProfilePic, myUserName, myEmail;
   Stream<QuerySnapshot>? chatRoomsStream;
   QuerySnapshot? usersStream;
@@ -46,22 +45,22 @@ class _ChatHistoryPageState extends State<ChatHistoryPage> {
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         return snapshot.hasData
             ? ListView.builder(
-            itemCount: snapshot.data?.docs.length,
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              DocumentSnapshot ds = snapshot.data?.docs[index] as DocumentSnapshot<Object?>;
-              Timestamp tsdate = ds["lastMessageSendTs"];
-              DateTime d = tsdate.toDate();
-              String date = DateFormat('yyyy-MM-dd').format(d);
-              String time = DateFormat('kk:mm').format(d);
-              return ChatRoomListTile(ds["lastMessage"], ds.id, myUserName!, date, time);
-            })
+                itemCount: snapshot.data?.docs.length,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  DocumentSnapshot ds =
+                      snapshot.data?.docs[index] as DocumentSnapshot<Object?>;
+                  Timestamp tsdate = ds["lastMessageSendTs"];
+                  DateTime d = tsdate.toDate();
+                  String date = DateFormat('yyyy-MM-dd').format(d);
+                  String time = DateFormat('kk:mm').format(d);
+                  return ChatRoomListTile(
+                      ds["lastMessage"], ds.id, myUserName!, date, time);
+                })
             : const Center(child: const CircularProgressIndicator());
       },
     );
   }
-
-
 
   @override
   void initState() {
@@ -81,17 +80,14 @@ class _ChatHistoryPageState extends State<ChatHistoryPage> {
         margin: const EdgeInsets.symmetric(horizontal: 20),
         child: chatRoomsList(),
       ),
-
     );
   }
 }
 
-
-
-
 class ChatRoomListTile extends StatefulWidget {
   final String lastMessage, chatRoomId, myUsername, dtDate, dtTime;
-  ChatRoomListTile(this.lastMessage, this.chatRoomId, this.myUsername, this.dtDate, this.dtTime);
+  ChatRoomListTile(this.lastMessage, this.chatRoomId, this.myUsername,
+      this.dtDate, this.dtTime);
 
   @override
   _ChatRoomListTileState createState() => _ChatRoomListTileState();
@@ -117,7 +113,6 @@ class _ChatRoomListTileState extends State<ChatRoomListTile> {
 
   @override
   Widget build(BuildContext context) {
-
     return GestureDetector(
       onTap: () {
         Navigator.pushReplacement(
@@ -134,7 +129,7 @@ class _ChatRoomListTileState extends State<ChatRoomListTile> {
               borderRadius: BorderRadius.circular(30),
               child: Image.network(
                 profilePicUrl,
-                errorBuilder:(context, error, stackTrace) {
+                errorBuilder: (context, error, stackTrace) {
                   return const CircularProgressIndicator();
                 },
                 height: 40,
@@ -146,7 +141,7 @@ class _ChatRoomListTileState extends State<ChatRoomListTile> {
                     child: CircularProgressIndicator(
                       value: loadingProgress.expectedTotalBytes != null
                           ? loadingProgress.cumulativeBytesLoaded /
-                          loadingProgress.expectedTotalBytes!
+                              loadingProgress.expectedTotalBytes!
                           : null,
                     ),
                   );

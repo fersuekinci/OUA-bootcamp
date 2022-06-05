@@ -6,6 +6,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 import 'package:oua_bootcamp/cloud_firestore/all_business_ref.dart';
 import 'package:oua_bootcamp/model/CategoryModal.dart';
+import 'package:oua_bootcamp/pages/businesses_page.dart';
+import 'package:oua_bootcamp/repositories/repo_categories.dart';
+import 'package:oua_bootcamp/sercices/auth.dart';
 import 'package:oua_bootcamp/utils/utils.dart';
 import 'package:oua_bootcamp/constants.dart';
 import 'package:oua_bootcamp/widgets/CategoryItems.dart';
@@ -45,10 +48,11 @@ class CategoryPage extends ConsumerWidget {
                 )
               ],
             )),
-        body: getBody(ref));
+        body: getBody(context, ref));
   }
 
-  Widget getBody(WidgetRef ref) {
+  Widget getBody(context, WidgetRef ref) {
+    final categoryRepoProvider = ref.read(categoriesPageProvider);
     return SafeArea(
       bottom: false,
       child: Column(
@@ -95,9 +99,8 @@ class CategoryPage extends ConsumerWidget {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      FirebaseAuth.instance.signOut();
+                      //FirebaseAuth.instance.signOut();
                       //print(FirebaseAuth.instance.currentUser!.email.toString());
-
                     },
                     child: const Text(
                       'Giriş Yap / Kayıt Ol',
@@ -105,7 +108,9 @@ class CategoryPage extends ConsumerWidget {
                     ),
                   ),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      AuthMethods().signInWithGoogle(context);
+                    },
                     icon: SvgPicture.asset(
                       'assets/svg/icons8-google.svg',
                       width: 24,
@@ -138,7 +143,7 @@ class CategoryPage extends ConsumerWidget {
                     future: getCategory(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(
+                        return const Center(
                           child: SpinKitThreeInOut(
                             color: kThirdColor,
                           ),
@@ -154,7 +159,7 @@ class CategoryPage extends ConsumerWidget {
                               padding: const EdgeInsets.all(24),
                               scrollDirection: Axis.vertical,
                               gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2,
                                 childAspectRatio: 1.3,
                                 mainAxisSpacing: 0.0,
@@ -163,15 +168,20 @@ class CategoryPage extends ConsumerWidget {
                               itemCount: 8,
                               itemBuilder: (context, index) {
                                 return GestureDetector(
-                                  onTap: () => Navigator.pushReplacementNamed(
-                                      context, '/businessList',
-                                      arguments: ref
-                                              .read(selectedCategory.state)
-                                              .state
-                                              .category =
-                                          categories[index]
-                                              .category
-                                              .toString()),
+                                  onTap: () {
+                                    categoryRepoProvider.category =
+                                        categories[index].category.toString();
+                                    categoryRepoProvider.image =
+                                        categories[index].image.toString();
+
+                                    categoryRepoProvider.notifyAll();
+
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                Businesses()));
+                                  },
                                   child: CategoryItems(
                                     height: 150.0,
                                     width: MediaQuery.of(context).size.width,
