@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -11,6 +12,9 @@ import '../pages/home_page.dart';
 class AuthMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
+  List allUsers = [];
+  bool isBusiness = false;
+
 
   getCurrentUser() async {
     return await _auth.currentUser;
@@ -31,49 +35,68 @@ class AuthMethods {
 
     User userDetails = result.user!;
 
-    Map<String, dynamic>? kayitOl = await Navigator.of(context).push<Map<String, dynamic>>(MaterialPageRoute(builder: (context) {
-      return const RegisterPage();
-    },));
-    print("Kayıt ol sayfasından gelen map = ${kayitOl.toString()}");
+    QuerySnapshot qs = await DatabaseMethods().getAllUsersList();
+
+    for(int i = 0; i<qs.docs.length; i++){
+      String user = qs.docs[i]["email"].toString();
+      allUsers.add(user);
+    }
+
+    if(allUsers.contains(FirebaseAuth.instance.currentUser!.email)){
+      print("Zaten kayıtlı");
+      return isBusiness;
+    }else{
+
+      Map<String, dynamic>? kayitOl = await Navigator.of(context).push<Map<String, dynamic>>(MaterialPageRoute(builder: (context) {
+        return const RegisterPage();
+      },));
+      print("Kayıt ol sayfasından gelen map = ${kayitOl.toString()}");
 
 
-    SharedPreferenceHelper().saveUserEmail(userDetails.email);
-    SharedPreferenceHelper().saveUserId(userDetails.uid);
-    SharedPreferenceHelper()
-        .saveUserName(userDetails.email!.replaceAll("@gmail.com", ""));
-    SharedPreferenceHelper().saveDisplayName(userDetails.displayName);
-    SharedPreferenceHelper().saveUserProfileUrl(userDetails.photoURL);
+      print("1");
+      SharedPreferenceHelper().saveUserEmail(userDetails.email);
+      SharedPreferenceHelper().saveUserId(userDetails.uid);
+      SharedPreferenceHelper()
+          .saveUserName(userDetails.email!.replaceAll("@gmail.com", ""));
+      SharedPreferenceHelper().saveDisplayName(userDetails.displayName);
+      SharedPreferenceHelper().saveUserProfileUrl(userDetails.photoURL);
+      print("2");
 
-    Map<String, dynamic> userInfoMap = {
-      "email": userDetails.email,
-      "username": userDetails.email?.replaceAll("@gmail.com", ""),
-      "name": userDetails.displayName,
-      "imgUrl": userDetails.photoURL
-    };
+      Map<String, dynamic> userInfoMap = {
+        "email": userDetails.email,
+        "username": userDetails.email?.replaceAll("@gmail.com", ""),
+        "name": userDetails.displayName,
+        "imgUrl": userDetails.photoURL
+      };
+      print("3");
 
-    if(kayitOl != null){
+      if(kayitOl != null){
+        userInfoMap.addAll(kayitOl);
+        isBusiness = userInfoMap["isBusiness"];
 
-      userInfoMap.addAll(kayitOl);
-      //kayıt olan işletme olarak kayıt olduysa
-      if(kayitOl["isBusiness"]){
-        // Veritabanında AllBusiness ekleyelim
-        DatabaseMethods().addBusiness(kayitOl["category"], userDetails.uid, userInfoMap);
-        print("İşletme olarak kayıt edildi");
+        //kayıt olan işletme olarak kayıt olduysa
+        if(kayitOl["isBusiness"]){
+          // Veritabanında AllBusiness ekleyelim
+          DatabaseMethods().addBusiness(kayitOl["category"], userDetails.uid, userInfoMap);
+          print("İşletme olarak kayıt edildi");
 
-      }else{
-        // Bişe yapmaya gerek yok. Zaten altta "users" içerisine kayıt ediyor.
-        print("Bireysel kullanıcı olarak kayıt edildi.");
+        }else{
+          // Bişe yapmaya gerek yok. Zaten altta "users" içerisine kayıt ediyor.
+          print("Bireysel kullanıcı olarak kayıt edildi.");
+        }
       }
+      DatabaseMethods()
+          .addUserInfoToDB(userDetails.uid, userInfoMap)
+          .then((value) {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => HomePage(isBusiness)));
+      });
+
+
     }
 
 
 
-    DatabaseMethods()
-        .addUserInfoToDB(userDetails.uid, userInfoMap)
-        .then((value) {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => HomePage()));
-    });
   }
 
   Future signOut() async {

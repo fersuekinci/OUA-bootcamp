@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       //debug logosunu kaldırmak için kullanıldı.
       debugShowCheckedModeBanner: false,
-      title: 'Material App',
+      title: 'Ustasını Bul',
       // theme: ThemeData.light().copyWith(
       //   //appBarTheme : proje kapsamında appbar teması özellikleri
       //   appBarTheme: const AppBarTheme(
@@ -76,7 +76,7 @@ class MyApp extends StatelessWidget {
         }
       },
 
-      home: HomePage(),
+      home: HomePage(false),
       // home: FutureBuilder(
       //   future: AuthMethods().getCurrentUser(),
       //   builder: (context, AsyncSnapshot<dynamic> snapshot) {

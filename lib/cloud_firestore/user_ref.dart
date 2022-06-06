@@ -19,6 +19,19 @@ Future<UserModel> getUserProfiles(WidgetRef ref, dynamic mail) async {
   }
 }
 
+Future<List> getUserDateAppointment() async {
+  var listAppointment = List.empty(growable: true);
+  var result = await FirebaseFirestore.instance
+      .collection("UserHistory")
+      .doc(FirebaseAuth.instance.currentUser!.email.toString())
+
+      // .orderBy('timeStamp', descending: true)
+      //.where(, isEqualTo: FirebaseAuth.instance.currentUser!.email)
+      .get();
+
+  return listAppointment;
+}
+
 Future<List<AppointmentModel>> getUserHistory(String date) async {
   var listAppointment = List<AppointmentModel>.empty(growable: true);
   var result = await FirebaseFirestore.instance

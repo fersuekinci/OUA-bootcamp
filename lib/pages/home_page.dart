@@ -12,12 +12,13 @@ import 'package:oua_bootcamp/pages/menu_page.dart';
 import 'package:oua_bootcamp/model/menu_item.dart';
 import 'package:oua_bootcamp/pages/splashh.dart';
 import 'package:oua_bootcamp/pages/user_history_page.dart';
+import 'package:oua_bootcamp/state/state_management.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'signup_page.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage(bool isBusiness, {Key? key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -55,12 +56,12 @@ class _HomePageState extends State<HomePage> {
           },
         );
       }),
-      mainScreen: getScreen(),
+      mainScreen: getScreen(context),
     );
   }
 
 //Menüde tıklanan başlığa göre sayfalara yönlendirme yapılması
-  Widget getScreen() {
+  Widget getScreen(context) {
     switch (currentItem) {
       case MenuItems.category:
         return CategoryPage();

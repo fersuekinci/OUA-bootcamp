@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:oua_bootcamp/cloud_firestore/all_business_ref.dart';
@@ -19,16 +20,43 @@ class BusinessHistoryPage extends ConsumerWidget {
     final String _appbarTitle = 'Randevu Bilgileri';
     var refRefresh = ref.watch(deleteFlagRefresh);
     final businessRepoProvider = ref.read(businessDetailPageProvider);
+    var now = ref.watch(selectedDate.state).state;
     return Scaffold(
-        appBar: AppBar(leading: const MenuWidget(), title: Text(_appbarTitle)),
+        appBar: AppBar(
+          leading: const MenuWidget(),
+          title: Text(_appbarTitle),
+          actions: [
+            Container(
+              child: Row(
+                children: [
+                  GestureDetector(
+                    onTap: (() {
+                      DatePicker.showDatePicker(context,
+                          showTitleActions: true,
+                          minTime: DateTime.now(),
+                          maxTime: DateTime.now().add(const Duration(days: 31)),
+                          onConfirm: (date) =>
+                              ref.read(selectedDate.state).state = date);
+                    }),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Align(
+                          alignment: Alignment.centerRight,
+                          child: Image.asset(
+                              'assets/images/icons8-tear-off-calendar-48.png')),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
         body: Container(
           color: kPrimaryColor,
           padding: const EdgeInsets.all(15),
           child: FutureBuilder(
-              future: getBusinessHistory(
-                  DateFormat('dd-MM-yyyy')
-                      .format(ref.read(selectedDate.state).state),
-                  businessRepoProvider),
+              future: getBusinessHistory(DateFormat('dd-MM-yyyy').format(now),
+                  FirebaseAuth.instance.currentUser!.email.toString()),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(
@@ -70,7 +98,7 @@ class BusinessHistoryPage extends ConsumerWidget {
                                             .toString()),
                                         subtitle: Text(
                                           businessAppointments[index]
-                                              .businessAddress
+                                              .userMail
                                               .toString(),
                                           style: TextStyle(
                                               color: Colors.black
@@ -130,7 +158,7 @@ class BusinessHistoryPage extends ConsumerWidget {
                                               businessAppointments[index].done!
                                                   ? 'Gerçekleşti '
                                                   : isExpried
-                                                      ? 'Süresi Doldu'
+                                                      ? 'İptal Et'
                                                       : 'İptal Et',
                                               style: const TextStyle(
                                                   color: Colors.white),

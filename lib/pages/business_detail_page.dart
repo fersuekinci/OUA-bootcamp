@@ -59,22 +59,10 @@ class BusinessDetail extends ConsumerWidget {
           unselectedLabelColor: Colors.white38,
           indicatorColor: Colors.white,
           tabs: [
-            Tab(
-                child: Text(
-              "Bilgiler",
-            )),
-            Tab(
-                child: Text(
-              "Hizmetler",
-            )),
-            Tab(
-                child: Text(
-              "Yorumlar",
-            )),
-            Tab(
-                child: Text(
-              "İletişim",
-            ))
+            Tab(child: Text("Bilgiler", style: TextStyle(fontSize: 13))),
+            Tab(child: Text("Hizmetler", style: TextStyle(fontSize: 13))),
+            Tab(child: Text("Yorumlar", style: TextStyle(fontSize: 13))),
+            Tab(child: Text("İletişim", style: TextStyle(fontSize: 13)))
           ],
         ),
       ],
