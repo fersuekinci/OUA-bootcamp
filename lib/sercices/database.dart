@@ -111,5 +111,14 @@ class DatabaseMethods {
         .snapshots();
   }
 
+  Future<QuerySnapshot> getAllUsersList() async {
+    return await FirebaseFirestore.instance
+        .collection("users")
+        .where("email")
+        .get();
+  }
+
+
+
 
 }

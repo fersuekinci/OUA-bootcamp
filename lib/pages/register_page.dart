@@ -43,7 +43,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-
+    _allBusiness.addAll({"isBusiness": false});
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -60,10 +60,9 @@ class _RegisterPageState extends State<RegisterPage> {
                   Switch(
                       value: _isBusiness,
                       onChanged: (value){
-                        _isBusiness = value;
-                        _allBusiness.addAll({"isBusiness": value});
                         setState(() {
                           _isBusiness = value;
+                          _allBusiness.addAll({"isBusiness": value});
                         });                }
                   ),
                   const Text("İşletme"),
@@ -100,6 +99,14 @@ class _RegisterPageState extends State<RegisterPage> {
                     textField(_phone),
                     textField(_subtitle),
                     //    textField(_fotograflar),
+                  ],
+                ),
+              ),
+              Visibility(
+                visible: !_isBusiness,
+                child: Column(
+                  children: [
+                    textField(_phone),
                   ],
                 ),
               ),

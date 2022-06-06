@@ -76,7 +76,7 @@ class MyApp extends StatelessWidget {
         }
       },
 
-      home: HomePage(),
+      home: HomePage(false),
       // home: FutureBuilder(
       //   future: AuthMethods().getCurrentUser(),
       //   builder: (context, AsyncSnapshot<dynamic> snapshot) {
