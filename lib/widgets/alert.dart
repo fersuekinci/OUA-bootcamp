@@ -1,5 +1,6 @@
 import 'package:oua_bootcamp/constants.dart';
 import 'package:oua_bootcamp/pages/category_page.dart';
+import 'package:oua_bootcamp/sercices/auth.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:flutter/material.dart';
 
@@ -27,8 +28,7 @@ Alert getAlert(context, String content, String title) {
             child: const Text('Giriş Yap',
                 style: TextStyle(color: Colors.white, fontFamily: fontFamiy)),
             onPressed: () {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => CategoryPage()));
+              AuthMethods().signInWithGoogle(context);
             })
       ]);
 }
