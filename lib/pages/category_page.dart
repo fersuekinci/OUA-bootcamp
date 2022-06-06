@@ -44,7 +44,6 @@ class CategoryPage extends ConsumerWidget {
     } else if (FirebaseAuth.instance.currentUser?.email != null) {
       return AppBar(
           leading: MenuWidget(),
-          automaticallyImplyLeading: false,
           title: Text(
             appbarTitle,
             style: const TextStyle(
@@ -104,7 +103,6 @@ class CategoryPage extends ConsumerWidget {
                     if (FirebaseAuth.instance.currentUser == null)
                       GestureDetector(
                         onTap: () {
-
                           //FirebaseAuth.instance.signOut();
                           //print(FirebaseAuth.instance.currentUser!.email.toString());
                         },
