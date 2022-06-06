@@ -143,8 +143,8 @@ Story'ler yapılacak işlere (task'lere) bölünmüştür. Miro Board'da gözük
 Alınan kararlar: 3.sprint için planlanan işlemler tamamlanmış olup, projeye devam edilirse yapılabilecek işlemler retrospective toplantısında konuşulacaktır.
 
 - **Sprint Retrospective**:
-  - Uygulamanın arayüzü iyileştirilmelidir.
-  - Uygulamanın işleyişinin aktif olabilmesi için backend çalışmaları iyileştirilmelidir.
+  - Uygulamanın arayüzü iyileştirilebilir.
+  - Uygulamanın işleyişinin aktif olabilmesi için backend çalışmaları iyileştirilebilir.
   - Bazı eksiklikler ve errorlar düzeltilmelidir.
   - Filtreleme ve sıralama(puana göre, yakınlığa göre) özellikleri getirilebilir.
   - Google maps iyileştirilmeleri yapılabilir.
@@ -153,4 +153,3 @@ Alınan kararlar: 3.sprint için planlanan işlemler tamamlanmış olup, projeye
 -**Diğer Notlar**:
 - 3.Sprint ile veri tabanı optimizasyon ve revize işlemleri yapılmıştır. Clean code prensipleri ve veri tabanı kayıt işlemleri daha efektif kullanılabilmesi için çalışmalar yapılmıştır, proje ilerlerse release edilmeden düzeltilecek şeyler mevcuttur.
 
----
