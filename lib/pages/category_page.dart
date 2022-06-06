@@ -87,14 +87,6 @@ class CategoryPage extends ConsumerWidget {
                       fontSize: 20,
                       fontFamily: fontFamiy),
                 ),
-                InkWell(
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                      return AppointmentsPage();
-                    },));
-                  },
-                  child: Text("X"),
-                )
               ],
             ),
           ),

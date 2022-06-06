@@ -13,9 +13,9 @@ class MenuItems {
   static const category = MenuItemK('Ana Sayfa', Icons.category);
 
   static const userHistory =
-      MenuItemK('Randevu Bilgileri', Icons.calendar_month);
+      MenuItemK('Kullanıcı Randevu Bilgileri', Icons.calendar_month);
   static const businessHistory =
-      MenuItemK('Randevu Bilgileri', Icons.calendar_month_outlined);
+      MenuItemK('İşletme Randevu Bilgileri', Icons.calendar_month_outlined);
 
   static const all = <MenuItemK>[category, userHistory, businessHistory];
 }
