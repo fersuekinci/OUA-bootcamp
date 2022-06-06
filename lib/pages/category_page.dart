@@ -1,28 +1,19 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_auth_ui/flutter_auth_ui.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:oua_bootcamp/cloud_firestore/all_business_ref.dart';
 import 'package:oua_bootcamp/cloud_firestore/user_ref.dart';
 import 'package:oua_bootcamp/model/CategoryModal.dart';
 import 'package:oua_bootcamp/model/user_model.dart';
 import 'package:oua_bootcamp/pages/businesses_page.dart';
-import 'package:oua_bootcamp/pages/signup_page.dart';
 import 'package:oua_bootcamp/repositories/repo_categories.dart';
-import 'package:oua_bootcamp/repositories/repo_user.dart';
 import 'package:oua_bootcamp/sercices/auth.dart';
-import 'package:oua_bootcamp/utils/utils.dart';
 import 'package:oua_bootcamp/constants.dart';
 import 'package:oua_bootcamp/widgets/CategoryItems.dart';
-// ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:oua_bootcamp/state/state_management.dart';
 import 'package:oua_bootcamp/widgets/login_precess.dart';
 import 'package:oua_bootcamp/widgets/menu_widget.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
 
 // ignore: must_be_immutable
 class CategoryPage extends ConsumerWidget {
@@ -64,7 +55,7 @@ class CategoryPage extends ConsumerWidget {
 
   Widget getBody(context, WidgetRef ref) {
     final categoryRepoProvider = ref.read(categoriesPageProvider);
-    final userRepoProvider = ref.read(userProvider);
+
     return SafeArea(
       bottom: false,
       child: Column(
@@ -113,6 +104,7 @@ class CategoryPage extends ConsumerWidget {
                     if (FirebaseAuth.instance.currentUser == null)
                       GestureDetector(
                         onTap: () {
+
                           //FirebaseAuth.instance.signOut();
                           //print(FirebaseAuth.instance.currentUser!.email.toString());
                         },
@@ -181,7 +173,8 @@ class CategoryPage extends ConsumerWidget {
                     ),
                     IconButton(
                         onPressed: () {
-                          FirebaseAuth.instance.signOut();
+                          AuthMethods().signOut();
+                          //FirebaseAuth.instance.signOut();
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(

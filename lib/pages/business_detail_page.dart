@@ -2,15 +2,10 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:oua_bootcamp/pages/category_page.dart';
 import 'package:oua_bootcamp/pages/map_page.dart';
 import 'package:oua_bootcamp/widgets/alert.dart';
-import 'package:oua_bootcamp/widgets/menu_widget.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
 import '../constants.dart';
 import '../repositories/repo_business_detail.dart';
-import 'chat_screen.dart';
 
 class BusinessDetail extends ConsumerWidget {
   BusinessDetail({Key? key}) : super(key: key);
@@ -18,9 +13,7 @@ class BusinessDetail extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     final businessRepoProvider = ref.watch(businessDetailPageProvider);
-    final String email = businessRepoProvider.getEmailForChatPage();
-    final String companyName = businessRepoProvider.getCompanyName();
-    Size size = MediaQuery.of(context).size;
+
     return DefaultTabController(
       length: 3,
       child: Stack(
@@ -261,7 +254,6 @@ class BusinessDetail extends ConsumerWidget {
                         FirebaseAuth.instance.currentUser?.email == null
                             ? getAlert(
                                     context,
-                                    ref,
                                     'Seçilen işletmeden randevu alabilmek için giriş yapmanız ya da kayıt olmanız gerekmektedir. ',
                                     'Giriş Yap')
                                 .show()
@@ -274,7 +266,6 @@ class BusinessDetail extends ConsumerWidget {
                         FirebaseAuth.instance.currentUser?.email == null
                             ? getAlert(
                                     context,
-                                    ref,
                                     'Seçilen işletmeyle mesajlaşabilmek için giriş yapmanız ya da kayıt olmanız gerekmektedir. ',
                                     'Giriş Yap')
                                 .show()

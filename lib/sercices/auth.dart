@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:oua_bootcamp/pages/register_page.dart';
 import 'package:oua_bootcamp/sercices/database.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -30,28 +31,49 @@ class AuthMethods {
 
     User userDetails = result.user!;
 
-    if (result != null) {
-      SharedPreferenceHelper().saveUserEmail(userDetails.email);
-      SharedPreferenceHelper().saveUserId(userDetails.uid);
-      SharedPreferenceHelper()
-          .saveUserName(userDetails.email!.replaceAll("@gmail.com", ""));
-      SharedPreferenceHelper().saveDisplayName(userDetails.displayName);
-      SharedPreferenceHelper().saveUserProfileUrl(userDetails.photoURL);
+    Map<String, dynamic>? kayitOl = await Navigator.of(context).push<Map<String, dynamic>>(MaterialPageRoute(builder: (context) {
+      return const RegisterPage();
+    },));
+    print("Kayıt ol sayfasından gelen map = ${kayitOl.toString()}");
 
-      Map<String, dynamic> userInfoMap = {
-        "email": userDetails.email,
-        "username": userDetails.email?.replaceAll("@gmail.com", ""),
-        "name": userDetails.displayName,
-        "imgUrl": userDetails.photoURL
-      };
 
-      DatabaseMethods()
-          .addUserInfoToDB(userDetails.uid, userInfoMap)
-          .then((value) {
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => HomePage()));
-      });
+    SharedPreferenceHelper().saveUserEmail(userDetails.email);
+    SharedPreferenceHelper().saveUserId(userDetails.uid);
+    SharedPreferenceHelper()
+        .saveUserName(userDetails.email!.replaceAll("@gmail.com", ""));
+    SharedPreferenceHelper().saveDisplayName(userDetails.displayName);
+    SharedPreferenceHelper().saveUserProfileUrl(userDetails.photoURL);
+
+    Map<String, dynamic> userInfoMap = {
+      "email": userDetails.email,
+      "username": userDetails.email?.replaceAll("@gmail.com", ""),
+      "name": userDetails.displayName,
+      "imgUrl": userDetails.photoURL
+    };
+
+    if(kayitOl != null){
+
+      userInfoMap.addAll(kayitOl);
+      //kayıt olan işletme olarak kayıt olduysa
+      if(kayitOl["isBusiness"]){
+        // Veritabanında AllBusiness ekleyelim
+        DatabaseMethods().addBusiness(kayitOl["category"], userDetails.uid, userInfoMap);
+        print("İşletme olarak kayıt edildi");
+
+      }else{
+        // Bişe yapmaya gerek yok. Zaten altta "users" içerisine kayıt ediyor.
+        print("Bireysel kullanıcı olarak kayıt edildi.");
+      }
     }
+
+
+
+    DatabaseMethods()
+        .addUserInfoToDB(userDetails.uid, userInfoMap)
+        .then((value) {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => HomePage()));
+    });
   }
 
   Future signOut() async {
@@ -61,3 +83,4 @@ class AuthMethods {
     await _googleSignIn.signOut();
   }
 }
+

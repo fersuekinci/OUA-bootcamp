@@ -6,6 +6,7 @@ class SharedPreferenceHelper {
   static String displayNameKey = "USERDISPLAYNAMEKEY";
   static String userEmailKey = "USEREMAILKEY";
   static String userProfilePicKey = "USERPROFILEPICKEY";
+  static String isBusinessOrUserKey = "ISBUSİNESSORUSERKEY";
 
   //save data
   Future<bool> saveUserName(String getUserName) async {
@@ -33,6 +34,11 @@ class SharedPreferenceHelper {
     return prefs.setString(userProfilePicKey, getUserProfile!);
   }
 
+  Future<bool> saveIsBusinessOrUser(String? getIsBusinessOrUser) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.setString(isBusinessOrUserKey, getIsBusinessOrUser!);
+  }
+
   // get data
   Future<String?> getUserName() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -57,5 +63,10 @@ class SharedPreferenceHelper {
   Future<String?> getUserProfileUrl() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString(userProfilePicKey);
+  }
+
+  Future<String?> getIsBusinessOrUser() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString(isBusinessOrUserKey);
   }
 }

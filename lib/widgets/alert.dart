@@ -1,10 +1,9 @@
 import 'package:oua_bootcamp/constants.dart';
 import 'package:oua_bootcamp/pages/category_page.dart';
-import 'package:oua_bootcamp/widgets/login_precess.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:flutter/material.dart';
 
-Alert getAlert(context, ref, String content, String title) {
+Alert getAlert(context, String content, String title) {
   return Alert(
       style: const AlertStyle(
           titleStyle: TextStyle(fontFamily: fontFamiy, fontSize: 16),

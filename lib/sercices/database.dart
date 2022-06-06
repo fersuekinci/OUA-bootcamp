@@ -74,4 +74,21 @@ class DatabaseMethods {
         .where("username", isEqualTo: username)
         .get();
   }
+
+  Future<QuerySnapshot> getBusinessList() async {
+    return await FirebaseFirestore.instance
+        .collection("AllBusiness")
+        .where("category")
+        .get();
+  }
+
+  Future addBusiness(
+      String isletmeTuru, String isletmeId, Map<String, dynamic> isletmeMap) async {
+    return FirebaseFirestore.instance
+        .collection("AllBusiness")
+        .doc(isletmeTuru)
+        .collection("BusinessList")
+        .doc(isletmeId)
+        .set(isletmeMap);
+  }
 }

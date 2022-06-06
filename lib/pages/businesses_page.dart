@@ -12,7 +12,6 @@ import 'package:oua_bootcamp/pages/chat_history_page.dart';
 import 'package:oua_bootcamp/pages/make_appointment.dart';
 import 'package:oua_bootcamp/repositories/repo_business_detail.dart';
 import 'package:oua_bootcamp/repositories/repo_categories.dart';
-import 'package:oua_bootcamp/state/state_management.dart';
 import 'package:oua_bootcamp/utils/utils.dart';
 import 'package:oua_bootcamp/widgets/alert.dart';
 
@@ -213,7 +212,6 @@ class Businesses extends ConsumerWidget {
         if (FirebaseAuth.instance.currentUser?.email == null) {
           getAlert(
                   context,
-                  ref,
                   'Seçilen işletmeden randevu alabilmek için giriş yapmanız ya da kayıt olmanız gerekmektedir',
                   'Giriş Yap')
               .show();
@@ -225,7 +223,7 @@ class Businesses extends ConsumerWidget {
           businessRepoProvider.phone = businessList[index].phone.toString();
           businessRepoProvider.subtitle =
               businessList[index].subtitle.toString();
-          businessRepoProvider.email = businessList[index].email.toString();
+          businessRepoProvider.mail = businessList[index].email.toString();
           businessRepoProvider.notifyAll();
 
           Navigator.push(context,
@@ -239,7 +237,7 @@ class Businesses extends ConsumerWidget {
         businessRepoProvider.content = businessList[index].content.toString();
         businessRepoProvider.phone = businessList[index].phone.toString();
         businessRepoProvider.subtitle = businessList[index].subtitle.toString();
-        businessRepoProvider.email = businessList[index].email.toString();
+        businessRepoProvider.mail = businessList[index].email.toString();
         businessRepoProvider.notifyAll();
 
         Navigator.push(
