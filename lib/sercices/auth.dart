@@ -14,9 +14,7 @@ class AuthMethods {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   List allUsers = [];
   bool isBusiness = false;
-
-
-  getCurrentUser() async {
+    getCurrentUser() async {
     return await _auth.currentUser;
   }
 
@@ -53,14 +51,6 @@ class AuthMethods {
       print("Kayıt ol sayfasından gelen map = ${kayitOl.toString()}");
 
 
-      print("1");
-      SharedPreferenceHelper().saveUserEmail(userDetails.email);
-      SharedPreferenceHelper().saveUserId(userDetails.uid);
-      SharedPreferenceHelper()
-          .saveUserName(userDetails.email!.replaceAll("@gmail.com", ""));
-      SharedPreferenceHelper().saveDisplayName(userDetails.displayName);
-      SharedPreferenceHelper().saveUserProfileUrl(userDetails.photoURL);
-      print("2");
 
       Map<String, dynamic> userInfoMap = {
         "email": userDetails.email,
@@ -68,7 +58,6 @@ class AuthMethods {
         "name": userDetails.displayName,
         "imgUrl": userDetails.photoURL
       };
-      print("3");
 
       if(kayitOl != null){
         userInfoMap.addAll(kayitOl);
@@ -85,6 +74,13 @@ class AuthMethods {
           print("Bireysel kullanıcı olarak kayıt edildi.");
         }
       }
+
+      SharedPreferenceHelper().saveUserEmail(userDetails.email);
+      SharedPreferenceHelper().saveUserId(userDetails.uid);
+      SharedPreferenceHelper()
+          .saveUserName(userDetails.email!.replaceAll("@gmail.com", ""));
+      SharedPreferenceHelper().saveDisplayName(userDetails.displayName);
+      SharedPreferenceHelper().saveUserProfileUrl(userDetails.photoURL);
       DatabaseMethods()
           .addUserInfoToDB(userDetails.uid, userInfoMap)
           .then((value) {

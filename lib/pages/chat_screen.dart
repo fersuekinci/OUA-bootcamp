@@ -37,7 +37,6 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   addMessage(bool sendClicked) {
-
     DatabaseMethods().createChatRoom(chatRoomId!, {
       "lastMessage": "",
       "lastMessageSendTs": "",

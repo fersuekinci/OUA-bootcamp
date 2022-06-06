@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:oua_bootcamp/pages/chat_screen.dart';
 import 'package:oua_bootcamp/pages/comment.dart';
 import 'package:oua_bootcamp/pages/make_appointment.dart';
 import 'package:oua_bootcamp/pages/map_page.dart';
@@ -16,7 +17,6 @@ class BusinessDetail extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     final businessRepoProvider = ref.watch(businessDetailPageProvider);
-
     return DefaultTabController(
       length: 4,
       child: Stack(
@@ -151,6 +151,8 @@ class BusinessDetail extends ConsumerWidget {
   }
 
   getContanct(BusinessDetailRepository businessRepoProvider, context, ref) {
+    final String email = businessRepoProvider.getEmailForChatPage();
+    final String companyName = businessRepoProvider.getCompanyName();
     return Container(
       color: kPrimaryColor,
       child: Center(
@@ -268,7 +270,11 @@ class BusinessDetail extends ConsumerWidget {
                                     'Seçilen işletmeyle mesajlaşabilmek için giriş yapmanız ya da kayıt olmanız gerekmektedir. ',
                                     'Giriş Yap')
                                 .show()
-                            : '';
+                            : Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    ChatScreen(email,companyName)));
                       },
                     ),
                   ],
