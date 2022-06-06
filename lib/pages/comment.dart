@@ -19,12 +19,12 @@ class _ReviewsState extends State<Reviews> {
     return WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
-          backgroundColor: kWhiteColor,
+          backgroundColor: kThirdColor,
           body: Column(
             children: [
               Expanded(
                 child: ListView.separated(
-                  padding: EdgeInsets.only(bottom: 8.0, top: 8.0),
+                  padding: const EdgeInsets.only(bottom: 8.0, top: 8.0),
                   itemCount: reviewList.length,
                   itemBuilder: (context, index) {
                     return ReviewUI(
@@ -33,7 +33,7 @@ class _ReviewsState extends State<Reviews> {
                       date: reviewList[index].date,
                       comment: reviewList[index].comment,
                       rating: reviewList[index].rating,
-                      onPressed: () => print("More Action $index"),
+                      onPressed: () {},
                       onTap: () => setState(() {
                         isMore = !isMore;
                       }),
@@ -41,8 +41,8 @@ class _ReviewsState extends State<Reviews> {
                     );
                   },
                   separatorBuilder: (context, index) {
-                    return Divider(
-                      thickness: 2.0,
+                    return const Divider(
+                      thickness: 1.0,
                       color: kAccentColor,
                     );
                   },
@@ -102,7 +102,7 @@ class ReviewUI extends StatelessWidget {
                 child: Text(
                   name!,
                   style: TextStyle(
-                    fontSize: 20.0,
+                    fontSize: 16.0,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -119,14 +119,12 @@ class ReviewUI extends StatelessWidget {
                 direction: Axis.horizontal,
                 allowHalfRating: true,
                 itemCount: 5,
-                itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
                 itemBuilder: (context, _) => Icon(
                   Icons.star,
-                  color: Colors.orange,
+                  color: kSecondaryColor,
                 ),
-                onRatingUpdate: (rating) {
-                  print(rating);
-                },
+                onRatingUpdate: (rating) {},
               ),
               SizedBox(width: kFixPadding),
               Text(
@@ -151,8 +149,8 @@ class ReviewUI extends StatelessWidget {
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
-                      fontSize: 18.0,
-                      color: kLightColor,
+                      fontSize: 16.0,
+                      color: Colors.black,
                     ),
                   ),
           ),

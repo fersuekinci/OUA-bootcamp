@@ -121,7 +121,7 @@ class Businesses extends ConsumerWidget {
     );
   }
 
-  Widget listView(ref, businessRepoProvider) {
+  Widget listView(ref, BusinessDetailRepository businessRepoProvider) {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: ListView.separated(
@@ -158,8 +158,12 @@ class Businesses extends ConsumerWidget {
                 onTap: () {
                   //  AuthMethods().signInWithGoogle(context);
                   //   AuthMethods().signOut();
+                  businessRepoProvider.latitude = businessList[index].latitude!;
+                  businessRepoProvider.longitude =
+                      businessList[index].longitude!;
                   businessRepoProvider.companyName =
                       businessList[index].name.toString();
+
                   businessRepoProvider.address =
                       businessList[index].address.toString();
                   businessRepoProvider.content =
@@ -238,6 +242,8 @@ class Businesses extends ConsumerWidget {
 
         break;
       case SlidableAction.detail:
+        businessRepoProvider.latitude = businessList[index].latitude!;
+        businessRepoProvider.longitude = businessList[index].longitude!;
         businessRepoProvider.companyName = businessList[index].name.toString();
         businessRepoProvider.address = businessList[index].address.toString();
         businessRepoProvider.content = businessList[index].content.toString();

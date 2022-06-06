@@ -10,8 +10,8 @@ class GoogleMaps extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final businessRepoProvider = ref.watch(businessDetailPageProvider);
-    LatLng showLocation = LatLng(double.parse(businessRepoProvider.address),
-        double.parse(businessRepoProvider.subtitle));
+    LatLng showLocation =
+        LatLng((businessRepoProvider.latitude), businessRepoProvider.longitude);
 
     //latitude , longitude
 

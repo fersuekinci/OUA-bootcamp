@@ -6,6 +6,8 @@ class BusinessModal {
   String? subtitle;
   dynamic? key;
   String? email;
+  double? latitude;
+  double? longitude;
 
   BusinessModal(
       {this.name,
@@ -13,7 +15,9 @@ class BusinessModal {
       this.address,
       this.phone,
       this.subtitle,
-      this.email});
+      this.email,
+      this.latitude,
+      this.longitude});
 
   BusinessModal.fromJson(Map<String, dynamic> json) {
     name = json['name'];
@@ -22,6 +26,8 @@ class BusinessModal {
     phone = json['phone'];
     subtitle = json['subtitle'];
     email = json['email'];
+    latitude = json['latitude'];
+    longitude = json['longitude'];
   }
 
   set docId(String docId) {}
@@ -34,6 +40,8 @@ class BusinessModal {
     data['phone'] = phone;
     data['subtitle'] = subtitle;
     data['email'] = email;
+    data['latitude'] = latitude;
+    data['longitude'] = longitude;
     return data;
   }
 }
