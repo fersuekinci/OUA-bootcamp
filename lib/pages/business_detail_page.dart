@@ -8,6 +8,7 @@ import 'package:oua_bootcamp/pages/map_page.dart';
 import 'package:oua_bootcamp/widgets/alert.dart';
 import '../constants.dart';
 import '../repositories/repo_business_detail.dart';
+import 'comment.dart';
 
 class BusinessDetail extends ConsumerWidget {
   BusinessDetail({Key? key}) : super(key: key);
@@ -17,7 +18,7 @@ class BusinessDetail extends ConsumerWidget {
     final businessRepoProvider = ref.watch(businessDetailPageProvider);
 
     return DefaultTabController(
-      length: 3,
+      length: 4,
       child: Stack(
         children: [
           Scaffold(
@@ -30,6 +31,7 @@ class BusinessDetail extends ConsumerWidget {
               children: [
                 getBusinessData(businessRepoProvider),
                 getServices(businessRepoProvider),
+                Reviews(),
                 getContanct(businessRepoProvider, context, ref),
               ],
             ),
@@ -64,6 +66,10 @@ class BusinessDetail extends ConsumerWidget {
             Tab(
                 child: Text(
               "Hizmetler",
+            )),
+            Tab(
+                child: Text(
+              "Yorumlar",
             )),
             Tab(
                 child: Text(
@@ -335,12 +341,12 @@ class BusinessDetail extends ConsumerWidget {
       ),
     );
   }
-}
 
-String getChatRoomId(String a, String b) {
-  if (a.substring(0, 1).codeUnitAt(0) > b.substring(0, 1).codeUnitAt(0)) {
-    return "$b\_$a";
-  } else {
-    return "$a\_$b";
+  String getChatRoomId(String a, String b) {
+    if (a.substring(0, 1).codeUnitAt(0) > b.substring(0, 1).codeUnitAt(0)) {
+      return "$b\_$a";
+    } else {
+      return "$a\_$b";
+    }
   }
 }

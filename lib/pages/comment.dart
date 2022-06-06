@@ -16,49 +16,43 @@ class _ReviewsState extends State<Reviews> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: kWhiteColor,
-      appBar: AppBar(
-        title: Text("Yorumlar"),
-        backgroundColor: kSecondaryColor,
-
-      ),
-      body: Column(
-        children: [
-
-          Expanded(
-            child: ListView.separated(
-              padding: EdgeInsets.only(bottom: 8.0, top: 8.0),
-              itemCount: reviewList.length,
-              itemBuilder: (context, index) {
-                return ReviewUI(
-                  image: reviewList[index].image,
-                  name: reviewList[index].name,
-                  date: reviewList[index].date,
-                  comment: reviewList[index].comment,
-                  rating: reviewList[index].rating,
-                  onPressed: () => print("More Action $index"),
-                  onTap: () => setState(() {
-                    isMore = !isMore;
-                  }), isLess: isMore,
-
-                );
-              },
-              separatorBuilder: (context, index) {
-                return Divider(
-                  thickness: 2.0,
-                  color: kAccentColor,
-                );
-              },
-            ),
+    return WillPopScope(
+        onWillPop: () async => false,
+        child: Scaffold(
+          backgroundColor: kWhiteColor,
+          body: Column(
+            children: [
+              Expanded(
+                child: ListView.separated(
+                  padding: EdgeInsets.only(bottom: 8.0, top: 8.0),
+                  itemCount: reviewList.length,
+                  itemBuilder: (context, index) {
+                    return ReviewUI(
+                      image: reviewList[index].image,
+                      name: reviewList[index].name,
+                      date: reviewList[index].date,
+                      comment: reviewList[index].comment,
+                      rating: reviewList[index].rating,
+                      onPressed: () => print("More Action $index"),
+                      onTap: () => setState(() {
+                        isMore = !isMore;
+                      }),
+                      isLess: isMore,
+                    );
+                  },
+                  separatorBuilder: (context, index) {
+                    return Divider(
+                      thickness: 2.0,
+                      color: kAccentColor,
+                    );
+                  },
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
-    );
+        ));
   }
 }
-
-
 
 class ReviewUI extends StatelessWidget {
   String? image, name, date, comment;
@@ -67,7 +61,6 @@ class ReviewUI extends StatelessWidget {
   bool? isLess;
 
   ReviewUI({
-
     Key? key,
     this.image,
     this.name,
@@ -144,24 +137,24 @@ class ReviewUI extends StatelessWidget {
           ),
           SizedBox(height: 8.0),
           GestureDetector(
-            onTap: ()=>{},
+            onTap: () => {},
             child: isLess!
                 ? Text(
-              comment!,
-              style: TextStyle(
-                fontSize: 18.0,
-                color: kLightColor,
-              ),
-            )
+                    comment!,
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      color: kLightColor,
+                    ),
+                  )
                 : Text(
-              comment!,
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontSize: 18.0,
-                color: kLightColor,
-              ),
-            ),
+                    comment!,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      color: kLightColor,
+                    ),
+                  ),
           ),
         ],
       ),
@@ -169,56 +162,47 @@ class ReviewUI extends StatelessWidget {
   }
 }
 
-
-
-
 final reviewList = [
   ReviewModal(
     image: "assets/images/user.png",
     name: "Doruk Ege",
     rating: 4,
     date: "05 June 2022",
-    comment:
-    "Harika",
+    comment: "Harika",
   ),
   ReviewModal(
     image: "assets/images/user.png",
     name: "Fatma Özlem",
     rating: 5,
     date: "06 June 2022",
-    comment:
-    "Çok iyi.",
+    comment: "Çok iyi.",
   ),
   ReviewModal(
     image: "assets/images/user.png",
     name: "Kenan Atan",
     rating: 4.5,
     date: "03 June 2022",
-    comment:
-    "Müthiş.",
+    comment: "Müthiş.",
   ),
   ReviewModal(
     image: "assets/images/user.png",
     name: "Onur Bayrak",
     rating: 2,
     date: "01 June 2022",
-    comment:
-    "Kötü",
+    comment: "Kötü",
   ),
   ReviewModal(
     image: "assets/images/user.png",
     name: "Seda Sayar",
     rating: 1,
     date: "06 June 2022",
-    comment:
-    "Çok kötü.",
+    comment: "Çok kötü.",
   ),
   ReviewModal(
     image: "assets/images/user.png",
     name: "Ali Veli",
     rating: 3,
     date: "08 June 2022",
-    comment:
-    "İyi.",
+    comment: "İyi.",
   ),
 ];
