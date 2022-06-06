@@ -6,6 +6,7 @@ import 'package:oua_bootcamp/cloud_firestore/all_business_ref.dart';
 import 'package:oua_bootcamp/cloud_firestore/user_ref.dart';
 import 'package:oua_bootcamp/model/CategoryModal.dart';
 import 'package:oua_bootcamp/model/user_model.dart';
+import 'package:oua_bootcamp/pages/appointment_page.dart';
 import 'package:oua_bootcamp/pages/businesses_page.dart';
 import 'package:oua_bootcamp/repositories/repo_categories.dart';
 import 'package:oua_bootcamp/sercices/auth.dart';
@@ -71,7 +72,7 @@ class CategoryPage extends ConsumerWidget {
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: const [
+              children: [
                 Text(
                   'Kategori Seç',
                   style: TextStyle(
@@ -86,6 +87,14 @@ class CategoryPage extends ConsumerWidget {
                       fontSize: 20,
                       fontFamily: fontFamiy),
                 ),
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                      return AppointmentsPage();
+                    },));
+                  },
+                  child: Text("X"),
+                )
               ],
             ),
           ),

@@ -91,4 +91,25 @@ class DatabaseMethods {
         .doc(isletmeId)
         .set(isletmeMap);
   }
+
+  Future addAppointment(
+      String isletmeUID, String randevuSaati, Map<String, dynamic> appointmentInfoMap) async {
+    return FirebaseFirestore.instance
+        .collection("Appointment")
+        .doc(isletmeUID)
+        .collection("randevular")
+        .doc(randevuSaati)
+        .set(appointmentInfoMap);
+  }
+
+  Future<Stream<QuerySnapshot>> getAppointment(isletmeUID) async {
+    return FirebaseFirestore.instance
+        .collection("Appointment")
+        .doc(isletmeUID)
+        .collection("randevular")
+        .orderBy("timeStamp", descending: true)
+        .snapshots();
+  }
+
+
 }
