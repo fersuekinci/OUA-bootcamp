@@ -17,53 +17,56 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-          appBar: AppBar(
-              toolbarHeight: 97,
-              automaticallyImplyLeading: false,
-              title: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: const [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 13.0),
-                    child: Text('Kayıt Ol'),
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  TabBar(
-                    indicatorSize: TabBarIndicatorSize.label,
-                    indicatorWeight: 3,
-                    labelColor: Colors.white,
-                    unselectedLabelColor: Colors.white38,
-                    indicatorColor: Colors.white,
-                    tabs: [
-                      Tab(
-                          child: Text(
-                        "İşletme Kaydı",
-                      )),
-                      Tab(
-                          child: Text(
-                        "Kullanıcı Kaydı",
-                      )),
-                    ],
-                  ),
-                ],
-              )),
-          body: TabBarView(
-            children: [
-              getBusiness(context),
-              getUser(context),
-            ],
-          )),
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: DefaultTabController(
+        length: 2,
+        child: Scaffold(
+            appBar: AppBar(
+                toolbarHeight: 97,
+                automaticallyImplyLeading: false,
+                title: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: const [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 13.0),
+                      child: Text('Kayıt Ol'),
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    TabBar(
+                      indicatorSize: TabBarIndicatorSize.label,
+                      indicatorWeight: 3,
+                      labelColor: Colors.white,
+                      unselectedLabelColor: Colors.white38,
+                      indicatorColor: Colors.white,
+                      tabs: [
+                        Tab(
+                            child: Text(
+                          "İşletme Kaydı",
+                        )),
+                        Tab(
+                            child: Text(
+                          "Kullanıcı Kaydı",
+                        )),
+                      ],
+                    ),
+                  ],
+                )),
+            body: TabBarView(
+              children: [
+                getBusiness(context),
+                getUser(context),
+              ],
+            )),
+      ),
     );
   }
 
+  var userFullNameController = TextEditingController();
+  var userPhoneNumberController = TextEditingController();
   getUser(BuildContext context) {
-    var userFullNameController = TextEditingController();
-    var userPhoneNumberController = TextEditingController();
     return SafeArea(
       child: Container(
         width: MediaQuery.of(context).size.width,
@@ -133,12 +136,12 @@ class _SignUpState extends State<SignUp> {
   }
 }
 
+var businessNameController = TextEditingController();
+var businessSubTitleController = TextEditingController();
+var businessPhoneNumberController = TextEditingController();
+var businessAddressController = TextEditingController();
+var businessDetailsController = TextEditingController();
 getBusiness(context) {
-  var businessNameController = TextEditingController();
-  var businessSubTitleController = TextEditingController();
-  var businessPhoneNumberController = TextEditingController();
-  var businessAddressController = TextEditingController();
-  var businessDetailsController = TextEditingController();
   return SafeArea(
     child: Container(
       width: MediaQuery.of(context).size.width,
