@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_zoom_drawer/config.dart';
 
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:oua_bootcamp/constants.dart';
@@ -37,11 +38,11 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return ZoomDrawer(
-      style: DrawerStyle.DefaultStyle,
+      style: DrawerStyle.defaultStyle,
       borderRadius: 40,
-      backgroundColor: kSecondaryColor,
+      menuBackgroundColor: kFourthColor,
       angle: -10,
-      slideWidth: MediaQuery.of(context).size.width * 0.15,
+      slideWidth: MediaQuery.of(context).size.width * 0.7,
       showShadow: true,
       menuScreen: Builder(builder: (context) {
         return MenuPage(
