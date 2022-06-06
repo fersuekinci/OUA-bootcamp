@@ -9,16 +9,15 @@ Takım kırk8
 - Murat Kondu: Product Owner
 - Fersu Ekinci: Scrum Master
 - Merve Albay: Developer
-- Fatma İlhan: Developer
 - Muhammed Yasin Şenocak: Developer
 
 ## Ürün İsmi
 
---undefined--
+USTASINI BUL
 
 ## Ürün Açıklaması
 
-- <undefined> uygulamamız ile tüm kullanıcıların, özellikle küçük ve orta düzey işletmelerden hizmet almasını kolaylaştıracağız. Kullanıcı, kategori seçenekleri arasından istediği kategoriyi seçerek, o kategoride hizmet veren herkesi  görüntüleyebilecek, isterse randevu alacak, isterse mesajlaşarak iletişim kurabilecektir.
+- USTASINI BUL uygulamamız ile tüm kullanıcıların, özellikle küçük ve orta düzey işletmelerden hizmet almasını kolaylaştıracağız. Kullanıcı, kategori seçenekleri arasından istediği kategoriyi seçerek, o kategoride hizmet veren herkesi  görüntüleyebilecek, isterse randevu alacak, isterse mesajlaşarak iletişim kurabilecektir.
 
 ## Ürün Özellikleri
 
@@ -61,7 +60,7 @@ Story'ler yapılacak işlere (task'lere) bölünmüştür. Miro Board'da gözük
 - **Sprint Review**: 
 Alınan kararlar: Login, auth, user-role işlemleri 2.sprintle başlayacaktır ve bunun için firebase tarafında yapı oluşturulacaktır. Login olan kullanıcı rolüne göre menü üzerinde görüntüleme yapılacak, session ile işlemler yönetilmeye başlanacaktır. Form işlemlerine 2.sprint ile başlanması öngörülmüştür. 1.Sprint için planan işlemler tamamlanmış ve kurulan, kurulacak olan yapılar entegre bir şekilde çalışması için 2.sprint uygun görülmüştür.
 
-- **Sprint Retrospective:**
+- **Sprint Retrospective**:
   - Sprintlerde gerçekleştirilmesi için daha fazla görev yükü gerekmektedir. 
   - Uygulamanın işleyişinin aktif olabilmesi için backend çalışmaları başlamalıdır.
   - Veri yapılarının oluşturulması için uygulama detayları belirlenmelidir, dizayn ve yapılarda zaman yönetimi için gereklidir.
@@ -105,7 +104,7 @@ Story'ler yapılacak işlere (task'lere) bölünmüştür. Miro Board'da gözük
 Alınan kararlar: Tasarımda ve backend kısmında iyileştirmeler 3.sprintle başlayacaktır. Login olmayan kullanıcı ve login olan kullanıcı (hizmet alan ve hizmet veren)
 rollerinin tam oturtulması üzerine çalışmalar yapılacaktır. Eksikler ve errorlar düzeltilecektir. 2.sprint için planlanan işlemler neredeyse tamamlanmış olup, tamamlanamayan işlerin 3.sprintte atanması uygun görülmüştür.
 
-- **Sprint Retrospective:**
+- **Sprint Retrospective**:
   - Uygulamanın arayüzü iyileştirilmelidir.
   - Uygulamanın işleyişinin aktif olabilmesi için backend çalışmaları iyileştirilmelidir.
   - Takım ile daha sık buluşmalar gerçekleştirilerek yapılan işler üzerinde yorumlama ve geliştirme analizleri yapılmalıdır. 
@@ -118,5 +117,40 @@ rollerinin tam oturtulması üzerine çalışmalar yapılacaktır. Eksikler ve e
 ---
 
 # Sprint 3
+
+- **Sprint Notları**: User Story'ler product backlog'ların içine yazılmıştır. Product backlog item'lara tıklandığında hikayelerin detayları okunabilir.
+
+- **Sprint içinde tamamlanması tahmin edilen puan**: 100 Puan
+
+- **Puan tamamlama mantığı**: Toplamda proje boyunca tamamlanması gereken 400 puanlık backlog bulunmaktadır. 3.sprint'in 100 puan ile devam edilmesine karar verildi.
+
+- **Backlog düzeni ve Story seçimleri**: Backlog'umuz ilk yapılacak story'lere göre düzenlenmiştir. Sprint başına tahmin edilen puan sayısını geçmeyecek şekilde sıradan seçimler yapılmaktadır. Story başına çıkan tahmin puanı, toplam puanın yarısından az tutulmuştur.
+
+Story'ler yapılacak işlere (task'lere) bölünmüştür. Miro Board'da gözüken kırmızı item'lar yapılacak işleri (task) gösterirken, mavi item'lar story'leri temsil etmektedir.
+
+- **Daily Scrum**: Daily Scrum toplantılarının 3.sprint için Discord ve Whatsapp üzerinden yapılmasına karar verilmiştir. Daily Scrum toplantısı örneği word dosyası olarak Readme'de tarafımızdan paylaşılmaktadır: [Sprint 2 Daily Scrum Chats](https://docs.google.com/document/d/1INxz9AeIHqrVkdeBte7ipC4JCeFNTNMbOnGxMn1kNMQ/edit?usp=sharing) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+- **Sprint board update**: Sprint board screenshotları: 
+![Backlog 2](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint2/ss8.PNG) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+- **Ürün Durumu**: Ekran görüntüleri:
+  
+  ![Screenshot 1](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint2/ss1.png)
+  ![Screenshot 2](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint2/ss2.png)
+  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+- **Sprint Review**: 
+Alınan kararlar: 3.sprint için planlanan işlemler tamamlanmış olup, projeye devam edilirse yapılabilecek işlemler retrospective toplantısında konuşulacaktır.
+
+- **Sprint Retrospective**:
+  - Uygulamanın arayüzü iyileştirilmelidir.
+  - Uygulamanın işleyişinin aktif olabilmesi için backend çalışmaları iyileştirilmelidir.
+  - Bazı eksiklikler ve errorlar düzeltilmelidir.
+  - Filtreleme ve sıralama(puana göre, yakınlığa göre) özellikleri getirilebilir.
+  - Google maps iyileştirilmeleri yapılabilir.
+
+
+-**Diğer Notlar**:
+- 3.Sprint ile veri tabanı optimizasyon ve revize işlemleri yapılmıştır. Clean code prensipleri ve veri tabanı kayıt işlemleri daha efektif kullanılabilmesi için çalışmalar yapılmıştır, proje ilerlerse release edilmeden düzeltilecek şeyler mevcuttur.
 
 ---
