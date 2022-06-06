@@ -12,8 +12,6 @@ import 'package:oua_bootcamp/pages/home_page.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:oua_bootcamp/pages/make_appointment.dart';
-import 'package:oua_bootcamp/pages/signin.dart';
-import 'package:oua_bootcamp/sercices/auth.dart';
 import 'package:page_transition/page_transition.dart';
 
 Future<void> main() async {
@@ -25,7 +23,6 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
