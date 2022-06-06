@@ -128,7 +128,7 @@ rollerinin tam oturtulması üzerine çalışmalar yapılacaktır. Eksikler ve e
 
 Story'ler yapılacak işlere (task'lere) bölünmüştür. Miro Board'da gözüken kırmızı item'lar yapılacak işleri (task) gösterirken, mavi item'lar story'leri temsil etmektedir.
 
-- **Daily Scrum**: Daily Scrum toplantılarının 3.sprint için Discord ve Whatsapp üzerinden yapılmasına karar verilmiştir. Daily Scrum toplantısı örneği word dosyası olarak Readme'de tarafımızdan paylaşılmaktadır: [Sprint 2 Daily Scrum Chats](https://docs.google.com/document/d/1INxz9AeIHqrVkdeBte7ipC4JCeFNTNMbOnGxMn1kNMQ/edit?usp=sharing) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+- **Daily Scrum**: Daily Scrum toplantılarının 3.sprint için Discord ve Whatsapp üzerinden yapılmasına karar verilmiştir. Daily Scrum toplantısı örneği word dosyası olarak Readme'de tarafımızdan paylaşılmaktadır: [Sprint 3 Daily Scrum Chats](https://docs.google.com/document/d/1IHrnczOJQwH_Mw9tCUeJ5abhENEHnGbSvS1hsLcqRDc/edit?usp=sharing)
 
 - **Sprint board update**: Sprint board screenshotları: 
 ![Backlog 2](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint2/ss8.PNG) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
