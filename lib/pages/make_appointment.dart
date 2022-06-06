@@ -11,6 +11,7 @@ import 'package:oua_bootcamp/constants.dart';
 import 'package:oua_bootcamp/model/CategoryModal.dart';
 import 'package:oua_bootcamp/model/appointment.dart';
 import 'package:oua_bootcamp/model/business_model.dart';
+import 'package:oua_bootcamp/pages/category_page.dart';
 import 'package:oua_bootcamp/repositories/repo_business_detail.dart';
 import 'package:oua_bootcamp/repositories/repo_user.dart';
 import 'package:oua_bootcamp/state/state_management.dart';
@@ -31,36 +32,31 @@ class MakeAppointment extends ConsumerWidget {
     var timeIntervalWatch = ref.watch(selectedTimeInterval.state).state;
     final businessRepoProvider = ref.read(businessDetailPageProvider);
 
+    // addAppointment()  {
+    //   String myUid = FirebaseAuth.instance.currentUser!.uid;
+    //   String? myMail = FirebaseAuth.instance.currentUser!.email;
+    //   String? myName = FirebaseAuth.instance.currentUser!.displayName;
+    //   String randevuTarihi = ref.read(selectedTime.state).state;
+    //   String randevuSaati = DateFormat('dd/MM/yyyy').format(ref.read(selectedDate.state).state);
 
+    //   Map<String, dynamic> appointmentMap = {
+    //     "businessAddress": businessRepoProvider.address,
+    //     "businessName": businessRepoProvider.companyName,
+    //     "category": "category",
+    //     "done": false,
+    //     "timeStamp": DateTime.now(),
+    //     "randevuTarihi": randevuTarihi,
+    //     "randevuSaati": randevuSaati,
+    //     "userMail": myMail,
+    //     "userName": myName,
+    //     "userPhone": "",
+    //   };
 
-
-    addAppointment()  {
-      String myUid = FirebaseAuth.instance.currentUser!.uid;
-      String? myMail = FirebaseAuth.instance.currentUser!.email;
-      String? myName = FirebaseAuth.instance.currentUser!.displayName;
-      String randevuTarihi = ref.read(selectedTime.state).state;
-      String randevuSaati = DateFormat('dd/MM/yyyy').format(ref.read(selectedDate.state).state);
-
-      Map<String, dynamic> appointmentMap = {
-        "businessAddress": businessRepoProvider.address,
-        "businessName": businessRepoProvider.companyName,
-        "category": "category",
-        "done": false,
-        "timeStamp": DateTime.now(),
-        "randevuTarihi": randevuTarihi,
-        "randevuSaati": randevuSaati,
-        "userMail": myMail,
-        "userName": myName,
-        "userPhone": "",
-      };
-
-
-      String time = DateFormat('kk:mm').format(DateTime.now());
-      DatabaseMethods().addAppointment(myUid, time, appointmentMap);
-      print(appointmentMap);
-      print("Eklendi");
-    }
-
+    //   String time = DateFormat('kk:mm').format(DateTime.now());
+    //   DatabaseMethods().addAppointment(myUid, time, appointmentMap);
+    //   print(appointmentMap);
+    //   print("Eklendi");
+    // }
 
     final String _appbarTitle = businessRepoProvider.companyName;
     return Scaffold(
@@ -111,7 +107,8 @@ class MakeAppointment extends ConsumerWidget {
                       ),
                       ElevatedButton(
                           style: ElevatedButton.styleFrom(primary: kThirdColor),
-                          onPressed: (() => addAppointment()),
+                          onPressed: (() => confirmAppointment(context, ref,
+                              businessRepoProvider, categoryWatch)),
                           child: const Text(
                             'Randevuyu Kaydet',
                             style: TextStyle(
@@ -346,15 +343,15 @@ class MakeAppointment extends ConsumerWidget {
 
     FirebaseFirestore.instance
         .collection("Appointment")
-        .doc(businessRepoProvider.companyName)
+        .doc(FirebaseAuth.instance.currentUser!.email.toString())
         .collection(
             DateFormat('dd-MM-yyyy').format(ref.read(selectedDate.state).state))
         .doc(ref.read(selectedTime.state).state.toString())
         .set({
       'businessName': businessRepoProvider.companyName,
       'category': categoryWatch.category,
-      'userName': ref.read(userInformation.state).state.fullName,
-      'userMail': ref.read(userInformation.state).state.mail,
+      'userName': FirebaseAuth.instance.currentUser?.displayName.toString(),
+      'userMail': FirebaseAuth.instance.currentUser?.email.toString(),
       'done': false,
       'businessAddress': businessRepoProvider.address,
       'interval': ref.read(selectedTime.state).state,
@@ -379,7 +376,8 @@ class MakeAppointment extends ConsumerWidget {
 
       Add2Calendar.addEvent2Cal(appointment).then((value) {});
 
-      Navigator.popAndPushNamed(context, '/homePage');
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => CategoryPage()));
 
       // FirebaseFirestore.instance
       //     .collection('AllBusiness')

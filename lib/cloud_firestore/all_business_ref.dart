@@ -78,11 +78,11 @@ Future<List<String>> getTimeIntervalOfAppointment(
 }
 
 Future<List<AppointmentModel>> getBusinessHistory(
-    String date, BusinessDetailRepository businessRepoProvider) async {
+    String date, String email) async {
   var listAppointment = List<AppointmentModel>.empty(growable: true);
   var result = await FirebaseFirestore.instance
       .collection("Appointment")
-      .doc(FirebaseAuth.instance.currentUser?.displayName)
+      .doc(email)
       .collection(date)
       // .orderBy('timeStamp', descending: true)
       //.where(, isEqualTo: FirebaseAuth.instance.currentUser!.email)

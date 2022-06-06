@@ -108,23 +108,23 @@ class MenuPage extends ConsumerWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    userWatch.isBusiness == true
-                        ? IconButton(
-                            onPressed: () {
-                              Navigator.of(context)
-                                  .pushNamed('/businessManagement');
-                            },
-                            icon: Icon(Icons.admin_panel_settings))
-                        : InkWell(
-                            onTap: () {
-                              print("Profilimi Düzenle");
-                            },
-                            child: const Text(
-                              "Profilimi Düzenle",
-                              style:
-                                  TextStyle(fontSize: 14, color: kFourthColor),
-                            ),
-                          ),
+                    // userWatch.isBusiness == true
+                    //     ? IconButton(
+                    //         onPressed: () {
+                    //           Navigator.of(context)
+                    //               .pushNamed('/businessManagement');
+                    //         },
+                    //         icon: Icon(Icons.admin_panel_settings))
+                    //     : InkWell(
+                    //         onTap: () {
+                    //           print("Profilimi Düzenle");
+                    //         },
+                    //         child: const Text(
+                    //           "Profilimi Düzenle",
+                    //           style:
+                    //               TextStyle(fontSize: 14, color: kFourthColor),
+                    //         ),
+                    //       ),
                   ],
                 ),
               ),
