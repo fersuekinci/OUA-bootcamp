@@ -2,6 +2,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:oua_bootcamp/pages/comment.dart';
+import 'package:oua_bootcamp/pages/make_appointment.dart';
 import 'package:oua_bootcamp/pages/map_page.dart';
 import 'package:oua_bootcamp/widgets/alert.dart';
 import '../constants.dart';
@@ -257,7 +259,10 @@ class BusinessDetail extends ConsumerWidget {
                                     'Seçilen işletmeden randevu alabilmek için giriş yapmanız ya da kayıt olmanız gerekmektedir. ',
                                     'Giriş Yap')
                                 .show()
-                            : '';
+                            : Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => MakeAppointment()));
                       },
                     ),
                     IconButton(

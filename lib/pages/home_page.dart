@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/config.dart';
 
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:oua_bootcamp/constants.dart';
+import 'package:oua_bootcamp/pages/business_history.dart';
 
 import 'package:oua_bootcamp/pages/businesses_page.dart';
 import 'package:oua_bootcamp/pages/category_page.dart';
@@ -65,6 +67,8 @@ class _HomePageState extends State<HomePage> {
 
       case MenuItems.userHistory:
         return UserHistoryPage();
+      case MenuItems.businessHistory:
+        return BusinessHistoryPage();
       default:
         return CategoryPage();
     }

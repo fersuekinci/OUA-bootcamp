@@ -124,15 +124,15 @@ class CategoryPage extends ConsumerWidget {
                         height: 24,
                       ),
                     ),
-                    IconButton(
-                        onPressed: () {
-                          processLogin(context, ref, scaffoldState);
-                        },
-                        icon: Image.asset(
-                          'assets/images/icons_mail.png',
-                          width: 24,
-                          height: 24,
-                        )),
+                    // IconButton(
+                    //     onPressed: () {
+                    //       processLogin(context, ref, scaffoldState);
+                    //     },
+                    //     icon: Image.asset(
+                    //       'assets/images/icons_mail.png',
+                    //       width: 24,
+                    //       height: 24,
+                    //     )),
                   ],
                 )),
           if (FirebaseAuth.instance.currentUser?.email != null)
@@ -160,7 +160,7 @@ class CategoryPage extends ConsumerWidget {
                         } else {
                           var userModel = snapshot.data as UserModel;
                           return Text(
-                            'Hoş geldin  ${userModel.fullName.toString()}',
+                            'Hoş geldin  ${FirebaseAuth.instance.currentUser!.displayName.toString()}',
                             style: const TextStyle(
                                 color: kThirdColor,
                                 fontSize: 18,
@@ -169,16 +169,16 @@ class CategoryPage extends ConsumerWidget {
                         }
                       },
                     ),
-                    IconButton(
-                        onPressed: () {
-                          AuthMethods().signOut();
-                          //FirebaseAuth.instance.signOut();
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => CategoryPage()));
-                        },
-                        icon: const Icon(Icons.exit_to_app))
+                    // IconButton(
+                    //     onPressed: () {
+                    //       AuthMethods().signOut();
+                    //       //FirebaseAuth.instance.signOut();
+                    //       Navigator.pushReplacement(
+                    //           context,
+                    //           MaterialPageRoute(
+                    //               builder: (context) => CategoryPage()));
+                    //     },
+                    //     icon: const Icon(Icons.exit_to_app))
                   ],
                 )),
           Expanded(

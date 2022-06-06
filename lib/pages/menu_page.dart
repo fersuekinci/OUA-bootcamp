@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:oua_bootcamp/constants.dart';
 import 'package:oua_bootcamp/model/menu_item.dart';
+import 'package:oua_bootcamp/pages/category_page.dart';
 import 'package:oua_bootcamp/state/state_management.dart';
 import '../sercices/auth.dart';
 
@@ -11,9 +12,12 @@ class MenuItems {
   //Menü elemanları ekleniyor.
   static const category = MenuItemK('Ana Sayfa', Icons.category);
 
-  static const userHistory = MenuItemK('Kullanıcı Geçmişi', Icons.history);
+  static const userHistory =
+      MenuItemK('Randevu Bilgileri', Icons.calendar_month);
+  static const businessHistory =
+      MenuItemK('Randevu Bilgileri', Icons.calendar_month_outlined);
 
-  static const all = <MenuItemK>[category, userHistory];
+  static const all = <MenuItemK>[category, userHistory, businessHistory];
 }
 
 class MenuPage extends ConsumerWidget {
@@ -83,6 +87,11 @@ class MenuPage extends ConsumerWidget {
                               InkWell(
                                 onTap: () {
                                   AuthMethods().signOut().then((s) {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                CategoryPage()));
                                     //         AuthMethods().signInAnon(context);
                                   });
                                 },

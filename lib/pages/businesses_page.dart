@@ -133,16 +133,6 @@ class Businesses extends ConsumerWidget {
             clipBehavior: Clip.antiAlias,
             child: Slidable(
               key: Key(businessList[index].key.toString()),
-              // dismissal: SlidableDismissal(
-              //   child: const SlidableDrawerDismissal(),
-              //   onDismissed: (type) {
-              //     final action = type == SlideActionType.primary
-              //         ? SlidableAction.appointment
-              //         : SlidableAction.detail;
-              //     onDismissed(
-              //         index, action, context, ref, businessRepoProvider);
-              //   },
-              // ),
               actionPane: const SlidableDrawerActionPane(),
               actions: [
                 IconSlideAction(
@@ -168,10 +158,24 @@ class Businesses extends ConsumerWidget {
                 onTap: () {
                   //  AuthMethods().signInWithGoogle(context);
                   //   AuthMethods().signOut();
-                   Navigator.push(
+                  businessRepoProvider.companyName =
+                      businessList[index].name.toString();
+                  businessRepoProvider.address =
+                      businessList[index].address.toString();
+                  businessRepoProvider.content =
+                      businessList[index].content.toString();
+                  businessRepoProvider.phone =
+                      businessList[index].phone.toString();
+                  businessRepoProvider.subtitle =
+                      businessList[index].subtitle.toString();
+                  businessRepoProvider.email =
+                      businessList[index].email.toString();
+                  businessRepoProvider.notifyAll();
+
+                  Navigator.push(
                       context,
-                       MaterialPageRoute(
-                           builder: (context) => Reviews()));
+                      MaterialPageRoute(
+                          builder: (context) => BusinessDetail()));
                 },
                 child: Column(
                   children: [

@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:oua_bootcamp/model/CategoryModal.dart';
 import 'package:oua_bootcamp/model/appointment.dart';
 import 'package:oua_bootcamp/model/business_model.dart';
+import 'package:oua_bootcamp/repositories/repo_business_detail.dart';
 
 Future<List<CategoryModal>> getCategory() async {
   var categories = List<CategoryModal>.empty(growable: true);
@@ -73,4 +75,22 @@ Future<List<String>> getTimeIntervalOfAppointment(
     appointment.add(appointments.interval.toString());
   }
   return appointment;
+}
+
+Future<List<AppointmentModel>> getBusinessHistory(
+    String date, BusinessDetailRepository businessRepoProvider) async {
+  var listAppointment = List<AppointmentModel>.empty(growable: true);
+  var result = await FirebaseFirestore.instance
+      .collection("Appointment")
+      .doc(FirebaseAuth.instance.currentUser?.displayName)
+      .collection(date)
+      // .orderBy('timeStamp', descending: true)
+      //.where(, isEqualTo: FirebaseAuth.instance.currentUser!.email)
+      .get();
+
+  result.docs.forEach((res) {
+    var appointment = AppointmentModel.fromJson(res.data());
+    listAppointment.add(appointment);
+  });
+  return listAppointment;
 }
