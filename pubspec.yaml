@@ -29,7 +29,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  
+
+  flutter_rating_bar: ^4.0.1
+  rating_dialog: ^2.0.4
+
   #Slider resim eklentisi
   carousel_slider: ^4.1.1
 

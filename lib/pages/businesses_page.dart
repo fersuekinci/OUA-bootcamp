@@ -14,6 +14,8 @@ import 'package:oua_bootcamp/repositories/repo_business_detail.dart';
 import 'package:oua_bootcamp/repositories/repo_categories.dart';
 import 'package:oua_bootcamp/utils/utils.dart';
 import 'package:oua_bootcamp/widgets/alert.dart';
+import 'package:oua_bootcamp/pages/comment.dart';
+import 'package:oua_bootcamp/pages/rating_dialog.dart';
 
 class Businesses extends ConsumerWidget {
   List<BusinessModal> businessList = [];
@@ -166,10 +168,10 @@ class Businesses extends ConsumerWidget {
                 onTap: () {
                   //  AuthMethods().signInWithGoogle(context);
                   //   AuthMethods().signOut();
-                  // Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //         builder: (context) => const ChatHistoryPage()));
+                   Navigator.push(
+                      context,
+                       MaterialPageRoute(
+                           builder: (context) => Reviews()));
                 },
                 child: Column(
                   children: [
