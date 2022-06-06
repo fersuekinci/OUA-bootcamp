@@ -324,9 +324,9 @@ class BusinessDetail extends ConsumerWidget {
                           for (int count
                               in List.generate(9, (index) => index + 1))
                             ListTile(
-                              title: Text('List item $count'),
+                              title: Text('Hizmet $count'),
                               isThreeLine: true,
-                              subtitle: Text('Secondary text\nTertiary text'),
+                              subtitle: Text('Kaliteli\nGüvenilir'),
                               leading: Icon(Icons.label),
                             ),
                         ],
