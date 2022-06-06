@@ -131,13 +131,25 @@ Story'ler yapılacak işlere (task'lere) bölünmüştür. Miro Board'da gözük
 - **Daily Scrum**: Daily Scrum toplantılarının 3.sprint için Discord ve Whatsapp üzerinden yapılmasına karar verilmiştir. Daily Scrum toplantısı örneği word dosyası olarak Readme'de tarafımızdan paylaşılmaktadır: [Sprint 3 Daily Scrum Chats](https://docs.google.com/document/d/1IHrnczOJQwH_Mw9tCUeJ5abhENEHnGbSvS1hsLcqRDc/edit?usp=sharing)
 
 - **Sprint board update**: Sprint board screenshotları: 
-![Backlog 2](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint2/ss8.PNG) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+![Backlog 3](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint%203/trello.jpeg)
 
 - **Ürün Durumu**: Ekran görüntüleri:
   
-  ![Screenshot 1](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint2/ss1.png)
-  ![Screenshot 2](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint2/ss2.png)
-  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  ![Screenshot 1](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint%203/1.jpg)
+  ![Screenshot 2](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint%203/2.jpg)
+  ![Screenshot 3](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint%203/3.jpg)
+  ![Screenshot 4](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint%203/4.jpg)
+  ![Screenshot 5](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint%203/5.jpg)
+  ![Screenshot 6](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint%203/6.jpg)
+  ![Screenshot 7](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint%203/7.jpg)
+  ![Screenshot 8](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint%203/8.jpg)
+  ![Screenshot 9](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint%203/9.jpg)
+  ![Screenshot 10](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint%203/10.jpg)
+  ![Screenshot 11](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint%203/11.jpg)
+  ![Screenshot 12](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint%203/12.jpg)
+  ![Screenshot 13](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint%203/13.jpg)
+  ![Screenshot 14](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint%203/14.jpg)
+  ![Screenshot 15](https://github.com/fersuekinci/OUA-bootcamp/blob/main/BootcampScrum/Sprint%203/15.jpg)
 
 - **Sprint Review**: 
 Alınan kararlar: 3.sprint için planlanan işlemler tamamlanmış olup, projeye devam edilirse yapılabilecek işlemler retrospective toplantısında konuşulacaktır.
