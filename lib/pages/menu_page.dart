@@ -29,7 +29,7 @@ class MenuPage extends ConsumerWidget {
     return Theme(
       data: ThemeData.dark(),
       child: Scaffold(
-        backgroundColor: kSecondColor,
+        backgroundColor: kFourthColor,
         body: SafeArea(
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
