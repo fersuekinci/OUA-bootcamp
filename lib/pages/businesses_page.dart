@@ -166,10 +166,10 @@ class Businesses extends ConsumerWidget {
                 onTap: () {
                   //  AuthMethods().signInWithGoogle(context);
                   //   AuthMethods().signOut();
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const ChatHistoryPage()));
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (context) => const ChatHistoryPage()));
                 },
                 child: Column(
                   children: [
@@ -206,7 +206,7 @@ class Businesses extends ConsumerWidget {
   }
 
   Future<void> onDismissed(int index, SlidableAction action, context, ref,
-      businessRepoProvider) async {
+      BusinessDetailRepository businessRepoProvider) async {
     switch (action) {
       case SlidableAction.appointment:
         if (FirebaseAuth.instance.currentUser?.email == null) {
@@ -223,7 +223,7 @@ class Businesses extends ConsumerWidget {
           businessRepoProvider.phone = businessList[index].phone.toString();
           businessRepoProvider.subtitle =
               businessList[index].subtitle.toString();
-          businessRepoProvider.mail = businessList[index].email.toString();
+          businessRepoProvider.email = businessList[index].email.toString();
           businessRepoProvider.notifyAll();
 
           Navigator.push(context,
@@ -237,7 +237,7 @@ class Businesses extends ConsumerWidget {
         businessRepoProvider.content = businessList[index].content.toString();
         businessRepoProvider.phone = businessList[index].phone.toString();
         businessRepoProvider.subtitle = businessList[index].subtitle.toString();
-        businessRepoProvider.mail = businessList[index].email.toString();
+        businessRepoProvider.email = businessList[index].email.toString();
         businessRepoProvider.notifyAll();
 
         Navigator.push(
